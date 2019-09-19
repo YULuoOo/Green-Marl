@@ -54,8 +54,25 @@ int main(int argc, char** argv) {
     for (int i = 1; i < G.num_nodes(); i++) {
         printf("%d's parent = %ld\n", i, pid[i]);
     }
-    star_detection(G, parent, id, pid, star);
-    for (int i = 1; i < G.num_nodes(); i++) {
-        printf("%d's star = %ld\n", i, star[i]);
+    star_detection(G,parent,id,pid,star);
+    for(int i =1;i<G.num_nodes();i++){
+        printf("%d's star = %ld\n",i,star[i]);
+    }
+    C_star_hooking(G,size,parent,id,pid,star);
+    U_star_hooking(G,size,parent,id,pid,star);
+    for(int i =1;i<G.num_nodes();i++){
+        node_t fn = parent[i];
+        printf("%d's parent = %ld = %d\n",i,pid[i],fn);
+    }
+    for(int i =1;i<G.num_nodes();i++){
+        printf("%d's star = %ld\n",i,star[i]);
+    }
+    pointer_jumping(G,parent,id,pid);
+    for(int i =1;i<G.num_nodes();i++){
+        node_t fn = parent[i];
+        printf("%d's parent = %ld = %d\n",i,pid[i],fn);
+    }
+    for(int i =1;i<G.num_nodes();i++){
+        printf("%d's star = %ld\n",i,star[i]);
     }
 }
