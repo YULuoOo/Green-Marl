@@ -1,11 +1,74 @@
 //
 // Created by 赵奕威 on 2019/9/19.
 //
-Procedure mytest(G:Graph, parent:N_P<Long>, id:N_P<Long>)
-{
-    Foreach(n: G.Nodes){
-        Foreach(in: n.Nbrs){
-            n.parent min= in.id;
+ Procedure init(G:Graph, parent:N_P<Node>, id:N_P<Long>, pid:N_P<Long>)
+ {
+   Foreach(n: G.Nodes){
+     Foreach(in: n.Nbrs){
+      <n.pid;n.parent> min= <in.id;in>;
+     }
+    }
+   Foreach(n:G.Nodes){
+     If(n.pid == n.id)
+         n.parent = n;
+   }
+ }
+//due to the mistake in paper, this function "correct" the first step. Make it same as Figure2 in paper.
+Procedure mistake(G:Graph, parent:N_P<Node>, id:N_P<Long>, pid:N_P<Long>){
+    Foreach(n:G.Nodes){
+        Foreach(t:G.Nodes){
+            If(n.id==12 && t.id == 10){
+                n.pid = 10;
+                n.parent = t;
+            }
         }
+    }
+}
+Procedure singleton_elimination(G: Graph, size:Long, parent:N_P<Node>, id:N_P<Long>,pid:N_P<Long>, count:N_P<Int>){
+    Foreach(n:G.Nodes){
+        Foreach(e: n.Nbrs){
+            If(e.pid == n.id){
+                n.count += 1;
+            }
+        }
+    }
+    Foreach(n:G.Nodes){
+        Long mmin = size;
+        Node nn;
+        Int flag = 0;
+        If(n.count ==0 && n.pid == n.id){
+            Foreach(e:n.Nbrs){
+                <mmin;nn> min= <e.id;e>;
+                flag = 1;
+            }
+            If(flag == 1){
+                n.pid = mmin;
+                n.parent = nn;
+            }
+        }
+    }
+}
+Procedure star_detection(G: Graph, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>){
+    //rule 1
+    Foreach(n:G.Nodes){
+        Node fa = n.parent;
+        If(fa.pid != n.pid){
+            n.star = 1;
+        }
+    }
+    //rule 2
+    Foreach(n:G.Nodes){
+        If(n.star == 1){
+           //shit grammar!
+            Node fa = n.parent;
+            Node gf = fa.parent;
+            gf.star = 1;
+        }
+    }
+    //rule 3
+    Foreach(n:G.Nodes){
+        Node fa = n.parent;
+        If(fa.star == 1)
+            n.star = 1;
     }
 }
