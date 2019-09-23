@@ -31,20 +31,22 @@ public:
 
     virtual bool prepare() {
         printf("prepare");
+        return true;
+    }
+
+    virtual bool run()
+    {
         node_t*  parent = new node_t[G.num_nodes()+1];
         long* pid = new long[G.num_nodes()+1];
         long* id = new long[G.num_nodes()+1];
         int* count = new int[G.num_nodes()+1];
         long size = G.num_nodes();
         int* star = new int[G.num_nodes()+1];
-        return true;
-    }
-
-    virtual bool run()
-    {
         printf("Graph has %d node\n",G.num_nodes());
+        printf("id.size = %d\n", sizeof(id));
         for (int i = 0; i < G.num_nodes(); i++)
-        {
+        {        printf("d%\n",i);
+
             id[i] = i;
             pid[i] = i;
             count[i] = 0;
