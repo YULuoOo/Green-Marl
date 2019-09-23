@@ -20,9 +20,17 @@ public:
     }
 
     my_main(){
+        printf("main");
+        node_t*  parent = null;
+        long* pid = null;
+        long* id = null;
+        int* count = null;
+        long size = null;
+        int* star = null;
     }
 
     virtual bool prepare() {
+        printf("prepare");
         node_t*  parent = new node_t[G.num_nodes()+1];
         long* pid = new long[G.num_nodes()+1];
         long* id = new long[G.num_nodes()+1];
@@ -39,7 +47,6 @@ public:
         {
             id[i] = i;
             pid[i] = i;
-
             count[i] = 0;
             star[i] = 0;
         }
