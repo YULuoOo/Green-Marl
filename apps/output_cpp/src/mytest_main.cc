@@ -17,7 +17,6 @@ public:
         delete[] id;
         delete[] count;
         delete[] star;
-        delete[] membership;
     }
 
     my_main(){
@@ -45,9 +44,9 @@ public:
             star[i] = 0;
         }
 
-
+        printf("init");
         init(G, parent,id,pid);
-        mistake(G,parent,id,pid);
+        //mistake(G,parent,id,pid);
         for(int i =0;i<G.num_nodes();i++){
             printf("%d's parent = %ld\n",i,pid[i]);
         }
