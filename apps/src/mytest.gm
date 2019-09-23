@@ -91,17 +91,17 @@ Procedure C_star_hooking(G: Graph, size:Long,parent:N_P<Node>,id:N_P<Long>,pid:N
 		        fa1.parent = minNode;
 		        fa1.pid = minPid;
 		        Node fa2 = minNode;
-		        fa1.star = 1;
-		        Foreach(f1:fa1.Nbrs){
-		            If(f1.pid == fa1.id)
-			        f1.star = 1;
-		        }
-		        If(fa2.star == 0){
-		            fa2.star = 1;
-		            Foreach(f2:fa2.Nbrs){
-			            f2.star = 1;
-		            }
-		        }
+		       // fa1.star = 1;
+		       // Foreach(f1:fa1.Nbrs){
+		       //     If(f1.pid == fa1.id)
+			//        f1.star = 1;
+		        //}
+		       // If(fa2.star == 0){
+		         //   fa2.star = 1;
+		           // Foreach(f2:fa2.Nbrs){
+			      //      f2.star = 1;
+		            //}
+		        //}
 	        }
 	    }
     }
@@ -124,17 +124,17 @@ Procedure U_star_hooking(G: Graph,size: Long, parent:N_P<Node>,id:N_P<Long>,pid:
                 fa1.parent = minNode;
                 fa1.pid = minPid;
                 Node fa2 = minNode;
-                fa1.star = 1;
-                Foreach(f1:fa1.Nbrs){
-                    If(f1.pid == fa1.id)
-                        f1.star = 1;
-                }
-                If(fa2.star == 0){
-                    fa2.star = 1;
-                    Foreach(f2:fa2.Nbrs){
-                        f2.star = 1;
-                    }
-                }
+               // fa1.star = 1;
+                //Foreach(f1:fa1.Nbrs){
+                  //  If(f1.pid == fa1.id)
+                    //    f1.star = 1;
+                //}
+               // If(fa2.star == 0){
+                 //   fa2.star = 1;
+                   // Foreach(f2:fa2.Nbrs){
+                     //   f2.star = 1;
+                    //}
+                //}
             }
         }
     }
@@ -158,4 +158,12 @@ Procedure pointer_jumping(G:Graph,parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>){
          Long fid = n.pid;
          n.parent = IdNode[fid];
      }
+}
+Procedure ret_cc_num(G:Graph,id:N_P<Long>,pid:N_P<Long>):Long{
+    Long rett = 0;
+    Foreach(n:G.Nodes){
+	If(n.id == n.pid)
+	    rett++;
+    }
+    Return rett;      
 }
