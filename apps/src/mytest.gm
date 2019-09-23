@@ -71,13 +71,14 @@ Procedure star_detection(G: Graph, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,s
 	        n.star = 1;
     }
     Foreach(n:G.Nodes){
-	    If(n.star == 0)
-	        ret += 1;
+            If(n.star == 0)
+                ret += 1;
     }
     Return ret;
 }
-Procedure C_star_hooking(G: Graph, size:Long,parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>){
-    Foreach(n:G.Nodes){
+Procedure C_star_hooking(G: Graph, size:Long,parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>):Int{
+     Int ret = 0;
+     Foreach(n:G.Nodes){
 	    If(n.star == 0 && n.pid != n.id){
 	        Long minPid = size+1;
 	        Node minNode;
@@ -88,6 +89,7 @@ Procedure C_star_hooking(G: Graph, size:Long,parent:N_P<Node>,id:N_P<Long>,pid:N
 	        }
 	   //if fa1 hooked to fa2, then 2 tree should be set to star 
 	        If(fa1.id > minPid){
+                        ret++;
 		        fa1.parent = minNode;
 		        fa1.pid = minPid;
 		        Node fa2 = minNode;
@@ -105,8 +107,10 @@ Procedure C_star_hooking(G: Graph, size:Long,parent:N_P<Node>,id:N_P<Long>,pid:N
 	        }
 	    }
     }
+    Return ret;
 }
-Procedure U_star_hooking(G: Graph,size: Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>){
+Procedure U_star_hooking(G: Graph,size: Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>):Int{
+    Int ret = 0;
     Foreach(n:G.Nodes){
         If(n.star == 0 && n.pid != n.id){
             Long minPid = size+1;
@@ -121,7 +125,8 @@ Procedure U_star_hooking(G: Graph,size: Long, parent:N_P<Node>,id:N_P<Long>,pid:
 
             If(flag == 1){
             //if fa1 hooked to fa2, then 2 tree should be set to star
-                fa1.parent = minNode;
+                ret++;
+		fa1.parent = minNode;
                 fa1.pid = minPid;
                 Node fa2 = minNode;
                // fa1.star = 1;
@@ -138,6 +143,7 @@ Procedure U_star_hooking(G: Graph,size: Long, parent:N_P<Node>,id:N_P<Long>,pid:
             }
         }
     }
+    Return ret;
 }
 Procedure pointer_jumping(G:Graph,parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>){
      N_P<Long> parId;
