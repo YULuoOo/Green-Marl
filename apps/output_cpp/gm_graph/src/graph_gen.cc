@@ -70,6 +70,7 @@ gm_graph* create_uniform_random_graph2(node_t N, edge_t M, long seed) {
     for (edge_t i = 0; i < M; i++) {
         node_t from = rand() % N;
         node_t to = rand() % N;
+       G->add_edge(to,from);
         G->add_edge(from, to);
     }
 
@@ -95,8 +96,10 @@ gm_graph* create_uniform_random_nonmulti_graph(node_t N, edge_t M, long seed) {
     for (edge_t i = 0; i < M; i++) {
         node_t from = rand() % N;
         node_t to = rand() % N;
-        if (!G->has_edge(from, to))
+        if (!G->has_edge(from, to)){
           G->add_edge(from, to);
+          G->add_edge(to,from);
+        }
         else
           i--;
     }
