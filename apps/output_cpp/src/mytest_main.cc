@@ -7,15 +7,15 @@ public:
     node_t*  parent;
     long* pid;
     long* id;
-    int* count;
     long size;
+    int* count;
     int* star;
 
     virtual ~my_main() {
         delete[] parent;
         delete[] pid;
-        delete[] id;
         delete[] count;
+        delete[] id;
         delete[] star;
     }
 
@@ -27,7 +27,6 @@ public:
         //node_t*  parent = new node_t[G.num_nodes()+1];
         //long* pid = new long[G.num_nodes()+1];
         //long* id = new long[G.num_nodes()+1];
-        //int* count = new int[G.num_nodes()+1];
         //long size = G.num_nodes();
         //int* star = new int[G.num_nodes()+1];
         return true;
@@ -38,8 +37,8 @@ public:
         node_t*  parent = new node_t[G.num_nodes()+1];
         long* pid = new long[G.num_nodes()+1];
         long* id = new long[G.num_nodes()+1];
-        int* count = new int[G.num_nodes()+1];
         long size = G.num_nodes();
+        int* count = new int[G.num_nodes()+1];
         int* star = new int[G.num_nodes()+1];
         printf("Graph has %d node\n",G.num_nodes());
         for (int i = 0; i < G.num_nodes(); i++)
@@ -48,7 +47,7 @@ public:
             id[i] = i;
             pid[i] = i;
             count[i] = 0;
-            star[i] = 0;
+            star[i] = 1;
         }
 
         init(G, parent,id,pid);
@@ -58,24 +57,16 @@ public:
         int hookingRet1 = 0;
         int hookingRet2 = 0; 
         //avoid while(true)
-        while(ii++ < 99999){
+        while(true){
 
            hookingRet1 =  C_star_hooking(G,size,parent,id,pid,star);
-           for(int i =0;i<G.num_nodes();i++){
-               star[i] = 0;
-           } 
+           //memset(star,0,sizeof(star));
            star_detection(G,parent,id,pid,star);
            hookingRet2 = U_star_hooking(G,size,parent,id,pid,star);
-           for(int i =0;i<G.num_nodes();i++){
-               star[i] = 0;
-           }
-           star_detection(G,parent,id,pid,star);
+           //memset(star,0,sizeof(star));
+	    star_detection(G,parent,id,pid,star);
             pointer_jumping(G,parent,id,pid);
-
-            for(int i =0;i<G.num_nodes();i++){
-                star[i] = 0;
-            }
-
+	   // memset(star,0,sizeof(star));
             long ret1 = star_detection(G,parent,id,pid,star);
 
            if(ret1 == size && hookingRet1 == 0 && hookingRet2 == 0)

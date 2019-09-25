@@ -6,7 +6,7 @@ Procedure init(G:Graph, parent:N_P<Node>, id:N_P<Long>, pid:N_P<Long>)
         }
     }
     Foreach(n:G.Nodes){
-        If(n.pid == n.id)
+        If(n.pid >= n.id)
 	        n.parent = n;
     }
 }
@@ -22,7 +22,7 @@ Procedure mistake(G:Graph, parent:N_P<Node>, id:N_P<Long>, pid:N_P<Long>){
     }
 }
 
-Procedure singleton_elimination(G: Graph, size:Long, parent:N_P<Node>, id:N_P<Long>,pid:N_P<Long>, count:N_P<Int>){
+Procedure singleton_elimination(G: Graph, size:Long, parent:N_P<Node>, id:N_P<Long>,pid:N_P<Long>,count:N_P<Int>){
     Foreach(n:G.Nodes){
         Foreach(e: n.Nbrs){
 	        If(e.pid == n.id){
@@ -48,30 +48,33 @@ Procedure singleton_elimination(G: Graph, size:Long, parent:N_P<Node>, id:N_P<Lo
 }
 Procedure star_detection(G: Graph, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>):Long{
     Long ret = 0;
+    Foreach(n:G.Nodes){
+        n.star = 1;
+    }
     //rule 1
     Foreach(n:G.Nodes){
         Node fa = n.parent;
 	    If(fa.pid != n.pid){
-	        n.star = 1;
+	        n.star = 0;
 	    }
     }
     //rule 2
     Foreach(n:G.Nodes){
-	    If(n.star == 1){
+	    If(n.star == 0){
            //shit grammar!
 	        Node fa = n.parent;
 	        Node gf = fa.parent;
-	        gf.star = 1;
+	        gf.star = 0;
 	    }
     }
     //rule 3
     Foreach(n:G.Nodes){
 	    Node fa = n.parent;
-	    If(fa.star == 1)
-	        n.star = 1;
+	    If(fa.star == 0)
+	        n.star = 0;
     }
     Foreach(n:G.Nodes){
-            If(n.star == 0)
+            If(n.star == 1)
                 ret += 1;
     }
     Return ret;
@@ -79,11 +82,11 @@ Procedure star_detection(G: Graph, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,s
 Procedure C_star_hooking(G: Graph, size:Long,parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>):Int{
      Int ret = 0;
      Foreach(n:G.Nodes){
-	    If(n.star == 0 && n.pid != n.id){
+	    If(n.star == 1 && n.pid != n.id){
 	        Long minPid = size+1;
 	        Node minNode;
 	        Node fa1 = n.parent;
-	        Foreach(t:n.Nbrs)(t.star == 0){
+	        Foreach(t:n.Nbrs)(t.star == 1){
 		        Node ff = t.parent;
 		        <minPid;minNode> min= <ff.id;ff.parent>;
 	        }
@@ -93,15 +96,15 @@ Procedure C_star_hooking(G: Graph, size:Long,parent:N_P<Node>,id:N_P<Long>,pid:N
 		        fa1.parent = minNode;
 		        fa1.pid = minPid;
 		        Node fa2 = minNode;
-		       // fa1.star = 1;
+		       // fa1.star = 0;
 		       // Foreach(f1:fa1.Nbrs){
 		       //     If(f1.pid == fa1.id)
-			//        f1.star = 1;
+			//        f1.star = 0;
 		        //}
-		       // If(fa2.star == 0){
-		         //   fa2.star = 1;
+		       // If(fa2.star == 1){
+		         //   fa2.star = 0;
 		           // Foreach(f2:fa2.Nbrs){
-			      //      f2.star = 1;
+			      //      f2.star = 0;
 		            //}
 		        //}
 	        }
@@ -112,7 +115,7 @@ Procedure C_star_hooking(G: Graph, size:Long,parent:N_P<Node>,id:N_P<Long>,pid:N
 Procedure U_star_hooking(G: Graph,size: Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>):Int{
     Int ret = 0;
     Foreach(n:G.Nodes){
-        If(n.star == 0 && n.pid != n.id){
+        If(n.star == 1 && n.pid != n.id){
             Long minPid = size+1;
             Node minNode;
             Node fa1 = n.parent;
@@ -129,15 +132,15 @@ Procedure U_star_hooking(G: Graph,size: Long, parent:N_P<Node>,id:N_P<Long>,pid:
 		fa1.parent = minNode;
                 fa1.pid = minPid;
                 Node fa2 = minNode;
-               // fa1.star = 1;
+               // fa1.star = 0;
                 //Foreach(f1:fa1.Nbrs){
                   //  If(f1.pid == fa1.id)
-                    //    f1.star = 1;
+                    //    f1.star = 0;
                 //}
-               // If(fa2.star == 0){
-                 //   fa2.star = 1;
+               // If(fa2.star == 1){
+                 //   fa2.star = 0;
                    // Foreach(f2:fa2.Nbrs){
-                     //   f2.star = 1;
+                     //   f2.star = 0;
                     //}
                 //}
             }
