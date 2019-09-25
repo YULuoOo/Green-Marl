@@ -80,39 +80,65 @@ Procedure star_detection(G: Graph, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,s
     Return ret;
 }
 Procedure C_star_hooking(G: Graph, size:Long,parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>):Int{
-     Int ret = 0;
-     Foreach(n:G.Nodes){
-	    If(n.star == 1 && n.pid != n.id){
-	        Long minPid = size+1;
-	        Node minNode;
-	        Node fa1 = n.parent;
-	        Foreach(t:n.Nbrs)(t.star == 1){
-		        Node ff = t.parent;
-		        <minPid;minNode> min= <ff.id;ff.parent>;
-	        }
-	   //if fa1 hooked to fa2, then 2 tree should be set to star 
-	        If(fa1.id > minPid){
-                        ret++;
-		        fa1.parent = minNode;
-		        fa1.pid = minPid;
-		        Node fa2 = minNode;
-		       // fa1.star = 0;
-		       // Foreach(f1:fa1.Nbrs){
-		       //     If(f1.pid == fa1.id)
-			//        f1.star = 0;
-		        //}
-		       // If(fa2.star == 1){
-		         //   fa2.star = 0;
-		           // Foreach(f2:fa2.Nbrs){
-			      //      f2.star = 0;
-		            //}
-		        //}
-	        }
-	    }
-    }
-    Return ret;
+	Int ret = 0;
+       Foreach(n:G.Nodes)(n.star==1 && n.pid == n.id){
+               Long minPPid = size+1;
+               Node minNNode = n;
+               Long minPid2 = size+1;
+               Node minNode2 = n;
+               Foreach(e:n.Nbrs)(e.pid == n.id){
+                   Long minPid = size+1;
+                   Node minNode = n;
+                   Foreach(t:e.Nbrs){
+                       <minPid;minNode> min= <t.pid;t.parent>;
+                   }
+                   <minPPid;minNNode> min= <minPid;minNode>;
+               }
+               Foreach(t:n.Nbrs)(t.pid != n.id){
+                    <minPid2;minNode2> min= <t.pid;t.parent>;
+               }
+               If(minPPid>minPid2){
+                   minPPid = minPid2;
+                   minNNode = minNode2;
+               }
+             If(n.id > minPPid){
+                     ret++;
+                     n.parent = minNNode;
+                     n.pid = minPPid;
+             }
+        }
+        Return ret;
 }
+
 Procedure U_star_hooking(G: Graph,size: Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>):Int{
+   /*Int ret = 0;
+   Foreach(n:G.Nodes)(n.star==1 && n.pid == n.id){
+          Long minPPid = size+1;
+          Node minNNode;
+          Long minPid2 = size+1;
+          Node minNode2;
+          Foreach(e:n.Nbrs)(e.pid == n.id){
+              Long minPid = size+1;
+              Node minNode;
+              Foreach(t:e.Nbrs)(t.pid != n.id){
+                  <minPid;minNode> min= <t.pid;t.parent>;
+              }
+              <minPPid;minNNode> min= <minPid;minNode>;
+          }
+          Foreach(t:n.Nbrs)(t.pid != n.id){
+               <minPid2;minNode2> min= <t.pid;t.parent>;
+          }
+          If(minPPid>minPid2){
+              minPPid = minPid2;
+              minNNode = minNode2;
+          }
+       If(minPPid != (size+1)   && minPPid != n.id){
+           ret++;
+           n.parent = minNNode;
+           n.pid = minPPid;
+       }
+   }
+   Return ret;*/
     Int ret = 0;
     Foreach(n:G.Nodes){
         If(n.star == 1 && n.pid != n.id){
@@ -127,22 +153,9 @@ Procedure U_star_hooking(G: Graph,size: Long, parent:N_P<Node>,id:N_P<Long>,pid:
             }
 
             If(flag == 1){
-            //if fa1 hooked to fa2, then 2 tree should be set to star
                 ret++;
-		fa1.parent = minNode;
+		        fa1.parent = minNode;
                 fa1.pid = minPid;
-                Node fa2 = minNode;
-               // fa1.star = 0;
-                //Foreach(f1:fa1.Nbrs){
-                  //  If(f1.pid == fa1.id)
-                    //    f1.star = 0;
-                //}
-               // If(fa2.star == 1){
-                 //   fa2.star = 0;
-                   // Foreach(f2:fa2.Nbrs){
-                     //   f2.star = 0;
-                    //}
-                //}
             }
         }
     }
