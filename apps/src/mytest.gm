@@ -86,7 +86,7 @@ Procedure C_star_hooking(G: Graph, size:Long,parent:N_P<Node>,id:N_P<Long>,pid:N
                Node minNNode = n;
                Long minPid2 = size+1;
                Node minNode2 = n;
-               Foreach(e:n.Nbrs)(e.pid == n.id){
+               InBFS(e:G.Nodes From n)[e.pid == n.id]{
                    Long minPid = size+1;
                    Node minNode = n;
                    Foreach(t:e.Nbrs){
@@ -111,56 +111,36 @@ Procedure C_star_hooking(G: Graph, size:Long,parent:N_P<Node>,id:N_P<Long>,pid:N
 }
 
 Procedure U_star_hooking(G: Graph,size: Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>):Int{
-   /*Int ret = 0;
+   Int ret = 0;
    Foreach(n:G.Nodes)(n.star==1 && n.pid == n.id){
           Long minPPid = size+1;
           Node minNNode;
           Long minPid2 = size+1;
           Node minNode2;
-          Foreach(e:n.Nbrs)(e.pid == n.id){
-              Long minPid = size+1;
-              Node minNode;
-              Foreach(t:e.Nbrs)(t.pid != n.id){
-                  <minPid;minNode> min= <t.pid;t.parent>;
-              }
-              <minPPid;minNNode> min= <minPid;minNode>;
-          }
-          Foreach(t:n.Nbrs)(t.pid != n.id){
-               <minPid2;minNode2> min= <t.pid;t.parent>;
-          }
-          If(minPPid>minPid2){
-              minPPid = minPid2;
-              minNNode = minNode2;
-          }
-       If(minPPid != (size+1)   && minPPid != n.id){
+          InBFS(e:G.Nodes From n)[e.pid == n.id]{
+               Long minPid = size+1;
+               Node minNode = n;
+               Foreach(t:e.Nbrs){
+                   <minPid;minNode> min= <t.pid;t.parent>;
+               }
+               <minPPid;minNNode> min= <minPid;minNode>;
+           }
+           Foreach(t:n.Nbrs)(t.pid != n.id){
+                <minPid2;minNode2> min= <t.pid;t.parent>;
+           }
+           If(minPPid>minPid2){
+               minPPid = minPid2;
+               minNNode = minNode2;
+           }
+        If(minPPid != size+1 && minPPid != n.pid){
            ret++;
            n.parent = minNNode;
            n.pid = minPPid;
        }
    }
-   Return ret;*/
-    Int ret = 0;
-    Foreach(n:G.Nodes){
-        If(n.star == 1 && n.pid != n.id){
-            Long minPid = size+1;
-            Node minNode;
-            Node fa1 = n.parent;
-	        Int flag = 0;
-            Foreach(t:n.Nbrs)(t.pid!=n.pid){
-		        flag = 1;
-                Node ff = t.parent;
-                <minPid;minNode> min= <ff.id;ff>;
-            }
-
-            If(flag == 1){
-                ret++;
-		        fa1.parent = minNode;
-                fa1.pid = minPid;
-            }
-        }
-    }
-    Return ret;
+   Return ret;
 }
+
 Procedure pointer_jumping(G:Graph,parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>){
      N_P<Long> parId;
      N_P<Node> parNode;
