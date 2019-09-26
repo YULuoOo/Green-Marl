@@ -1,0 +1,16 @@
+Proc naive_cc (G: Graph, mem: N_P<Int>) :Int
+{
+    Int ret=0;
+    N_P<Bool> Checked;
+    G.Checked = False;
+    For(t:G.Nodes) (!t.Checked)
+    {
+        InDFS(n:G.Nodes From t)[!n.Checked] 
+        {} // do nothing at pre-visit
+        InPost{ // check at post-visit
+            n.Checked = True;
+        }
+        ret++;
+    }
+    Return ret;
+}
