@@ -1,0 +1,57 @@
+Proc prim(G:Graph,Len:E_P<Int>,root:Node,size:Int):Int{
+    Int num = 0;
+    Int sum = 0;
+    N_P<Bool> added;
+    Foreach(n:G.Nodes)
+	n.added = False;
+    Node_Seq Seq;
+    Seq.PushFront(root);
+    num++;
+    root.added = True;
+While(num < size){
+    Int minLen = INF;
+    Edge next;
+    Node nn;
+    Foreach(t:Seq.Items){
+	Int mmin = INF;
+	Edge minedge;
+	Foreach(v:t.Nbrs)(!v.added){
+	    Edge e = v.ToEdge();
+	    Int temp = e.Len;
+	    <mmin;minedge> min= <e.Len;e>;	
+	}
+	<minLen;next> min= <mmin;minedge>;
+    }
+    nn = next.ToNode();
+    nn.added = True;
+    Seq.PushFront(nn);
+    num++;
+    sum += next.Len;
+}
+Return sum;
+}
+Proc makeEdgeSame(G:Graph, Len:E_P<Int>){
+    Foreach(e:G.Edges){
+        Node from = e.FromNode();
+	Node to = e.ToNode();
+	If(to > from){
+	    Edge big;
+	    Edge small;
+	    Foreach(end:to.Nbrs)(end == from)
+		big = end.ToEdge();
+            Foreach(end:from.Nbrs)(end == to)
+                small = end.ToEdge();	
+	    big.Len = small.Len; 
+	}
+    }
+}
+Proc printEdgeLen(G:Graph, Len:E_P<Int>, from:Node, to:Node):Int{
+    Int ret = 0;
+    Foreach(n:G.Nodes)(n == from){
+	Foreach(v:n.Nbrs)(v == to){
+	    Edge e = v.ToEdge();
+	    ret = e.Len;
+	}
+    }
+    Return ret;
+}
