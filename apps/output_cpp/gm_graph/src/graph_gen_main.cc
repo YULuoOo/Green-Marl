@@ -50,6 +50,12 @@ int main(int argc, char** argv) {
         case 3:
             g = create_uniform_random_graph(N, M, random_seed, true);
             break;
+        case 4:
+	    g = mycreate(N,M,random_seed);
+	    break;
+        case 5:
+            g = mycreate_long_chain(N,M,random_seed);
+            break;
         /*
         case 4:
              g = create_RMAT_graph(N, M, random_seed, need_back_edge);

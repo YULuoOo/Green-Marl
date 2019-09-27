@@ -4,30 +4,36 @@
 class my_main: public main_t
 {
 public:
-    int* membership;
-    int  num_membership;
-
+    long* membership;
+    long  num_membership;
+    long* id;
     virtual ~my_main() {
-        delete[] membership;
+        delete[] id;
+	delete[] membership;
     }
 
-    my_main() : membership(NULL), num_membership(0) {
+    my_main() : membership(NULL), num_membership(0),id(NULL) {
     }
 
     virtual bool prepare() {
-        membership = new int[G.num_nodes()];
+        membership = new long[G.num_nodes()];
         num_membership = 0;
+	id = new long[G.num_nodes()];
         return true;
     }
 
     virtual bool run() 
     {
-        num_membership = naive_cc(G, membership);
+	for(int i=0;i<G.num_nodes();i++){
+	    id[i] = i;
+	    membership[i] = i;
+	}
+	num_membership = naive_cc(G,membership,id);
         return true;
     }
 
     virtual bool post_process() {
-        printf("num_membership = %d\n", num_membership);
+        printf("num_membership = %lld\n", num_membership);
         return true;
     }
 };

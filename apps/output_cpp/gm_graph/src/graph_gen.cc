@@ -5,10 +5,11 @@
 #include <stdio.h>
 #include <assert.h>
 #include <sys/time.h>
-
+#include <string>
+#include <fstream>
 #include "graph_gen.h"
 #include "gm_rand.h"
-
+using namespace std;
 gm_graph* create_uniform_random_graph(node_t N, edge_t M, long seed, bool use_xorshift_rng) {
     
     gm_rand xorshift_rng(seed);
@@ -108,6 +109,65 @@ gm_graph* create_uniform_random_nonmulti_graph(node_t N, edge_t M, long seed) {
 
     return G;
 }
+
+struct edge {
+    int to;
+    int from;
+};
+gm_graph* mycreate(node_t N, edge_t M, long seed) {
+    gm_graph *G = new gm_graph();
+    for (node_t i = 0; i<=916427; i++) {
+        G->add_node();
+    }
+    string path = "/root/zyw/Green-Marl/apps/output_cpp/web-Google.txt";
+
+    ifstream inFile(path.c_str());
+    if (!inFile.is_open())
+    {
+        printf("Could not open the file \n");
+    }
+
+    int num = 5105039;
+    edge *dd = new edge[num+1];
+    int i=0;
+    while(i<num)
+    {
+        inFile >> dd[i].to;
+        inFile >> dd[i].from;
+        inFile.get();
+        i++;
+        if (inFile.eof()){
+            printf("End of file reached.\n");
+            break;
+        }
+    }
+    for (edge_t ii = 0; ii < num; ii++) {
+        if (!G->has_edge(dd[ii].to,dd[ii].from)){
+            G->add_edge(dd[ii].to,dd[ii].from);
+            G->add_edge(dd[ii].from,dd[ii].to);
+        }
+    }
+    G->freeze();
+    return G;
+
+}
+gm_graph* mycreate_long_chain(node_t N, edge_t M, long seed){
+    gm_graph *G = new gm_graph();
+    for (node_t i = 0; i <= 100; i++) {
+        G->add_node();
+    }
+    for (edge_t i = 0; i < 100; i++) {
+        node_t from = i;
+        node_t to = i+1;
+        G->add_edge(from, to);
+        G->add_edge(to,from);
+    }
+
+    G->freeze();
+
+    return G;
+}
+
 
 /** 
  Create RMAT graph

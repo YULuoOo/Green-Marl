@@ -1,16 +1,33 @@
-Proc naive_cc (G: Graph, mem: N_P<Int>) :Int
+Proc naive_cc (G: Graph, mem: N_P<Long>, id: N_P<Long>) :Long
 {
-    Int ret=0;
-    N_P<Bool> Checked;
-    G.Checked = False;
-    For(t:G.Nodes) (!t.Checked)
-    {
-        InDFS(n:G.Nodes From t)[!n.Checked] 
-        {} // do nothing at pre-visit
-        InPost{ // check at post-visit
-            n.Checked = True;
-        }
-        ret++;
+    Long cc_num = 0;
+    Long ret=1;
+    Map<Long,Long> map;
+    Foreach(n:G.Nodes){
+	map[n.id] = n.mem;
     }
-    Return ret;
+    While(ret!=0)
+    {
+	ret = 0;
+        Foreach(n:G.Nodes)
+        {
+	    Int minId = n.id;
+            Foreach(e:n.Nbrs){
+                minId min= e.mem;
+	    }
+	    If(n.mem > minId){
+	        map[n.id] = minId;
+	        ret++;
+	    }
+        }
+	Foreach(n:G.Nodes)
+	    n.mem = map[n.id];
+	cc_num++;
+    }
+   
+     Foreach(n:G.Nodes){
+        If(n.id == n.mem)
+            cc_num++;
+    }
+    Return cc_num;
 }
