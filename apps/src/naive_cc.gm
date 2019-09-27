@@ -22,7 +22,6 @@ Proc naive_cc (G: Graph, mem: N_P<Long>, id: N_P<Long>) :Long
         }
 	Foreach(n:G.Nodes)
 	    n.mem = map[n.id];
-	cc_num++;
     }
    
      Foreach(n:G.Nodes){
