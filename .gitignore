@@ -58,3 +58,8 @@ apps/output_java/src/main/_64bit
 
 etc/update_setup
 setup.mk.bak
+.idea/Green-Marl.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+apps/output_cpp/src/mst_prim_main.cc

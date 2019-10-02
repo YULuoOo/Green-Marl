@@ -56,6 +56,10 @@ int main(int argc, char** argv) {
         case 5:
             g = mycreate_long_chain(N,M,random_seed);
             break;
+
+        case 6:
+            g = exp_create(N,M,random_seed);
+            break;
         /*
         case 4:
              g = create_RMAT_graph(N, M, random_seed, need_back_edge);

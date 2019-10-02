@@ -168,6 +168,80 @@ gm_graph* mycreate_long_chain(node_t N, edge_t M, long seed){
     return G;
 }
 
+gm_grapg* exp_create(node_t N, edge_t M, long seed){
+    //M = 1 direct M = 2 undirect
+    //N = 1-5 dataset path
+
+    gm_graph *G = new gm_graph();
+    switch(N){
+        case 1:
+            string path = "/export/vldb/2/scratch/llai/flash_exp/datasets/com-friendster.ungraph.txt";
+            break;
+        case 2:
+            string path = "/export/vldb/2/scratch/llai/flash_exp/datasets/eur-converted-new.txt";
+            break;
+        case 3:
+            string path = "/export/vldb/2/scratch/llai/flash_exp/datasets/uk-2002.txt";
+            break;
+        case 4:
+            string path = "/export/vldb/2/scratch/llai/flash_exp/datasets/com-lj.ungraph.txt";
+            break;
+        case 5:
+            string path = "/export/vldb/2/scratch/llai/flash_exp/datasets/twitter-2010.txt";
+            break;
+    }
+
+    ifstream inFile(path.c_str());
+    if (!inFile.is_open())
+    {
+        printf("Could not open the file \n");
+    }
+    int maxnode = 0;
+    int temp;
+    while(true){
+        inFile>>temp;
+        maxnode = max(maxnode,temp);
+        inFile.get();
+        if (inFile.eof()){
+            break;
+        }
+    }
+    printf("maxnode = %d\n",maxnode);
+    for (node_t i = 0; i<=maxnode; i++) {
+        G->add_node();
+    }
+    inFile.close();
+
+    inFile.open(path.c_str());
+
+
+    int to;
+    int from;
+    int i=0;
+    int max = 0;
+    while(true)
+    {
+        inFile >> to;
+        inFile >> from;
+        inFile.get();
+        if (inFile.eof()){
+            printf("End of file reached.\n");
+            break;
+        }
+        if (!G->has_edge(to,from)){
+            G->add_edge(to,from);
+            if(M == 2)
+                G->add_edge(from,to);
+            i++;
+        }
+    }
+    printf("edge = %d\n",i);
+    G->freeze();
+
+    return G;
+
+}
+
 
 /** 
  Create RMAT graph
