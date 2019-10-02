@@ -171,23 +171,23 @@ gm_graph* mycreate_long_chain(node_t N, edge_t M, long seed){
 gm_graph* exp_create(node_t N, edge_t M, long seed){
     //M = 1 direct M = 2 undirect
     //N = 1-5 dataset path
-
+    string path;
     gm_graph *G = new gm_graph();
     switch(N){
         case 1:
-            string path = "/export/vldb/2/scratch/llai/flash_exp/datasets/com-friendster.ungraph.txt";
+            path = "/export/vldb/2/scratch/llai/flash_exp/datasets/com-friendster.ungraph.txt";
             break;
         case 2:
-            string path = "/export/vldb/2/scratch/llai/flash_exp/datasets/eur-converted-new.txt";
+            path = "/export/vldb/2/scratch/llai/flash_exp/datasets/eur-converted-new.txt";
             break;
         case 3:
-            string path = "/export/vldb/2/scratch/llai/flash_exp/datasets/uk-2002.txt";
+            path = "/export/vldb/2/scratch/llai/flash_exp/datasets/uk-2002.txt";
             break;
         case 4:
-            string path = "/export/vldb/2/scratch/llai/flash_exp/datasets/com-lj.ungraph.txt";
+            path = "/export/vldb/2/scratch/llai/flash_exp/datasets/com-lj.ungraph.txt";
             break;
         case 5:
-            string path = "/export/vldb/2/scratch/llai/flash_exp/datasets/twitter-2010.txt";
+            path = "/export/vldb/2/scratch/llai/flash_exp/datasets/twitter-2010.txt";
             break;
     }
 
@@ -218,7 +218,6 @@ gm_graph* exp_create(node_t N, edge_t M, long seed){
     int to;
     int from;
     int i=0;
-    int max = 0;
     while(true)
     {
         inFile >> to;
