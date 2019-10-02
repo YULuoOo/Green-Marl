@@ -172,6 +172,7 @@ gm_graph* exp_create(node_t N, edge_t M, long seed){
     //M = 1 direct M = 2 undirect
     //N = 1-5 dataset path
     string path;
+    string dummyLine;
     gm_graph *G = new gm_graph();
     switch(N){
         case 1:
@@ -196,6 +197,10 @@ gm_graph* exp_create(node_t N, edge_t M, long seed){
     {
         printf("Could not open the file \n");
     }
+    int zz=0;
+    if(N==1||N==4)
+        while(zz++<4)
+            getline(inFile, dummyLine);
     int maxnode = 0;
     int temp;
     while(true){
@@ -213,7 +218,10 @@ gm_graph* exp_create(node_t N, edge_t M, long seed){
     inFile.close();
 
     inFile.open(path.c_str());
-
+    zz=0;
+    if(N==1||N==4)
+        while(zz++<4)
+            getline(inFile, dummyLine);
 
     int to;
     int from;
@@ -227,6 +235,8 @@ gm_graph* exp_create(node_t N, edge_t M, long seed){
             printf("End of file reached.\n");
             break;
         }
+        if(to == from)
+            continue;
         if (!G->has_edge(to,from)){
             G->add_edge(to,from);
             if(M == 2)
