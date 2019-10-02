@@ -168,7 +168,7 @@ gm_graph* mycreate_long_chain(node_t N, edge_t M, long seed){
     return G;
 }
 
-gm_grapg* exp_create(node_t N, edge_t M, long seed){
+gm_graph* exp_create(node_t N, edge_t M, long seed){
     //M = 1 direct M = 2 undirect
     //N = 1-5 dataset path
 
