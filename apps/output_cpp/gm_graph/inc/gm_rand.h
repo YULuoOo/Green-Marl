@@ -46,25 +46,13 @@ class gm_rand {
   public:
     gm_rand() {}
     gm_rand(long seed) :
-#ifdef GM_NODE64
         xorshift_rng((int64_t)seed)
-#else
-        xorshift_rng((int32_t)seed)
-#endif  // GM_NODE64
     {}
 
-#ifdef GM_NODE64
     int64_t rand() { return xorshift_rng.rand(); }
-#else
-    int32_t rand() { return xorshift_rng.rand(); }
-#endif  // GM_NODE64
 
   private:
-#ifdef GM_NODE64
     gm_rand64 xorshift_rng;
-#else
-    gm_rand32 xorshift_rng;
-#endif  // GM_NODE64
 };
 
 

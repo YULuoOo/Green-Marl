@@ -166,11 +166,7 @@ bool gm_graph::load_adjacency_list(const char* filename, // input parameter
         temp_str = tknzr.getNextToken();
         //index_convert[atol(temp_str.c_str())] = N;
         node_t n ;
-#if GM_NODE64
         n = atoll(temp_str.c_str());
-#else
-        n = atol(temp_str.c_str());
-#endif
         add_nodekey(n);
         EDGE_CNT.push_back(M);
         N++;

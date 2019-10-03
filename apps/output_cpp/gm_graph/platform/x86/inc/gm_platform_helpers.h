@@ -127,22 +127,11 @@ _gm_i386_cas(volatile unsigned long* ptr, unsigned long old, unsigned long _new)
 #define _gm_atomic_fetch_and_add_node(ptr, val) __sync_fetch_and_add(ptr, val)
 
 
-#ifdef GM_NODE64
 #define htonedge(n) ((edge_t)__builtin_bswap64((edge_t)n))
 #define ntohedge(n) ((edge_t)__builtin_bswap64((edge_t)n))
 #define htonnode(n) ((node_t)__builtin_bswap64((node_t)n))
 #define ntohnode(n) ((node_t)__builtin_bswap64((node_t)n))
-#elif defined GM_EDGE64
-#define htonedge(n) ((edge_t)__builtin_bswap64((edge_t)n))
-#define ntohedge(n) ((edge_t)__builtin_bswap64((edge_t)n))
-#define htonnode(n) ((node_t)__builtin_bswap32((node_t)n))
-#define ntohnode(n) ((node_t)__builtin_bswap32((node_t)n))
-#else
-#define htonedge(n) ((edge_t)__builtin_bswap32((edge_t)n))
-#define ntohedge(n) ((edge_t)__builtin_bswap32((edge_t)n))
-#define htonnode(n) ((node_t)__builtin_bswap32((node_t)n))
-#define ntohnode(n) ((node_t)__builtin_bswap32((node_t)n))
-#endif
+
 
 // swap saved 32/64bit ==> recast into host node_t/edge_t type
 #define n32tohnode(n)  ((node_t)__builtin_bswap32((uint32_t)n))
