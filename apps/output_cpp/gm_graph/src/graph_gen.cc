@@ -206,7 +206,7 @@ gm_graph* exp_create(node_t N, edge_t M, long seed){
     while(true){
         inFile>>temp;
         maxnode = max(maxnode,temp);
-        inFile.get();
+    	inFile.get();
         if (inFile.eof()){
             break;
         }
@@ -219,32 +219,42 @@ gm_graph* exp_create(node_t N, edge_t M, long seed){
 
     inFile.open(path.c_str());
     zz=0;
-    if(N==1||N==4)
+    if(N==1||N==4){
         while(zz++<4)
             getline(inFile, dummyLine);
-
+        printf("skip 4 lines\n");
+    }
     int to;
     int from;
-    int i=0;
+    long long i=0;
     while(true)
     {
         inFile >> to;
+	if(N==3)
+            inFile.get();
         inFile >> from;
         inFile.get();
         if (inFile.eof()){
             printf("End of file reached.\n");
             break;
         }
+//	printf("%d -> %d\n",to,from);
         if(to == from)
             continue;
-        if (!G->has_edge(to,from)){
-            G->add_edge(to,from);
-            if(M == 2)
-                G->add_edge(from,to);
-            i++;
-        }
+        if(M ==1){
+	    G->add_edge(to,from);
+	    i++;
+	} else if(M == 2){
+            if (!G->has_edge(to,from)){
+	    	 G->add_edge(to,from);
+                 G->add_edge(from,to);
+                 i++;
+		}
+	}
     }
-    printf("edge = %d\n",i);
+    printf("edge = %lld\n",i);
+    inFile.close();
+
     G->freeze();
 
     return G;

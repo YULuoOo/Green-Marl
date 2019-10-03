@@ -66,30 +66,41 @@ void gm_graph::freeze() {
     node_t n_nodes = num_nodes();
     edge_t n_edges = num_edges();
 
-    allocate_memory_for_frozen_graph(n_nodes, n_edges);
-
-    e_idx2id = new edge_t[n_edges];
-    e_id2idx = new edge_t[n_edges];
-
-    // iterate over graph and make new structure
-    edge_t next_edge = 0;
-    for (node_t i = 0; i < n_nodes; i++) {
-        std::vector<edge_dest_t>& Nbrs = flexible_graph[i];
-        begin[i] = next_edge;
-
-        std::vector<edge_dest_t>::iterator I;
-        for (I = Nbrs.begin(); I != Nbrs.end(); I++) {
-            node_id dest = (*I).dest;         // for node ID = IDX
-            edge_id edgeID = (*I).edge;
-
-            node_idx[next_edge] = dest;
-
-            e_idx2id[next_edge] = edgeID;      // IDX and ID are different for edge
-            e_id2idx[edgeID] = next_edge;
-
-            next_edge++;
-        }
+    try {
+        allocate_memory_for_frozen_graph(n_nodes, n_edges);
+    } catch (const std::bad_alloc& e){
+        std::cout<< "Allocation failed 1" << e.what() << "\n";
     }
+
+    try {
+        e_idx2id = new edge_t[n_edges];
+        e_id2idx = new edge_t[n_edges];
+    } catch (const std::bad_alloc& e){
+        std::cout<< "Allocation failed 2" << e.what() << "\n";
+    }
+
+    edge_t next_edge = 0;
+    try {
+        for (node_t i = 0; i < n_nodes; i++) {
+            std::vector<edge_dest_t>& Nbrs = flexible_graph[i];
+            begin[i] = next_edge;
+
+            std::vector<edge_dest_t>::iterator I;
+            for (I = Nbrs.begin(); I != Nbrs.end(); I++) {
+                node_id dest = (*I).dest;         
+                edge_id edgeID = (*I).edge;
+
+                node_idx[next_edge] = dest;
+
+                e_idx2id[next_edge] = edgeID;      
+                e_id2idx[edgeID] = next_edge;
+
+                next_edge++;
+            }
+        }
+    } catch (const std::bad_alloc& e){
+        std::cout<< "Allocation failed 3" << e.what() << "\n";
+    } 
     begin[n_nodes] = next_edge;
 
     // free flexible structure

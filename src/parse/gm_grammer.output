@@ -11,21 +11,21 @@ Terminals unused in grammar
    T_RARROW
 
 
-Rules useless in grammar
+语法中的规则无效
 
   219 numeric_expr: expr
 
 
-State 248 conflicts: 1 shift/reduce
-State 350 conflicts: 1 shift/reduce
-State 352 conflicts: 1 shift/reduce
+状态 248conflicts: 1 shift/reduce
+状态 350conflicts: 1 shift/reduce
+状态 352conflicts: 1 shift/reduce
 
 
-Grammar
+语法
 
     0 $accept: prog $end
 
-    1 prog: /* empty */
+    1 prog: %empty
     2     | prog proc_def
 
     3 proc_def: proc_head proc_body
@@ -36,7 +36,7 @@ Grammar
     6 proc_name: T_PROC id
     7          | T_LOCAL id
 
-    8 arg_declist1: /* empty */
+    8 arg_declist1: %empty
     9             | arg_declist
 
    10 arg_declist: arg_decl
@@ -45,7 +45,7 @@ Grammar
    12 arg_declist2: arg_decl
    13             | arg_declist2 ',' arg_decl
 
-   14 proc_return_opt: /* empty */
+   14 proc_return_opt: %empty
    15                | proc_return
 
    16 proc_return: ':' prim_type
@@ -120,7 +120,7 @@ Grammar
 
    68 sb_end: '}'
 
-   69 sent_list: /* empty */
+   69 sent_list: %empty
    70          | sent_list sent
 
    71 sent: sent_assignment ';'
@@ -154,11 +154,11 @@ Grammar
    93 foreach_src: id foreach_dir
    94            | field foreach_dir
 
-   95 foreach_dir: /* empty */
+   95 foreach_dir: %empty
    96            | '-'
    97            | '+'
 
-   98 foreach_filter: /* empty */
+   98 foreach_filter: %empty
    99               | '(' bool_expr ')'
 
   100 iterator1: T_NODES
@@ -174,23 +174,23 @@ Grammar
 
   109 sent_bfs: T_BFS bfs_header_format bfs_filters sent_block bfs_reverse
 
-  110 dfs_post: /* empty */
+  110 dfs_post: %empty
   111         | T_POST bfs_filter sent_block
   112         | T_POST sent_block
 
-  113 bfs_reverse: /* empty */
+  113 bfs_reverse: %empty
   114            | T_BACK bfs_filter sent_block
   115            | T_BACK sent_block
 
   116 bfs_header_format: '(' id ':' id opt_tp '.' T_NODES from_or_semi id ')'
 
-  117 opt_tp: /* empty */
+  117 opt_tp: %empty
   118       | '^'
 
   119 from_or_semi: T_FROM
   120             | ';'
 
-  121 bfs_filters: /* empty */
+  121 bfs_filters: %empty
   122            | bfs_navigator
   123            | bfs_filter
   124            | bfs_navigator bfs_filter
@@ -215,7 +215,7 @@ Grammar
 
   136 sent_argminmax_assignment: lhs_list2 minmax_eq rhs_list2 optional_bind
 
-  137 optional_bind: /* empty */
+  137 optional_bind: %empty
   138              | '@' id
 
   139 reduce_eq: T_PLUSEQ
@@ -316,7 +316,7 @@ Grammar
 
   215 rhs_list2: '<' expr ';' expr_list '>'
 
-  216 $@1: /* empty */
+  216 $@1: %empty
 
   217 expr_user: '[' $@1 USER_TEXT ']'
 
@@ -597,16 +597,16 @@ id (178)
     63 64 92 93 107 116 129 138 203 204 205 206 207 208 209
 
 
-state 0
+State 0
 
     0 $accept: . prog $end
 
     $default  reduce using rule 1 (prog)
 
-    prog  go to state 1
+    prog  转到状态 1
 
 
-state 1
+State 1
 
     0 $accept: prog . $end
     2 prog: prog . proc_def
@@ -615,55 +615,55 @@ state 1
     T_PROC   shift, and go to state 3
     T_LOCAL  shift, and go to state 4
 
-    proc_def   go to state 5
-    proc_head  go to state 6
-    proc_name  go to state 7
+    proc_def   转到状态 5
+    proc_head  转到状态 6
+    proc_name  转到状态 7
 
 
-state 2
+State 2
 
     0 $accept: prog $end .
 
-    $default  accept
+    $default  接受
 
 
-state 3
+State 3
 
     6 proc_name: T_PROC . id
 
     ID  shift, and go to state 8
 
-    id  go to state 9
+    id  转到状态 9
 
 
-state 4
+State 4
 
     7 proc_name: T_LOCAL . id
 
     ID  shift, and go to state 8
 
-    id  go to state 10
+    id  转到状态 10
 
 
-state 5
+State 5
 
     2 prog: prog proc_def .
 
     $default  reduce using rule 2 (prog)
 
 
-state 6
+State 6
 
     3 proc_def: proc_head . proc_body
 
     '{'  shift, and go to state 11
 
-    proc_body   go to state 12
-    sent_block  go to state 13
-    sb_begin    go to state 14
+    proc_body   转到状态 12
+    sent_block  转到状态 13
+    sb_begin    转到状态 14
 
 
-state 7
+State 7
 
     4 proc_head: proc_name . '(' arg_declist1 ')' proc_return_opt
     5          | proc_name . '(' arg_declist1 ';' arg_declist2 ')' proc_return_opt
@@ -671,58 +671,58 @@ state 7
     '('  shift, and go to state 15
 
 
-state 8
+State 8
 
   218 id: ID .
 
     $default  reduce using rule 218 (id)
 
 
-state 9
+State 9
 
     6 proc_name: T_PROC id .
 
     $default  reduce using rule 6 (proc_name)
 
 
-state 10
+State 10
 
     7 proc_name: T_LOCAL id .
 
     $default  reduce using rule 7 (proc_name)
 
 
-state 11
+State 11
 
    67 sb_begin: '{' .
 
     $default  reduce using rule 67 (sb_begin)
 
 
-state 12
+State 12
 
     3 proc_def: proc_head proc_body .
 
     $default  reduce using rule 3 (proc_def)
 
 
-state 13
+State 13
 
    65 proc_body: sent_block .
 
     $default  reduce using rule 65 (proc_body)
 
 
-state 14
+State 14
 
    66 sent_block: sb_begin . sent_list sb_end
 
     $default  reduce using rule 69 (sent_list)
 
-    sent_list  go to state 16
+    sent_list  转到状态 16
 
 
-state 15
+State 15
 
     4 proc_head: proc_name '(' . arg_declist1 ')' proc_return_opt
     5          | proc_name '(' . arg_declist1 ';' arg_declist2 ')' proc_return_opt
@@ -731,15 +731,15 @@ state 15
 
     $default  reduce using rule 8 (arg_declist1)
 
-    arg_declist1   go to state 17
-    arg_declist    go to state 18
-    arg_decl       go to state 19
-    arg_target     go to state 20
-    id_comma_list  go to state 21
-    id             go to state 22
+    arg_declist1   转到状态 17
+    arg_declist    转到状态 18
+    arg_decl       转到状态 19
+    arg_target     转到状态 20
+    id_comma_list  转到状态 21
+    id             转到状态 22
 
 
-state 16
+State 16
 
    66 sent_block: sb_begin sent_list . sb_end
    70 sent_list: sent_list . sent
@@ -774,44 +774,44 @@ state 16
     '}'           shift, and go to state 48
     '['           shift, and go to state 49
 
-    typedecl                   go to state 50
-    graph_type                 go to state 51
-    prim_type                  go to state 52
-    nodeedge_type              go to state 53
-    node_type                  go to state 54
-    edge_type                  go to state 55
-    set_type                   go to state 56
-    map_type                   go to state 57
-    property                   go to state 58
-    sent_block                 go to state 59
-    sb_begin                   go to state 14
-    sb_end                     go to state 60
-    sent                       go to state 61
-    sent_call                  go to state 62
-    sent_while                 go to state 63
-    sent_do_while              go to state 64
-    sent_foreach               go to state 65
-    sent_dfs                   go to state 66
-    sent_bfs                   go to state 67
-    sent_variable_decl         go to state 68
-    sent_assignment            go to state 69
-    sent_reduce_assignment     go to state 70
-    sent_defer_assignment      go to state 71
-    sent_argminmax_assignment  go to state 72
-    sent_return                go to state 73
-    sent_if                    go to state 74
-    sent_user                  go to state 75
-    lhs                        go to state 76
-    scala                      go to state 77
-    field                      go to state 78
-    map_access                 go to state 79
-    built_in                   go to state 80
-    lhs_list2                  go to state 81
-    expr_user                  go to state 82
-    id                         go to state 83
+    typedecl                   转到状态 50
+    graph_type                 转到状态 51
+    prim_type                  转到状态 52
+    nodeedge_type              转到状态 53
+    node_type                  转到状态 54
+    edge_type                  转到状态 55
+    set_type                   转到状态 56
+    map_type                   转到状态 57
+    property                   转到状态 58
+    sent_block                 转到状态 59
+    sb_begin                   转到状态 14
+    sb_end                     转到状态 60
+    sent                       转到状态 61
+    sent_call                  转到状态 62
+    sent_while                 转到状态 63
+    sent_do_while              转到状态 64
+    sent_foreach               转到状态 65
+    sent_dfs                   转到状态 66
+    sent_bfs                   转到状态 67
+    sent_variable_decl         转到状态 68
+    sent_assignment            转到状态 69
+    sent_reduce_assignment     转到状态 70
+    sent_defer_assignment      转到状态 71
+    sent_argminmax_assignment  转到状态 72
+    sent_return                转到状态 73
+    sent_if                    转到状态 74
+    sent_user                  转到状态 75
+    lhs                        转到状态 76
+    scala                      转到状态 77
+    field                      转到状态 78
+    map_access                 转到状态 79
+    built_in                   转到状态 80
+    lhs_list2                  转到状态 81
+    expr_user                  转到状态 82
+    id                         转到状态 83
 
 
-state 17
+State 17
 
     4 proc_head: proc_name '(' arg_declist1 . ')' proc_return_opt
     5          | proc_name '(' arg_declist1 . ';' arg_declist2 ')' proc_return_opt
@@ -820,7 +820,7 @@ state 17
     ';'  shift, and go to state 85
 
 
-state 18
+State 18
 
     9 arg_declist1: arg_declist .
    11 arg_declist: arg_declist . ',' arg_decl
@@ -830,21 +830,21 @@ state 18
     $default  reduce using rule 9 (arg_declist1)
 
 
-state 19
+State 19
 
    10 arg_declist: arg_decl .
 
     $default  reduce using rule 10 (arg_declist)
 
 
-state 20
+State 20
 
    18 arg_decl: arg_target . ':' typedecl
 
     ':'  shift, and go to state 87
 
 
-state 21
+State 21
 
    19 arg_target: id_comma_list .
    64 id_comma_list: id_comma_list . ',' id
@@ -854,21 +854,21 @@ state 21
     $default  reduce using rule 19 (arg_target)
 
 
-state 22
+State 22
 
    63 id_comma_list: id .
 
     $default  reduce using rule 63 (id_comma_list)
 
 
-state 23
+State 23
 
    26 graph_type: T_GRAPH .
 
     $default  reduce using rule 26 (graph_type)
 
 
-state 24
+State 24
 
    34 node_type: T_NODE . '(' id ')'
    35          | T_NODE .
@@ -878,7 +878,7 @@ state 24
     $default  reduce using rule 35 (node_type)
 
 
-state 25
+State 25
 
    51 property: T_NODEPROP . '<' prim_type '>' '(' id ')'
    52         | T_NODEPROP . '<' nodeedge_type '>' '(' id ')'
@@ -890,7 +890,7 @@ state 25
     '<'  shift, and go to state 90
 
 
-state 26
+State 26
 
    36 edge_type: T_EDGE . '(' id ')'
    37          | T_EDGE .
@@ -901,7 +901,7 @@ state 26
     $default  reduce using rule 37 (edge_type)
 
 
-state 27
+State 27
 
    57 property: T_EDGEPROP . '<' prim_type '>' '(' id ')'
    58         | T_EDGEPROP . '<' nodeedge_type '>' '(' id ')'
@@ -913,7 +913,7 @@ state 27
     '<'  shift, and go to state 92
 
 
-state 28
+State 28
 
    38 set_type: T_NSET . '(' id ')'
    39         | T_NSET .
@@ -923,7 +923,7 @@ state 28
     $default  reduce using rule 39 (set_type)
 
 
-state 29
+State 29
 
    42 set_type: T_NORDER . '(' id ')'
    43         | T_NORDER .
@@ -933,7 +933,7 @@ state 29
     $default  reduce using rule 43 (set_type)
 
 
-state 30
+State 30
 
    40 set_type: T_NSEQ . '(' id ')'
    41         | T_NSEQ .
@@ -943,7 +943,7 @@ state 30
     $default  reduce using rule 41 (set_type)
 
 
-state 31
+State 31
 
    44 set_type: T_COLLECTION . '<' set_type '>' '(' id ')'
    45         | T_COLLECTION . '<' set_type '>'
@@ -951,58 +951,58 @@ state 31
     '<'  shift, and go to state 96
 
 
-state 32
+State 32
 
    50 map_type: T_MAP . '<' key_type ',' value_type '>'
 
     '<'  shift, and go to state 97
 
 
-state 33
+State 33
 
   108 sent_dfs: T_DFS . bfs_header_format bfs_filters sent_block dfs_post
 
     '('  shift, and go to state 98
 
-    bfs_header_format  go to state 99
+    bfs_header_format  转到状态 99
 
 
-state 34
+State 34
 
    27 prim_type: T_INT .
 
     $default  reduce using rule 27 (prim_type)
 
 
-state 35
+State 35
 
    29 prim_type: T_FLOAT .
 
     $default  reduce using rule 29 (prim_type)
 
 
-state 36
+State 36
 
    31 prim_type: T_BOOL .
 
     $default  reduce using rule 31 (prim_type)
 
 
-state 37
+State 37
 
    30 prim_type: T_DOUBLE .
 
     $default  reduce using rule 30 (prim_type)
 
 
-state 38
+State 38
 
    28 prim_type: T_LONG .
 
     $default  reduce using rule 28 (prim_type)
 
 
-state 39
+State 39
 
   148 sent_return: T_RETURN . expr
   149            | T_RETURN .
@@ -1031,46 +1031,46 @@ state 39
 
     $default  reduce using rule 149 (sent_return)
 
-    expr        go to state 119
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 119
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 40
+State 40
 
   109 sent_bfs: T_BFS . bfs_header_format bfs_filters sent_block bfs_reverse
 
     '('  shift, and go to state 98
 
-    bfs_header_format  go to state 128
+    bfs_header_format  转到状态 128
 
 
-state 41
+State 41
 
    90 sent_foreach: T_FOREACH . foreach_header foreach_filter sent
 
     '('  shift, and go to state 129
 
-    foreach_header  go to state 130
+    foreach_header  转到状态 130
 
 
-state 42
+State 42
 
    91 sent_foreach: T_FOR . foreach_header foreach_filter sent
 
     '('  shift, and go to state 129
 
-    foreach_header  go to state 131
+    foreach_header  转到状态 131
 
 
-state 43
+State 43
 
   150 sent_if: T_IF . '(' bool_expr ')' sent
   151        | T_IF . '(' bool_expr ')' sent T_ELSE sent
@@ -1078,248 +1078,248 @@ state 43
     '('  shift, and go to state 132
 
 
-state 44
+State 44
 
    89 sent_do_while: T_DO . sent_block T_WHILE '(' bool_expr ')'
 
     '{'  shift, and go to state 11
 
-    sent_block  go to state 133
-    sb_begin    go to state 14
+    sent_block  转到状态 133
+    sb_begin    转到状态 14
 
 
-state 45
+State 45
 
    88 sent_while: T_WHILE . '(' bool_expr ')' sent_block
 
     '('  shift, and go to state 134
 
 
-state 46
+State 46
 
   214 lhs_list2: '<' . lhs ';' lhs_list '>'
 
     T_EDGE  shift, and go to state 100
     ID      shift, and go to state 8
 
-    lhs         go to state 135
-    scala       go to state 77
-    field       go to state 136
-    map_access  go to state 79
-    id          go to state 137
+    lhs         转到状态 135
+    scala       转到状态 77
+    field       转到状态 136
+    map_access  转到状态 79
+    id          转到状态 137
 
 
-state 47
+State 47
 
    86 sent: ';' .
 
     $default  reduce using rule 86 (sent)
 
 
-state 48
+State 48
 
    68 sb_end: '}' .
 
     $default  reduce using rule 68 (sb_end)
 
 
-state 49
+State 49
 
   217 expr_user: '[' . $@1 USER_TEXT ']'
 
     $default  reduce using rule 216 ($@1)
 
-    $@1  go to state 138
+    $@1  转到状态 138
 
 
-state 50
+State 50
 
   128 sent_variable_decl: typedecl . var_target
   129                   | typedecl . id '=' rhs
 
     ID  shift, and go to state 8
 
-    id_comma_list  go to state 139
-    var_target     go to state 140
-    id             go to state 141
+    id_comma_list  转到状态 139
+    var_target     转到状态 140
+    id             转到状态 141
 
 
-state 51
+State 51
 
    21 typedecl: graph_type .
 
     $default  reduce using rule 21 (typedecl)
 
 
-state 52
+State 52
 
    20 typedecl: prim_type .
 
     $default  reduce using rule 20 (typedecl)
 
 
-state 53
+State 53
 
    23 typedecl: nodeedge_type .
 
     $default  reduce using rule 23 (typedecl)
 
 
-state 54
+State 54
 
    32 nodeedge_type: node_type .
 
     $default  reduce using rule 32 (nodeedge_type)
 
 
-state 55
+State 55
 
    33 nodeedge_type: edge_type .
 
     $default  reduce using rule 33 (nodeedge_type)
 
 
-state 56
+State 56
 
    24 typedecl: set_type .
 
     $default  reduce using rule 24 (typedecl)
 
 
-state 57
+State 57
 
    25 typedecl: map_type .
 
     $default  reduce using rule 25 (typedecl)
 
 
-state 58
+State 58
 
    22 typedecl: property .
 
     $default  reduce using rule 22 (typedecl)
 
 
-state 59
+State 59
 
    73 sent: sent_block .
 
     $default  reduce using rule 73 (sent)
 
 
-state 60
+State 60
 
    66 sent_block: sb_begin sent_list sb_end .
 
     $default  reduce using rule 66 (sent_block)
 
 
-state 61
+State 61
 
    70 sent_list: sent_list sent .
 
     $default  reduce using rule 70 (sent_list)
 
 
-state 62
+State 62
 
    83 sent: sent_call . ';'
 
     ';'  shift, and go to state 142
 
 
-state 63
+State 63
 
    79 sent: sent_while .
 
     $default  reduce using rule 79 (sent)
 
 
-state 64
+State 64
 
    78 sent: sent_do_while . ';'
 
     ';'  shift, and go to state 143
 
 
-state 65
+State 65
 
    74 sent: sent_foreach .
 
     $default  reduce using rule 74 (sent)
 
 
-state 66
+State 66
 
    82 sent: sent_dfs .
 
     $default  reduce using rule 82 (sent)
 
 
-state 67
+State 67
 
    81 sent: sent_bfs .
 
     $default  reduce using rule 81 (sent)
 
 
-state 68
+State 68
 
    72 sent: sent_variable_decl . ';'
 
     ';'  shift, and go to state 144
 
 
-state 69
+State 69
 
    71 sent: sent_assignment . ';'
 
     ';'  shift, and go to state 145
 
 
-state 70
+State 70
 
    76 sent: sent_reduce_assignment . ';'
 
     ';'  shift, and go to state 146
 
 
-state 71
+State 71
 
    77 sent: sent_defer_assignment . ';'
 
     ';'  shift, and go to state 147
 
 
-state 72
+State 72
 
    85 sent: sent_argminmax_assignment . ';'
 
     ';'  shift, and go to state 148
 
 
-state 73
+State 73
 
    80 sent: sent_return . ';'
 
     ';'  shift, and go to state 149
 
 
-state 74
+State 74
 
    75 sent: sent_if .
 
     $default  reduce using rule 75 (sent)
 
 
-state 75
+State 75
 
    84 sent: sent_user . ';'
 
     ';'  shift, and go to state 150
 
 
-state 76
+State 76
 
   131 sent_assignment: lhs . '=' rhs
   132 sent_reduce_assignment: lhs . reduce_eq rhs optional_bind
@@ -1338,17 +1338,17 @@ state 76
     T_OREQ        shift, and go to state 159
     '='           shift, and go to state 160
 
-    reduce_eq  go to state 161
+    reduce_eq  转到状态 161
 
 
-state 77
+State 77
 
   198 lhs: scala .
 
     $default  reduce using rule 198 (lhs)
 
 
-state 78
+State 78
 
   199 lhs: field .
   209 built_in: field . '.' id arg_list
@@ -1358,31 +1358,31 @@ state 78
     $default  reduce using rule 199 (lhs)
 
 
-state 79
+State 79
 
   200 lhs: map_access .
 
     $default  reduce using rule 200 (lhs)
 
 
-state 80
+State 80
 
    87 sent_call: built_in .
 
     $default  reduce using rule 87 (sent_call)
 
 
-state 81
+State 81
 
   136 sent_argminmax_assignment: lhs_list2 . minmax_eq rhs_list2 optional_bind
 
     T_MINEQ  shift, and go to state 163
     T_MAXEQ  shift, and go to state 164
 
-    minmax_eq  go to state 165
+    minmax_eq  转到状态 165
 
 
-state 82
+State 82
 
   152 sent_user: expr_user .
   153          | expr_user . T_DOUBLE_COLON '[' lhs_list ']'
@@ -1392,7 +1392,7 @@ state 82
     $default  reduce using rule 152 (sent_user)
 
 
-state 83
+State 83
 
   203 scala: id .
   204 field: id . '.' id
@@ -1406,10 +1406,10 @@ state 83
 
     $default  reduce using rule 203 (scala)
 
-    arg_list  go to state 170
+    arg_list  转到状态 170
 
 
-state 84
+State 84
 
     4 proc_head: proc_name '(' arg_declist1 ')' . proc_return_opt
 
@@ -1417,36 +1417,36 @@ state 84
 
     $default  reduce using rule 14 (proc_return_opt)
 
-    proc_return_opt  go to state 172
-    proc_return      go to state 173
+    proc_return_opt  转到状态 172
+    proc_return      转到状态 173
 
 
-state 85
+State 85
 
     5 proc_head: proc_name '(' arg_declist1 ';' . arg_declist2 ')' proc_return_opt
 
     ID  shift, and go to state 8
 
-    arg_declist2   go to state 174
-    arg_decl       go to state 175
-    arg_target     go to state 20
-    id_comma_list  go to state 21
-    id             go to state 22
+    arg_declist2   转到状态 174
+    arg_decl       转到状态 175
+    arg_target     转到状态 20
+    id_comma_list  转到状态 21
+    id             转到状态 22
 
 
-state 86
+State 86
 
    11 arg_declist: arg_declist ',' . arg_decl
 
     ID  shift, and go to state 8
 
-    arg_decl       go to state 176
-    arg_target     go to state 20
-    id_comma_list  go to state 21
-    id             go to state 22
+    arg_decl       转到状态 176
+    arg_target     转到状态 20
+    id_comma_list  转到状态 21
+    id             转到状态 22
 
 
-state 87
+State 87
 
    18 arg_decl: arg_target ':' . typedecl
 
@@ -1466,36 +1466,36 @@ state 87
     T_DOUBLE      shift, and go to state 37
     T_LONG        shift, and go to state 38
 
-    typedecl       go to state 178
-    graph_type     go to state 51
-    prim_type      go to state 52
-    nodeedge_type  go to state 53
-    node_type      go to state 54
-    edge_type      go to state 55
-    set_type       go to state 56
-    map_type       go to state 57
-    property       go to state 58
+    typedecl       转到状态 178
+    graph_type     转到状态 51
+    prim_type      转到状态 52
+    nodeedge_type  转到状态 53
+    node_type      转到状态 54
+    edge_type      转到状态 55
+    set_type       转到状态 56
+    map_type       转到状态 57
+    property       转到状态 58
 
 
-state 88
+State 88
 
    64 id_comma_list: id_comma_list ',' . id
 
     ID  shift, and go to state 8
 
-    id  go to state 179
+    id  转到状态 179
 
 
-state 89
+State 89
 
    34 node_type: T_NODE '(' . id ')'
 
     ID  shift, and go to state 8
 
-    id  go to state 180
+    id  转到状态 180
 
 
-state 90
+State 90
 
    51 property: T_NODEPROP '<' . prim_type '>' '(' id ')'
    52         | T_NODEPROP '<' . nodeedge_type '>' '(' id ')'
@@ -1516,24 +1516,24 @@ state 90
     T_DOUBLE      shift, and go to state 37
     T_LONG        shift, and go to state 38
 
-    prim_type      go to state 181
-    nodeedge_type  go to state 182
-    node_type      go to state 54
-    edge_type      go to state 55
-    set_type       go to state 183
+    prim_type      转到状态 181
+    nodeedge_type  转到状态 182
+    node_type      转到状态 54
+    edge_type      转到状态 55
+    set_type       转到状态 183
 
 
-state 91
+State 91
 
    36 edge_type: T_EDGE '(' . id ')'
   205 field: T_EDGE '(' . id ')' '.' id
 
     ID  shift, and go to state 8
 
-    id  go to state 184
+    id  转到状态 184
 
 
-state 92
+State 92
 
    57 property: T_EDGEPROP '<' . prim_type '>' '(' id ')'
    58         | T_EDGEPROP '<' . nodeedge_type '>' '(' id ')'
@@ -1554,41 +1554,41 @@ state 92
     T_DOUBLE      shift, and go to state 37
     T_LONG        shift, and go to state 38
 
-    prim_type      go to state 185
-    nodeedge_type  go to state 186
-    node_type      go to state 54
-    edge_type      go to state 55
-    set_type       go to state 187
+    prim_type      转到状态 185
+    nodeedge_type  转到状态 186
+    node_type      转到状态 54
+    edge_type      转到状态 55
+    set_type       转到状态 187
 
 
-state 93
+State 93
 
    38 set_type: T_NSET '(' . id ')'
 
     ID  shift, and go to state 8
 
-    id  go to state 188
+    id  转到状态 188
 
 
-state 94
+State 94
 
    42 set_type: T_NORDER '(' . id ')'
 
     ID  shift, and go to state 8
 
-    id  go to state 189
+    id  转到状态 189
 
 
-state 95
+State 95
 
    40 set_type: T_NSEQ '(' . id ')'
 
     ID  shift, and go to state 8
 
-    id  go to state 190
+    id  转到状态 190
 
 
-state 96
+State 96
 
    44 set_type: T_COLLECTION '<' . set_type '>' '(' id ')'
    45         | T_COLLECTION '<' . set_type '>'
@@ -1598,10 +1598,10 @@ state 96
     T_NSEQ        shift, and go to state 30
     T_COLLECTION  shift, and go to state 31
 
-    set_type  go to state 191
+    set_type  转到状态 191
 
 
-state 97
+State 97
 
    50 map_type: T_MAP '<' . key_type ',' value_type '>'
 
@@ -1613,23 +1613,23 @@ state 97
     T_DOUBLE  shift, and go to state 37
     T_LONG    shift, and go to state 38
 
-    prim_type      go to state 192
-    nodeedge_type  go to state 193
-    node_type      go to state 54
-    edge_type      go to state 55
-    key_type       go to state 194
+    prim_type      转到状态 192
+    nodeedge_type  转到状态 193
+    node_type      转到状态 54
+    edge_type      转到状态 55
+    key_type       转到状态 194
 
 
-state 98
+State 98
 
   116 bfs_header_format: '(' . id ':' id opt_tp '.' T_NODES from_or_semi id ')'
 
     ID  shift, and go to state 8
 
-    id  go to state 195
+    id  转到状态 195
 
 
-state 99
+State 99
 
   108 sent_dfs: T_DFS bfs_header_format . bfs_filters sent_block dfs_post
 
@@ -1638,117 +1638,117 @@ state 99
 
     $default  reduce using rule 121 (bfs_filters)
 
-    bfs_filters    go to state 198
-    bfs_navigator  go to state 199
-    bfs_filter     go to state 200
+    bfs_filters    转到状态 198
+    bfs_navigator  转到状态 199
+    bfs_filter     转到状态 200
 
 
-state 100
+State 100
 
   205 field: T_EDGE . '(' id ')' '.' id
 
     '('  shift, and go to state 201
 
 
-state 101
+State 101
 
   188 reduce_op: T_SUM .
 
     $default  reduce using rule 188 (reduce_op)
 
 
-state 102
+State 102
 
   189 reduce_op: T_PRODUCT .
 
     $default  reduce using rule 189 (reduce_op)
 
 
-state 103
+State 103
 
   190 reduce_op: T_MIN .
 
     $default  reduce using rule 190 (reduce_op)
 
 
-state 104
+State 104
 
   191 reduce_op: T_MAX .
 
     $default  reduce using rule 191 (reduce_op)
 
 
-state 105
+State 105
 
   195 reduce_op2: T_COUNT .
 
     $default  reduce using rule 195 (reduce_op2)
 
 
-state 106
+State 106
 
   193 reduce_op: T_ALL .
 
     $default  reduce using rule 193 (reduce_op)
 
 
-state 107
+State 107
 
   192 reduce_op: T_EXIST .
 
     $default  reduce using rule 192 (reduce_op)
 
 
-state 108
+State 108
 
   194 reduce_op: T_AVG .
 
     $default  reduce using rule 194 (reduce_op)
 
 
-state 109
+State 109
 
   197 inf: T_M_INF .
 
     $default  reduce using rule 197 (inf)
 
 
-state 110
+State 110
 
   196 inf: T_P_INF .
 
     $default  reduce using rule 196 (inf)
 
 
-state 111
+State 111
 
   181 expr: T_NIL .
 
     $default  reduce using rule 181 (expr)
 
 
-state 112
+State 112
 
   178 expr: INT_NUM .
 
     $default  reduce using rule 178 (expr)
 
 
-state 113
+State 113
 
   179 expr: FLOAT_NUM .
 
     $default  reduce using rule 179 (expr)
 
 
-state 114
+State 114
 
   177 expr: BOOL_VAL .
 
     $default  reduce using rule 177 (expr)
 
 
-state 115
+State 115
 
   156 expr: '-' . expr
 
@@ -1774,19 +1774,19 @@ state 115
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 202
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 202
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 116
+State 116
 
   154 expr: '(' . expr ')'
   158     | '(' . prim_type ')' expr
@@ -1818,20 +1818,20 @@ state 116
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    prim_type   go to state 203
-    expr        go to state 204
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    prim_type   转到状态 203
+    expr        转到状态 204
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 117
+State 117
 
   155 expr: '|' . expr '|'
 
@@ -1857,19 +1857,19 @@ state 117
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 205
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 205
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 118
+State 118
 
   157 expr: '!' . expr
 
@@ -1895,19 +1895,19 @@ state 118
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 206
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 206
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 119
+State 119
 
   148 sent_return: T_RETURN expr .
   163 expr: expr . '%' expr
@@ -1943,41 +1943,41 @@ state 119
     $default  reduce using rule 148 (sent_return)
 
 
-state 120
+State 120
 
   159 expr: reduce_op . foreach_header '(' expr ')' '{' expr '}'
   160     | reduce_op . foreach_header '{' expr '}'
 
     '('  shift, and go to state 129
 
-    foreach_header  go to state 221
+    foreach_header  转到状态 221
 
 
-state 121
+State 121
 
   161 expr: reduce_op2 . foreach_header '(' expr ')'
   162     | reduce_op2 . foreach_header
 
     '('  shift, and go to state 129
 
-    foreach_header  go to state 222
+    foreach_header  转到状态 222
 
 
-state 122
+State 122
 
   180 expr: inf .
 
     $default  reduce using rule 180 (expr)
 
 
-state 123
+State 123
 
   182 expr: scala .
 
     $default  reduce using rule 182 (expr)
 
 
-state 124
+State 124
 
   183 expr: field .
   209 built_in: field . '.' id arg_list
@@ -1987,28 +1987,28 @@ state 124
     $default  reduce using rule 183 (expr)
 
 
-state 125
+State 125
 
   186 expr: map_access .
 
     $default  reduce using rule 186 (expr)
 
 
-state 126
+State 126
 
   184 expr: built_in .
 
     $default  reduce using rule 184 (expr)
 
 
-state 127
+State 127
 
   185 expr: expr_user .
 
     $default  reduce using rule 185 (expr)
 
 
-state 128
+State 128
 
   109 sent_bfs: T_BFS bfs_header_format . bfs_filters sent_block bfs_reverse
 
@@ -2017,21 +2017,21 @@ state 128
 
     $default  reduce using rule 121 (bfs_filters)
 
-    bfs_filters    go to state 223
-    bfs_navigator  go to state 199
-    bfs_filter     go to state 200
+    bfs_filters    转到状态 223
+    bfs_navigator  转到状态 199
+    bfs_filter     转到状态 200
 
 
-state 129
+State 129
 
    92 foreach_header: '(' . id ':' foreach_src '.' iterator1 ')'
 
     ID  shift, and go to state 8
 
-    id  go to state 224
+    id  转到状态 224
 
 
-state 130
+State 130
 
    90 sent_foreach: T_FOREACH foreach_header . foreach_filter sent
 
@@ -2039,10 +2039,10 @@ state 130
 
     $default  reduce using rule 98 (foreach_filter)
 
-    foreach_filter  go to state 226
+    foreach_filter  转到状态 226
 
 
-state 131
+State 131
 
    91 sent_foreach: T_FOR foreach_header . foreach_filter sent
 
@@ -2050,10 +2050,10 @@ state 131
 
     $default  reduce using rule 98 (foreach_filter)
 
-    foreach_filter  go to state 227
+    foreach_filter  转到状态 227
 
 
-state 132
+State 132
 
   150 sent_if: T_IF '(' . bool_expr ')' sent
   151        | T_IF '(' . bool_expr ')' sent T_ELSE sent
@@ -2080,27 +2080,27 @@ state 132
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 228
-    bool_expr   go to state 229
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 228
+    bool_expr   转到状态 229
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 133
+State 133
 
    89 sent_do_while: T_DO sent_block . T_WHILE '(' bool_expr ')'
 
     T_WHILE  shift, and go to state 230
 
 
-state 134
+State 134
 
    88 sent_while: T_WHILE '(' . bool_expr ')' sent_block
 
@@ -2126,34 +2126,34 @@ state 134
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 228
-    bool_expr   go to state 231
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 228
+    bool_expr   转到状态 231
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 135
+State 135
 
   214 lhs_list2: '<' lhs . ';' lhs_list '>'
 
     ';'  shift, and go to state 232
 
 
-state 136
+State 136
 
   199 lhs: field .
 
     $default  reduce using rule 199 (lhs)
 
 
-state 137
+State 137
 
   203 scala: id .
   204 field: id . '.' id
@@ -2165,14 +2165,14 @@ state 137
     $default  reduce using rule 203 (scala)
 
 
-state 138
+State 138
 
   217 expr_user: '[' $@1 . USER_TEXT ']'
 
     USER_TEXT  shift, and go to state 234
 
 
-state 139
+State 139
 
    64 id_comma_list: id_comma_list . ',' id
   130 var_target: id_comma_list .
@@ -2182,14 +2182,14 @@ state 139
     $default  reduce using rule 130 (var_target)
 
 
-state 140
+State 140
 
   128 sent_variable_decl: typedecl var_target .
 
     $default  reduce using rule 128 (sent_variable_decl)
 
 
-state 141
+State 141
 
    63 id_comma_list: id .
   129 sent_variable_decl: typedecl id . '=' rhs
@@ -2199,70 +2199,70 @@ state 141
     $default  reduce using rule 63 (id_comma_list)
 
 
-state 142
+State 142
 
    83 sent: sent_call ';' .
 
     $default  reduce using rule 83 (sent)
 
 
-state 143
+State 143
 
    78 sent: sent_do_while ';' .
 
     $default  reduce using rule 78 (sent)
 
 
-state 144
+State 144
 
    72 sent: sent_variable_decl ';' .
 
     $default  reduce using rule 72 (sent)
 
 
-state 145
+State 145
 
    71 sent: sent_assignment ';' .
 
     $default  reduce using rule 71 (sent)
 
 
-state 146
+State 146
 
    76 sent: sent_reduce_assignment ';' .
 
     $default  reduce using rule 76 (sent)
 
 
-state 147
+State 147
 
    77 sent: sent_defer_assignment ';' .
 
     $default  reduce using rule 77 (sent)
 
 
-state 148
+State 148
 
    85 sent: sent_argminmax_assignment ';' .
 
     $default  reduce using rule 85 (sent)
 
 
-state 149
+State 149
 
    80 sent: sent_return ';' .
 
     $default  reduce using rule 80 (sent)
 
 
-state 150
+State 150
 
    84 sent: sent_user ';' .
 
     $default  reduce using rule 84 (sent)
 
 
-state 151
+State 151
 
   135 sent_defer_assignment: lhs T_LE . rhs optional_bind
 
@@ -2288,48 +2288,48 @@ state 151
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    rhs         go to state 236
-    expr        go to state 237
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    rhs         转到状态 236
+    expr        转到状态 237
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 152
+State 152
 
   139 reduce_eq: T_PLUSEQ .
 
     $default  reduce using rule 139 (reduce_eq)
 
 
-state 153
+State 153
 
   140 reduce_eq: T_MULTEQ .
 
     $default  reduce using rule 140 (reduce_eq)
 
 
-state 154
+State 154
 
   141 reduce_eq: T_MINEQ .
 
     $default  reduce using rule 141 (reduce_eq)
 
 
-state 155
+State 155
 
   142 reduce_eq: T_MAXEQ .
 
     $default  reduce using rule 142 (reduce_eq)
 
 
-state 156
+State 156
 
   133 sent_reduce_assignment: lhs T_PLUSPLUS . optional_bind
 
@@ -2337,10 +2337,10 @@ state 156
 
     $default  reduce using rule 137 (optional_bind)
 
-    optional_bind  go to state 239
+    optional_bind  转到状态 239
 
 
-state 157
+State 157
 
   134 sent_reduce_assignment: lhs T_MINUSMINUS . optional_bind
 
@@ -2348,24 +2348,24 @@ state 157
 
     $default  reduce using rule 137 (optional_bind)
 
-    optional_bind  go to state 240
+    optional_bind  转到状态 240
 
 
-state 158
+State 158
 
   143 reduce_eq: T_ANDEQ .
 
     $default  reduce using rule 143 (reduce_eq)
 
 
-state 159
+State 159
 
   144 reduce_eq: T_OREQ .
 
     $default  reduce using rule 144 (reduce_eq)
 
 
-state 160
+State 160
 
   131 sent_assignment: lhs '=' . rhs
 
@@ -2391,20 +2391,20 @@ state 160
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    rhs         go to state 241
-    expr        go to state 237
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    rhs         转到状态 241
+    expr        转到状态 237
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 161
+State 161
 
   132 sent_reduce_assignment: lhs reduce_eq . rhs optional_bind
 
@@ -2430,59 +2430,59 @@ state 161
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    rhs         go to state 242
-    expr        go to state 237
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    rhs         转到状态 242
+    expr        转到状态 237
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 162
+State 162
 
   209 built_in: field '.' . id arg_list
 
     ID  shift, and go to state 8
 
-    id  go to state 243
+    id  转到状态 243
 
 
-state 163
+State 163
 
   145 minmax_eq: T_MINEQ .
 
     $default  reduce using rule 145 (minmax_eq)
 
 
-state 164
+State 164
 
   146 minmax_eq: T_MAXEQ .
 
     $default  reduce using rule 146 (minmax_eq)
 
 
-state 165
+State 165
 
   136 sent_argminmax_assignment: lhs_list2 minmax_eq . rhs_list2 optional_bind
 
     '<'  shift, and go to state 244
 
-    rhs_list2  go to state 245
+    rhs_list2  转到状态 245
 
 
-state 166
+State 166
 
   153 sent_user: expr_user T_DOUBLE_COLON . '[' lhs_list ']'
 
     '['  shift, and go to state 246
 
 
-state 167
+State 167
 
   210 arg_list: '(' . expr_list ')'
   211         | '(' . ')'
@@ -2510,30 +2510,30 @@ state 167
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 248
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_list   go to state 249
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 248
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_list   转到状态 249
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 168
+State 168
 
   204 field: id '.' . id
   207 built_in: id '.' . id arg_list
 
     ID  shift, and go to state 8
 
-    id  go to state 250
+    id  转到状态 250
 
 
-state 169
+State 169
 
   206 map_access: id '[' . expr ']'
 
@@ -2559,26 +2559,26 @@ state 169
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 251
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 251
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 170
+State 170
 
   208 built_in: id arg_list .
 
     $default  reduce using rule 208 (built_in)
 
 
-state 171
+State 171
 
    16 proc_return: ':' . prim_type
    17            | ':' . node_type
@@ -2590,25 +2590,25 @@ state 171
     T_DOUBLE  shift, and go to state 37
     T_LONG    shift, and go to state 38
 
-    prim_type  go to state 252
-    node_type  go to state 253
+    prim_type  转到状态 252
+    node_type  转到状态 253
 
 
-state 172
+State 172
 
     4 proc_head: proc_name '(' arg_declist1 ')' proc_return_opt .
 
     $default  reduce using rule 4 (proc_head)
 
 
-state 173
+State 173
 
    15 proc_return_opt: proc_return .
 
     $default  reduce using rule 15 (proc_return_opt)
 
 
-state 174
+State 174
 
     5 proc_head: proc_name '(' arg_declist1 ';' arg_declist2 . ')' proc_return_opt
    13 arg_declist2: arg_declist2 . ',' arg_decl
@@ -2617,21 +2617,21 @@ state 174
     ','  shift, and go to state 255
 
 
-state 175
+State 175
 
    12 arg_declist2: arg_decl .
 
     $default  reduce using rule 12 (arg_declist2)
 
 
-state 176
+State 176
 
    11 arg_declist: arg_declist ',' arg_decl .
 
     $default  reduce using rule 11 (arg_declist)
 
 
-state 177
+State 177
 
    36 edge_type: T_EDGE . '(' id ')'
    37          | T_EDGE .
@@ -2641,28 +2641,28 @@ state 177
     $default  reduce using rule 37 (edge_type)
 
 
-state 178
+State 178
 
    18 arg_decl: arg_target ':' typedecl .
 
     $default  reduce using rule 18 (arg_decl)
 
 
-state 179
+State 179
 
    64 id_comma_list: id_comma_list ',' id .
 
     $default  reduce using rule 64 (id_comma_list)
 
 
-state 180
+State 180
 
    34 node_type: T_NODE '(' id . ')'
 
     ')'  shift, and go to state 257
 
 
-state 181
+State 181
 
    51 property: T_NODEPROP '<' prim_type . '>' '(' id ')'
    54         | T_NODEPROP '<' prim_type . '>'
@@ -2670,7 +2670,7 @@ state 181
     '>'  shift, and go to state 258
 
 
-state 182
+State 182
 
    52 property: T_NODEPROP '<' nodeedge_type . '>' '(' id ')'
    55         | T_NODEPROP '<' nodeedge_type . '>'
@@ -2678,7 +2678,7 @@ state 182
     '>'  shift, and go to state 259
 
 
-state 183
+State 183
 
    53 property: T_NODEPROP '<' set_type . '>' '(' id ')'
    56         | T_NODEPROP '<' set_type . '>'
@@ -2686,7 +2686,7 @@ state 183
     '>'  shift, and go to state 260
 
 
-state 184
+State 184
 
    36 edge_type: T_EDGE '(' id . ')'
   205 field: T_EDGE '(' id . ')' '.' id
@@ -2694,7 +2694,7 @@ state 184
     ')'  shift, and go to state 261
 
 
-state 185
+State 185
 
    57 property: T_EDGEPROP '<' prim_type . '>' '(' id ')'
    60         | T_EDGEPROP '<' prim_type . '>'
@@ -2702,7 +2702,7 @@ state 185
     '>'  shift, and go to state 262
 
 
-state 186
+State 186
 
    58 property: T_EDGEPROP '<' nodeedge_type . '>' '(' id ')'
    61         | T_EDGEPROP '<' nodeedge_type . '>'
@@ -2710,7 +2710,7 @@ state 186
     '>'  shift, and go to state 263
 
 
-state 187
+State 187
 
    59 property: T_EDGEPROP '<' set_type . '>' '(' id ')'
    62         | T_EDGEPROP '<' set_type . '>'
@@ -2718,28 +2718,28 @@ state 187
     '>'  shift, and go to state 264
 
 
-state 188
+State 188
 
    38 set_type: T_NSET '(' id . ')'
 
     ')'  shift, and go to state 265
 
 
-state 189
+State 189
 
    42 set_type: T_NORDER '(' id . ')'
 
     ')'  shift, and go to state 266
 
 
-state 190
+State 190
 
    40 set_type: T_NSEQ '(' id . ')'
 
     ')'  shift, and go to state 267
 
 
-state 191
+State 191
 
    44 set_type: T_COLLECTION '<' set_type . '>' '(' id ')'
    45         | T_COLLECTION '<' set_type . '>'
@@ -2747,35 +2747,35 @@ state 191
     '>'  shift, and go to state 268
 
 
-state 192
+State 192
 
    47 key_type: prim_type .
 
     $default  reduce using rule 47 (key_type)
 
 
-state 193
+State 193
 
    46 key_type: nodeedge_type .
 
     $default  reduce using rule 46 (key_type)
 
 
-state 194
+State 194
 
    50 map_type: T_MAP '<' key_type . ',' value_type '>'
 
     ','  shift, and go to state 269
 
 
-state 195
+State 195
 
   116 bfs_header_format: '(' id . ':' id opt_tp '.' T_NODES from_or_semi id ')'
 
     ':'  shift, and go to state 270
 
 
-state 196
+State 196
 
   127 bfs_filter: '(' . expr ')'
 
@@ -2801,19 +2801,19 @@ state 196
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 271
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 271
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 197
+State 197
 
   126 bfs_navigator: '[' . expr ']'
 
@@ -2839,29 +2839,29 @@ state 197
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 272
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 272
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 198
+State 198
 
   108 sent_dfs: T_DFS bfs_header_format bfs_filters . sent_block dfs_post
 
     '{'  shift, and go to state 11
 
-    sent_block  go to state 273
-    sb_begin    go to state 14
+    sent_block  转到状态 273
+    sb_begin    转到状态 14
 
 
-state 199
+State 199
 
   122 bfs_filters: bfs_navigator .
   124            | bfs_navigator . bfs_filter
@@ -2870,10 +2870,10 @@ state 199
 
     $default  reduce using rule 122 (bfs_filters)
 
-    bfs_filter  go to state 274
+    bfs_filter  转到状态 274
 
 
-state 200
+State 200
 
   123 bfs_filters: bfs_filter .
   125            | bfs_filter . bfs_navigator
@@ -2882,19 +2882,19 @@ state 200
 
     $default  reduce using rule 123 (bfs_filters)
 
-    bfs_navigator  go to state 275
+    bfs_navigator  转到状态 275
 
 
-state 201
+State 201
 
   205 field: T_EDGE '(' . id ')' '.' id
 
     ID  shift, and go to state 8
 
-    id  go to state 276
+    id  转到状态 276
 
 
-state 202
+State 202
 
   156 expr: '-' expr .
   163     | expr . '%' expr
@@ -2915,14 +2915,14 @@ state 202
     $default  reduce using rule 156 (expr)
 
 
-state 203
+State 203
 
   158 expr: '(' prim_type . ')' expr
 
     ')'  shift, and go to state 277
 
 
-state 204
+State 204
 
   154 expr: '(' expr . ')'
   163     | expr . '%' expr
@@ -2957,7 +2957,7 @@ state 204
     ')'    shift, and go to state 278
 
 
-state 205
+State 205
 
   155 expr: '|' expr . '|'
   163     | expr . '%' expr
@@ -2992,7 +2992,7 @@ state 205
     '|'    shift, and go to state 279
 
 
-state 206
+State 206
 
   157 expr: '!' expr .
   163     | expr . '%' expr
@@ -3013,7 +3013,7 @@ state 206
     $default  reduce using rule 157 (expr)
 
 
-state 207
+State 207
 
   174 expr: expr T_AND . expr
 
@@ -3039,19 +3039,19 @@ state 207
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 280
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 280
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 208
+State 208
 
   175 expr: expr T_OR . expr
 
@@ -3077,19 +3077,19 @@ state 208
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 281
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 281
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 209
+State 209
 
   172 expr: expr T_EQ . expr
 
@@ -3115,19 +3115,19 @@ state 209
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 282
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 282
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 210
+State 210
 
   173 expr: expr T_NEQ . expr
 
@@ -3153,19 +3153,19 @@ state 210
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 283
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 283
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 211
+State 211
 
   168 expr: expr T_LE . expr
 
@@ -3191,19 +3191,19 @@ state 211
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 284
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 284
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 212
+State 212
 
   169 expr: expr T_GE . expr
 
@@ -3229,19 +3229,19 @@ state 212
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 285
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 285
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 213
+State 213
 
   176 expr: expr '?' . expr ':' expr
 
@@ -3267,19 +3267,19 @@ state 213
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 286
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 286
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 214
+State 214
 
   170 expr: expr '<' . expr
 
@@ -3305,19 +3305,19 @@ state 214
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 287
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 287
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 215
+State 215
 
   171 expr: expr '>' . expr
 
@@ -3343,19 +3343,19 @@ state 215
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 288
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 288
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 216
+State 216
 
   166 expr: expr '+' . expr
 
@@ -3381,19 +3381,19 @@ state 216
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 289
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 289
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 217
+State 217
 
   167 expr: expr '-' . expr
 
@@ -3419,19 +3419,19 @@ state 217
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 290
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 290
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 218
+State 218
 
   164 expr: expr '*' . expr
 
@@ -3457,19 +3457,19 @@ state 218
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 291
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 291
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 219
+State 219
 
   165 expr: expr '/' . expr
 
@@ -3495,19 +3495,19 @@ state 219
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 292
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 292
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 220
+State 220
 
   163 expr: expr '%' . expr
 
@@ -3533,19 +3533,19 @@ state 220
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 293
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 293
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 221
+State 221
 
   159 expr: reduce_op foreach_header . '(' expr ')' '{' expr '}'
   160     | reduce_op foreach_header . '{' expr '}'
@@ -3554,7 +3554,7 @@ state 221
     '{'  shift, and go to state 295
 
 
-state 222
+State 222
 
   161 expr: reduce_op2 foreach_header . '(' expr ')'
   162     | reduce_op2 foreach_header .
@@ -3564,24 +3564,24 @@ state 222
     $default  reduce using rule 162 (expr)
 
 
-state 223
+State 223
 
   109 sent_bfs: T_BFS bfs_header_format bfs_filters . sent_block bfs_reverse
 
     '{'  shift, and go to state 11
 
-    sent_block  go to state 297
-    sb_begin    go to state 14
+    sent_block  转到状态 297
+    sb_begin    转到状态 14
 
 
-state 224
+State 224
 
    92 foreach_header: '(' id . ':' foreach_src '.' iterator1 ')'
 
     ':'  shift, and go to state 298
 
 
-state 225
+State 225
 
    99 foreach_filter: '(' . bool_expr ')'
 
@@ -3607,20 +3607,20 @@ state 225
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 228
-    bool_expr   go to state 299
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 228
+    bool_expr   转到状态 299
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 226
+State 226
 
    90 sent_foreach: T_FOREACH foreach_header foreach_filter . sent
 
@@ -3653,43 +3653,43 @@ state 226
     '{'           shift, and go to state 11
     '['           shift, and go to state 49
 
-    typedecl                   go to state 50
-    graph_type                 go to state 51
-    prim_type                  go to state 52
-    nodeedge_type              go to state 53
-    node_type                  go to state 54
-    edge_type                  go to state 55
-    set_type                   go to state 56
-    map_type                   go to state 57
-    property                   go to state 58
-    sent_block                 go to state 59
-    sb_begin                   go to state 14
-    sent                       go to state 300
-    sent_call                  go to state 62
-    sent_while                 go to state 63
-    sent_do_while              go to state 64
-    sent_foreach               go to state 65
-    sent_dfs                   go to state 66
-    sent_bfs                   go to state 67
-    sent_variable_decl         go to state 68
-    sent_assignment            go to state 69
-    sent_reduce_assignment     go to state 70
-    sent_defer_assignment      go to state 71
-    sent_argminmax_assignment  go to state 72
-    sent_return                go to state 73
-    sent_if                    go to state 74
-    sent_user                  go to state 75
-    lhs                        go to state 76
-    scala                      go to state 77
-    field                      go to state 78
-    map_access                 go to state 79
-    built_in                   go to state 80
-    lhs_list2                  go to state 81
-    expr_user                  go to state 82
-    id                         go to state 83
+    typedecl                   转到状态 50
+    graph_type                 转到状态 51
+    prim_type                  转到状态 52
+    nodeedge_type              转到状态 53
+    node_type                  转到状态 54
+    edge_type                  转到状态 55
+    set_type                   转到状态 56
+    map_type                   转到状态 57
+    property                   转到状态 58
+    sent_block                 转到状态 59
+    sb_begin                   转到状态 14
+    sent                       转到状态 300
+    sent_call                  转到状态 62
+    sent_while                 转到状态 63
+    sent_do_while              转到状态 64
+    sent_foreach               转到状态 65
+    sent_dfs                   转到状态 66
+    sent_bfs                   转到状态 67
+    sent_variable_decl         转到状态 68
+    sent_assignment            转到状态 69
+    sent_reduce_assignment     转到状态 70
+    sent_defer_assignment      转到状态 71
+    sent_argminmax_assignment  转到状态 72
+    sent_return                转到状态 73
+    sent_if                    转到状态 74
+    sent_user                  转到状态 75
+    lhs                        转到状态 76
+    scala                      转到状态 77
+    field                      转到状态 78
+    map_access                 转到状态 79
+    built_in                   转到状态 80
+    lhs_list2                  转到状态 81
+    expr_user                  转到状态 82
+    id                         转到状态 83
 
 
-state 227
+State 227
 
    91 sent_foreach: T_FOR foreach_header foreach_filter . sent
 
@@ -3722,43 +3722,43 @@ state 227
     '{'           shift, and go to state 11
     '['           shift, and go to state 49
 
-    typedecl                   go to state 50
-    graph_type                 go to state 51
-    prim_type                  go to state 52
-    nodeedge_type              go to state 53
-    node_type                  go to state 54
-    edge_type                  go to state 55
-    set_type                   go to state 56
-    map_type                   go to state 57
-    property                   go to state 58
-    sent_block                 go to state 59
-    sb_begin                   go to state 14
-    sent                       go to state 301
-    sent_call                  go to state 62
-    sent_while                 go to state 63
-    sent_do_while              go to state 64
-    sent_foreach               go to state 65
-    sent_dfs                   go to state 66
-    sent_bfs                   go to state 67
-    sent_variable_decl         go to state 68
-    sent_assignment            go to state 69
-    sent_reduce_assignment     go to state 70
-    sent_defer_assignment      go to state 71
-    sent_argminmax_assignment  go to state 72
-    sent_return                go to state 73
-    sent_if                    go to state 74
-    sent_user                  go to state 75
-    lhs                        go to state 76
-    scala                      go to state 77
-    field                      go to state 78
-    map_access                 go to state 79
-    built_in                   go to state 80
-    lhs_list2                  go to state 81
-    expr_user                  go to state 82
-    id                         go to state 83
+    typedecl                   转到状态 50
+    graph_type                 转到状态 51
+    prim_type                  转到状态 52
+    nodeedge_type              转到状态 53
+    node_type                  转到状态 54
+    edge_type                  转到状态 55
+    set_type                   转到状态 56
+    map_type                   转到状态 57
+    property                   转到状态 58
+    sent_block                 转到状态 59
+    sb_begin                   转到状态 14
+    sent                       转到状态 301
+    sent_call                  转到状态 62
+    sent_while                 转到状态 63
+    sent_do_while              转到状态 64
+    sent_foreach               转到状态 65
+    sent_dfs                   转到状态 66
+    sent_bfs                   转到状态 67
+    sent_variable_decl         转到状态 68
+    sent_assignment            转到状态 69
+    sent_reduce_assignment     转到状态 70
+    sent_defer_assignment      转到状态 71
+    sent_argminmax_assignment  转到状态 72
+    sent_return                转到状态 73
+    sent_if                    转到状态 74
+    sent_user                  转到状态 75
+    lhs                        转到状态 76
+    scala                      转到状态 77
+    field                      转到状态 78
+    map_access                 转到状态 79
+    built_in                   转到状态 80
+    lhs_list2                  转到状态 81
+    expr_user                  转到状态 82
+    id                         转到状态 83
 
 
-state 228
+State 228
 
   163 expr: expr . '%' expr
   164     | expr . '*' expr
@@ -3794,7 +3794,7 @@ state 228
     $default  reduce using rule 187 (bool_expr)
 
 
-state 229
+State 229
 
   150 sent_if: T_IF '(' bool_expr . ')' sent
   151        | T_IF '(' bool_expr . ')' sent T_ELSE sent
@@ -3802,52 +3802,52 @@ state 229
     ')'  shift, and go to state 302
 
 
-state 230
+State 230
 
    89 sent_do_while: T_DO sent_block T_WHILE . '(' bool_expr ')'
 
     '('  shift, and go to state 303
 
 
-state 231
+State 231
 
    88 sent_while: T_WHILE '(' bool_expr . ')' sent_block
 
     ')'  shift, and go to state 304
 
 
-state 232
+State 232
 
   214 lhs_list2: '<' lhs ';' . lhs_list '>'
 
     T_EDGE  shift, and go to state 100
     ID      shift, and go to state 8
 
-    lhs         go to state 305
-    lhs_list    go to state 306
-    scala       go to state 77
-    field       go to state 136
-    map_access  go to state 79
-    id          go to state 137
+    lhs         转到状态 305
+    lhs_list    转到状态 306
+    scala       转到状态 77
+    field       转到状态 136
+    map_access  转到状态 79
+    id          转到状态 137
 
 
-state 233
+State 233
 
   204 field: id '.' . id
 
     ID  shift, and go to state 8
 
-    id  go to state 307
+    id  转到状态 307
 
 
-state 234
+State 234
 
   217 expr_user: '[' $@1 USER_TEXT . ']'
 
     ']'  shift, and go to state 308
 
 
-state 235
+State 235
 
   129 sent_variable_decl: typedecl id '=' . rhs
 
@@ -3873,20 +3873,20 @@ state 235
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    rhs         go to state 309
-    expr        go to state 237
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    rhs         转到状态 309
+    expr        转到状态 237
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 236
+State 236
 
   135 sent_defer_assignment: lhs T_LE rhs . optional_bind
 
@@ -3894,10 +3894,10 @@ state 236
 
     $default  reduce using rule 137 (optional_bind)
 
-    optional_bind  go to state 310
+    optional_bind  转到状态 310
 
 
-state 237
+State 237
 
   147 rhs: expr .
   163 expr: expr . '%' expr
@@ -3933,37 +3933,37 @@ state 237
     $default  reduce using rule 147 (rhs)
 
 
-state 238
+State 238
 
   138 optional_bind: '@' . id
 
     ID  shift, and go to state 8
 
-    id  go to state 311
+    id  转到状态 311
 
 
-state 239
+State 239
 
   133 sent_reduce_assignment: lhs T_PLUSPLUS optional_bind .
 
     $default  reduce using rule 133 (sent_reduce_assignment)
 
 
-state 240
+State 240
 
   134 sent_reduce_assignment: lhs T_MINUSMINUS optional_bind .
 
     $default  reduce using rule 134 (sent_reduce_assignment)
 
 
-state 241
+State 241
 
   131 sent_assignment: lhs '=' rhs .
 
     $default  reduce using rule 131 (sent_assignment)
 
 
-state 242
+State 242
 
   132 sent_reduce_assignment: lhs reduce_eq rhs . optional_bind
 
@@ -3971,19 +3971,19 @@ state 242
 
     $default  reduce using rule 137 (optional_bind)
 
-    optional_bind  go to state 312
+    optional_bind  转到状态 312
 
 
-state 243
+State 243
 
   209 built_in: field '.' id . arg_list
 
     '('  shift, and go to state 167
 
-    arg_list  go to state 313
+    arg_list  转到状态 313
 
 
-state 244
+State 244
 
   215 rhs_list2: '<' . expr ';' expr_list '>'
 
@@ -4009,19 +4009,19 @@ state 244
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 314
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 314
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 245
+State 245
 
   136 sent_argminmax_assignment: lhs_list2 minmax_eq rhs_list2 . optional_bind
 
@@ -4029,32 +4029,32 @@ state 245
 
     $default  reduce using rule 137 (optional_bind)
 
-    optional_bind  go to state 315
+    optional_bind  转到状态 315
 
 
-state 246
+State 246
 
   153 sent_user: expr_user T_DOUBLE_COLON '[' . lhs_list ']'
 
     T_EDGE  shift, and go to state 100
     ID      shift, and go to state 8
 
-    lhs         go to state 305
-    lhs_list    go to state 316
-    scala       go to state 77
-    field       go to state 136
-    map_access  go to state 79
-    id          go to state 137
+    lhs         转到状态 305
+    lhs_list    转到状态 316
+    scala       转到状态 77
+    field       转到状态 136
+    map_access  转到状态 79
+    id          转到状态 137
 
 
-state 247
+State 247
 
   211 arg_list: '(' ')' .
 
     $default  reduce using rule 211 (arg_list)
 
 
-state 248
+State 248
 
   163 expr: expr . '%' expr
   164     | expr . '*' expr
@@ -4093,14 +4093,14 @@ state 248
     $default  reduce using rule 212 (expr_list)
 
 
-state 249
+State 249
 
   210 arg_list: '(' expr_list . ')'
 
     ')'  shift, and go to state 318
 
 
-state 250
+State 250
 
   204 field: id '.' id .
   207 built_in: id '.' id . arg_list
@@ -4109,10 +4109,10 @@ state 250
 
     $default  reduce using rule 204 (field)
 
-    arg_list  go to state 319
+    arg_list  转到状态 319
 
 
-state 251
+State 251
 
   163 expr: expr . '%' expr
   164     | expr . '*' expr
@@ -4147,21 +4147,21 @@ state 251
     ']'    shift, and go to state 320
 
 
-state 252
+State 252
 
    16 proc_return: ':' prim_type .
 
     $default  reduce using rule 16 (proc_return)
 
 
-state 253
+State 253
 
    17 proc_return: ':' node_type .
 
     $default  reduce using rule 17 (proc_return)
 
 
-state 254
+State 254
 
     5 proc_head: proc_name '(' arg_declist1 ';' arg_declist2 ')' . proc_return_opt
 
@@ -4169,39 +4169,39 @@ state 254
 
     $default  reduce using rule 14 (proc_return_opt)
 
-    proc_return_opt  go to state 321
-    proc_return      go to state 173
+    proc_return_opt  转到状态 321
+    proc_return      转到状态 173
 
 
-state 255
+State 255
 
    13 arg_declist2: arg_declist2 ',' . arg_decl
 
     ID  shift, and go to state 8
 
-    arg_decl       go to state 322
-    arg_target     go to state 20
-    id_comma_list  go to state 21
-    id             go to state 22
+    arg_decl       转到状态 322
+    arg_target     转到状态 20
+    id_comma_list  转到状态 21
+    id             转到状态 22
 
 
-state 256
+State 256
 
    36 edge_type: T_EDGE '(' . id ')'
 
     ID  shift, and go to state 8
 
-    id  go to state 323
+    id  转到状态 323
 
 
-state 257
+State 257
 
    34 node_type: T_NODE '(' id ')' .
 
     $default  reduce using rule 34 (node_type)
 
 
-state 258
+State 258
 
    51 property: T_NODEPROP '<' prim_type '>' . '(' id ')'
    54         | T_NODEPROP '<' prim_type '>' .
@@ -4211,7 +4211,7 @@ state 258
     $default  reduce using rule 54 (property)
 
 
-state 259
+State 259
 
    52 property: T_NODEPROP '<' nodeedge_type '>' . '(' id ')'
    55         | T_NODEPROP '<' nodeedge_type '>' .
@@ -4221,7 +4221,7 @@ state 259
     $default  reduce using rule 55 (property)
 
 
-state 260
+State 260
 
    53 property: T_NODEPROP '<' set_type '>' . '(' id ')'
    56         | T_NODEPROP '<' set_type '>' .
@@ -4231,7 +4231,7 @@ state 260
     $default  reduce using rule 56 (property)
 
 
-state 261
+State 261
 
    36 edge_type: T_EDGE '(' id ')' .
   205 field: T_EDGE '(' id ')' . '.' id
@@ -4241,7 +4241,7 @@ state 261
     $default  reduce using rule 36 (edge_type)
 
 
-state 262
+State 262
 
    57 property: T_EDGEPROP '<' prim_type '>' . '(' id ')'
    60         | T_EDGEPROP '<' prim_type '>' .
@@ -4251,7 +4251,7 @@ state 262
     $default  reduce using rule 60 (property)
 
 
-state 263
+State 263
 
    58 property: T_EDGEPROP '<' nodeedge_type '>' . '(' id ')'
    61         | T_EDGEPROP '<' nodeedge_type '>' .
@@ -4261,7 +4261,7 @@ state 263
     $default  reduce using rule 61 (property)
 
 
-state 264
+State 264
 
    59 property: T_EDGEPROP '<' set_type '>' . '(' id ')'
    62         | T_EDGEPROP '<' set_type '>' .
@@ -4271,28 +4271,28 @@ state 264
     $default  reduce using rule 62 (property)
 
 
-state 265
+State 265
 
    38 set_type: T_NSET '(' id ')' .
 
     $default  reduce using rule 38 (set_type)
 
 
-state 266
+State 266
 
    42 set_type: T_NORDER '(' id ')' .
 
     $default  reduce using rule 42 (set_type)
 
 
-state 267
+State 267
 
    40 set_type: T_NSEQ '(' id ')' .
 
     $default  reduce using rule 40 (set_type)
 
 
-state 268
+State 268
 
    44 set_type: T_COLLECTION '<' set_type '>' . '(' id ')'
    45         | T_COLLECTION '<' set_type '>' .
@@ -4302,7 +4302,7 @@ state 268
     $default  reduce using rule 45 (set_type)
 
 
-state 269
+State 269
 
    50 map_type: T_MAP '<' key_type ',' . value_type '>'
 
@@ -4314,23 +4314,23 @@ state 269
     T_DOUBLE  shift, and go to state 37
     T_LONG    shift, and go to state 38
 
-    prim_type      go to state 332
-    nodeedge_type  go to state 333
-    node_type      go to state 54
-    edge_type      go to state 55
-    value_type     go to state 334
+    prim_type      转到状态 332
+    nodeedge_type  转到状态 333
+    node_type      转到状态 54
+    edge_type      转到状态 55
+    value_type     转到状态 334
 
 
-state 270
+State 270
 
   116 bfs_header_format: '(' id ':' . id opt_tp '.' T_NODES from_or_semi id ')'
 
     ID  shift, and go to state 8
 
-    id  go to state 335
+    id  转到状态 335
 
 
-state 271
+State 271
 
   127 bfs_filter: '(' expr . ')'
   163 expr: expr . '%' expr
@@ -4365,7 +4365,7 @@ state 271
     ')'    shift, and go to state 336
 
 
-state 272
+State 272
 
   126 bfs_navigator: '[' expr . ']'
   163 expr: expr . '%' expr
@@ -4400,7 +4400,7 @@ state 272
     ']'    shift, and go to state 337
 
 
-state 273
+State 273
 
   108 sent_dfs: T_DFS bfs_header_format bfs_filters sent_block . dfs_post
 
@@ -4408,31 +4408,31 @@ state 273
 
     $default  reduce using rule 110 (dfs_post)
 
-    dfs_post  go to state 339
+    dfs_post  转到状态 339
 
 
-state 274
+State 274
 
   124 bfs_filters: bfs_navigator bfs_filter .
 
     $default  reduce using rule 124 (bfs_filters)
 
 
-state 275
+State 275
 
   125 bfs_filters: bfs_filter bfs_navigator .
 
     $default  reduce using rule 125 (bfs_filters)
 
 
-state 276
+State 276
 
   205 field: T_EDGE '(' id . ')' '.' id
 
     ')'  shift, and go to state 340
 
 
-state 277
+State 277
 
   158 expr: '(' prim_type ')' . expr
 
@@ -4458,33 +4458,33 @@ state 277
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 341
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 341
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 278
+State 278
 
   154 expr: '(' expr ')' .
 
     $default  reduce using rule 154 (expr)
 
 
-state 279
+State 279
 
   155 expr: '|' expr '|' .
 
     $default  reduce using rule 155 (expr)
 
 
-state 280
+State 280
 
   163 expr: expr . '%' expr
   164     | expr . '*' expr
@@ -4517,7 +4517,7 @@ state 280
     $default  reduce using rule 174 (expr)
 
 
-state 281
+State 281
 
   163 expr: expr . '%' expr
   164     | expr . '*' expr
@@ -4551,7 +4551,7 @@ state 281
     $default  reduce using rule 175 (expr)
 
 
-state 282
+State 282
 
   163 expr: expr . '%' expr
   164     | expr . '*' expr
@@ -4582,7 +4582,7 @@ state 282
     $default  reduce using rule 172 (expr)
 
 
-state 283
+State 283
 
   163 expr: expr . '%' expr
   164     | expr . '*' expr
@@ -4613,7 +4613,7 @@ state 283
     $default  reduce using rule 173 (expr)
 
 
-state 284
+State 284
 
   163 expr: expr . '%' expr
   164     | expr . '*' expr
@@ -4640,7 +4640,7 @@ state 284
     $default  reduce using rule 168 (expr)
 
 
-state 285
+State 285
 
   163 expr: expr . '%' expr
   164     | expr . '*' expr
@@ -4667,7 +4667,7 @@ state 285
     $default  reduce using rule 169 (expr)
 
 
-state 286
+State 286
 
   163 expr: expr . '%' expr
   164     | expr . '*' expr
@@ -4702,7 +4702,7 @@ state 286
     '%'    shift, and go to state 220
 
 
-state 287
+State 287
 
   163 expr: expr . '%' expr
   164     | expr . '*' expr
@@ -4729,7 +4729,7 @@ state 287
     $default  reduce using rule 170 (expr)
 
 
-state 288
+State 288
 
   163 expr: expr . '%' expr
   164     | expr . '*' expr
@@ -4756,7 +4756,7 @@ state 288
     $default  reduce using rule 171 (expr)
 
 
-state 289
+State 289
 
   163 expr: expr . '%' expr
   164     | expr . '*' expr
@@ -4781,7 +4781,7 @@ state 289
     $default  reduce using rule 166 (expr)
 
 
-state 290
+State 290
 
   163 expr: expr . '%' expr
   164     | expr . '*' expr
@@ -4806,7 +4806,7 @@ state 290
     $default  reduce using rule 167 (expr)
 
 
-state 291
+State 291
 
   163 expr: expr . '%' expr
   164     | expr . '*' expr
@@ -4827,7 +4827,7 @@ state 291
     $default  reduce using rule 164 (expr)
 
 
-state 292
+State 292
 
   163 expr: expr . '%' expr
   164     | expr . '*' expr
@@ -4848,7 +4848,7 @@ state 292
     $default  reduce using rule 165 (expr)
 
 
-state 293
+State 293
 
   163 expr: expr . '%' expr
   163     | expr '%' expr .
@@ -4869,7 +4869,7 @@ state 293
     $default  reduce using rule 163 (expr)
 
 
-state 294
+State 294
 
   159 expr: reduce_op foreach_header '(' . expr ')' '{' expr '}'
 
@@ -4895,19 +4895,19 @@ state 294
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 343
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 343
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 295
+State 295
 
   160 expr: reduce_op foreach_header '{' . expr '}'
 
@@ -4933,19 +4933,19 @@ state 295
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 344
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 344
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 296
+State 296
 
   161 expr: reduce_op2 foreach_header '(' . expr ')'
 
@@ -4971,19 +4971,19 @@ state 296
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 345
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 345
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 297
+State 297
 
   109 sent_bfs: T_BFS bfs_header_format bfs_filters sent_block . bfs_reverse
 
@@ -4991,43 +4991,43 @@ state 297
 
     $default  reduce using rule 113 (bfs_reverse)
 
-    bfs_reverse  go to state 347
+    bfs_reverse  转到状态 347
 
 
-state 298
+State 298
 
    92 foreach_header: '(' id ':' . foreach_src '.' iterator1 ')'
 
     T_EDGE  shift, and go to state 100
     ID      shift, and go to state 8
 
-    foreach_src  go to state 348
-    field        go to state 349
-    id           go to state 350
+    foreach_src  转到状态 348
+    field        转到状态 349
+    id           转到状态 350
 
 
-state 299
+State 299
 
    99 foreach_filter: '(' bool_expr . ')'
 
     ')'  shift, and go to state 351
 
 
-state 300
+State 300
 
    90 sent_foreach: T_FOREACH foreach_header foreach_filter sent .
 
     $default  reduce using rule 90 (sent_foreach)
 
 
-state 301
+State 301
 
    91 sent_foreach: T_FOR foreach_header foreach_filter sent .
 
     $default  reduce using rule 91 (sent_foreach)
 
 
-state 302
+State 302
 
   150 sent_if: T_IF '(' bool_expr ')' . sent
   151        | T_IF '(' bool_expr ')' . sent T_ELSE sent
@@ -5061,43 +5061,43 @@ state 302
     '{'           shift, and go to state 11
     '['           shift, and go to state 49
 
-    typedecl                   go to state 50
-    graph_type                 go to state 51
-    prim_type                  go to state 52
-    nodeedge_type              go to state 53
-    node_type                  go to state 54
-    edge_type                  go to state 55
-    set_type                   go to state 56
-    map_type                   go to state 57
-    property                   go to state 58
-    sent_block                 go to state 59
-    sb_begin                   go to state 14
-    sent                       go to state 352
-    sent_call                  go to state 62
-    sent_while                 go to state 63
-    sent_do_while              go to state 64
-    sent_foreach               go to state 65
-    sent_dfs                   go to state 66
-    sent_bfs                   go to state 67
-    sent_variable_decl         go to state 68
-    sent_assignment            go to state 69
-    sent_reduce_assignment     go to state 70
-    sent_defer_assignment      go to state 71
-    sent_argminmax_assignment  go to state 72
-    sent_return                go to state 73
-    sent_if                    go to state 74
-    sent_user                  go to state 75
-    lhs                        go to state 76
-    scala                      go to state 77
-    field                      go to state 78
-    map_access                 go to state 79
-    built_in                   go to state 80
-    lhs_list2                  go to state 81
-    expr_user                  go to state 82
-    id                         go to state 83
+    typedecl                   转到状态 50
+    graph_type                 转到状态 51
+    prim_type                  转到状态 52
+    nodeedge_type              转到状态 53
+    node_type                  转到状态 54
+    edge_type                  转到状态 55
+    set_type                   转到状态 56
+    map_type                   转到状态 57
+    property                   转到状态 58
+    sent_block                 转到状态 59
+    sb_begin                   转到状态 14
+    sent                       转到状态 352
+    sent_call                  转到状态 62
+    sent_while                 转到状态 63
+    sent_do_while              转到状态 64
+    sent_foreach               转到状态 65
+    sent_dfs                   转到状态 66
+    sent_bfs                   转到状态 67
+    sent_variable_decl         转到状态 68
+    sent_assignment            转到状态 69
+    sent_reduce_assignment     转到状态 70
+    sent_defer_assignment      转到状态 71
+    sent_argminmax_assignment  转到状态 72
+    sent_return                转到状态 73
+    sent_if                    转到状态 74
+    sent_user                  转到状态 75
+    lhs                        转到状态 76
+    scala                      转到状态 77
+    field                      转到状态 78
+    map_access                 转到状态 79
+    built_in                   转到状态 80
+    lhs_list2                  转到状态 81
+    expr_user                  转到状态 82
+    id                         转到状态 83
 
 
-state 303
+State 303
 
    89 sent_do_while: T_DO sent_block T_WHILE '(' . bool_expr ')'
 
@@ -5123,30 +5123,30 @@ state 303
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 228
-    bool_expr   go to state 353
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 228
+    bool_expr   转到状态 353
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 304
+State 304
 
    88 sent_while: T_WHILE '(' bool_expr ')' . sent_block
 
     '{'  shift, and go to state 11
 
-    sent_block  go to state 354
-    sb_begin    go to state 14
+    sent_block  转到状态 354
+    sb_begin    转到状态 14
 
 
-state 305
+State 305
 
   201 lhs_list: lhs .
   202         | lhs . ',' lhs_list
@@ -5156,63 +5156,63 @@ state 305
     $default  reduce using rule 201 (lhs_list)
 
 
-state 306
+State 306
 
   214 lhs_list2: '<' lhs ';' lhs_list . '>'
 
     '>'  shift, and go to state 356
 
 
-state 307
+State 307
 
   204 field: id '.' id .
 
     $default  reduce using rule 204 (field)
 
 
-state 308
+State 308
 
   217 expr_user: '[' $@1 USER_TEXT ']' .
 
     $default  reduce using rule 217 (expr_user)
 
 
-state 309
+State 309
 
   129 sent_variable_decl: typedecl id '=' rhs .
 
     $default  reduce using rule 129 (sent_variable_decl)
 
 
-state 310
+State 310
 
   135 sent_defer_assignment: lhs T_LE rhs optional_bind .
 
     $default  reduce using rule 135 (sent_defer_assignment)
 
 
-state 311
+State 311
 
   138 optional_bind: '@' id .
 
     $default  reduce using rule 138 (optional_bind)
 
 
-state 312
+State 312
 
   132 sent_reduce_assignment: lhs reduce_eq rhs optional_bind .
 
     $default  reduce using rule 132 (sent_reduce_assignment)
 
 
-state 313
+State 313
 
   209 built_in: field '.' id arg_list .
 
     $default  reduce using rule 209 (built_in)
 
 
-state 314
+State 314
 
   163 expr: expr . '%' expr
   164     | expr . '*' expr
@@ -5247,21 +5247,21 @@ state 314
     ';'    shift, and go to state 357
 
 
-state 315
+State 315
 
   136 sent_argminmax_assignment: lhs_list2 minmax_eq rhs_list2 optional_bind .
 
     $default  reduce using rule 136 (sent_argminmax_assignment)
 
 
-state 316
+State 316
 
   153 sent_user: expr_user T_DOUBLE_COLON '[' lhs_list . ']'
 
     ']'  shift, and go to state 358
 
 
-state 317
+State 317
 
   213 expr_list: expr ',' . expr_list
 
@@ -5287,155 +5287,155 @@ state 317
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 248
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_list   go to state 359
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 248
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_list   转到状态 359
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 318
+State 318
 
   210 arg_list: '(' expr_list ')' .
 
     $default  reduce using rule 210 (arg_list)
 
 
-state 319
+State 319
 
   207 built_in: id '.' id arg_list .
 
     $default  reduce using rule 207 (built_in)
 
 
-state 320
+State 320
 
   206 map_access: id '[' expr ']' .
 
     $default  reduce using rule 206 (map_access)
 
 
-state 321
+State 321
 
     5 proc_head: proc_name '(' arg_declist1 ';' arg_declist2 ')' proc_return_opt .
 
     $default  reduce using rule 5 (proc_head)
 
 
-state 322
+State 322
 
    13 arg_declist2: arg_declist2 ',' arg_decl .
 
     $default  reduce using rule 13 (arg_declist2)
 
 
-state 323
+State 323
 
    36 edge_type: T_EDGE '(' id . ')'
 
     ')'  shift, and go to state 360
 
 
-state 324
+State 324
 
    51 property: T_NODEPROP '<' prim_type '>' '(' . id ')'
 
     ID  shift, and go to state 8
 
-    id  go to state 361
+    id  转到状态 361
 
 
-state 325
+State 325
 
    52 property: T_NODEPROP '<' nodeedge_type '>' '(' . id ')'
 
     ID  shift, and go to state 8
 
-    id  go to state 362
+    id  转到状态 362
 
 
-state 326
+State 326
 
    53 property: T_NODEPROP '<' set_type '>' '(' . id ')'
 
     ID  shift, and go to state 8
 
-    id  go to state 363
+    id  转到状态 363
 
 
-state 327
+State 327
 
   205 field: T_EDGE '(' id ')' '.' . id
 
     ID  shift, and go to state 8
 
-    id  go to state 364
+    id  转到状态 364
 
 
-state 328
+State 328
 
    57 property: T_EDGEPROP '<' prim_type '>' '(' . id ')'
 
     ID  shift, and go to state 8
 
-    id  go to state 365
+    id  转到状态 365
 
 
-state 329
+State 329
 
    58 property: T_EDGEPROP '<' nodeedge_type '>' '(' . id ')'
 
     ID  shift, and go to state 8
 
-    id  go to state 366
+    id  转到状态 366
 
 
-state 330
+State 330
 
    59 property: T_EDGEPROP '<' set_type '>' '(' . id ')'
 
     ID  shift, and go to state 8
 
-    id  go to state 367
+    id  转到状态 367
 
 
-state 331
+State 331
 
    44 set_type: T_COLLECTION '<' set_type '>' '(' . id ')'
 
     ID  shift, and go to state 8
 
-    id  go to state 368
+    id  转到状态 368
 
 
-state 332
+State 332
 
    49 value_type: prim_type .
 
     $default  reduce using rule 49 (value_type)
 
 
-state 333
+State 333
 
    48 value_type: nodeedge_type .
 
     $default  reduce using rule 48 (value_type)
 
 
-state 334
+State 334
 
    50 map_type: T_MAP '<' key_type ',' value_type . '>'
 
     '>'  shift, and go to state 369
 
 
-state 335
+State 335
 
   116 bfs_header_format: '(' id ':' id . opt_tp '.' T_NODES from_or_semi id ')'
 
@@ -5443,24 +5443,24 @@ state 335
 
     $default  reduce using rule 117 (opt_tp)
 
-    opt_tp  go to state 371
+    opt_tp  转到状态 371
 
 
-state 336
+State 336
 
   127 bfs_filter: '(' expr ')' .
 
     $default  reduce using rule 127 (bfs_filter)
 
 
-state 337
+State 337
 
   126 bfs_navigator: '[' expr ']' .
 
     $default  reduce using rule 126 (bfs_navigator)
 
 
-state 338
+State 338
 
   111 dfs_post: T_POST . bfs_filter sent_block
   112         | T_POST . sent_block
@@ -5468,26 +5468,26 @@ state 338
     '('  shift, and go to state 196
     '{'  shift, and go to state 11
 
-    sent_block  go to state 372
-    sb_begin    go to state 14
-    bfs_filter  go to state 373
+    sent_block  转到状态 372
+    sb_begin    转到状态 14
+    bfs_filter  转到状态 373
 
 
-state 339
+State 339
 
   108 sent_dfs: T_DFS bfs_header_format bfs_filters sent_block dfs_post .
 
     $default  reduce using rule 108 (sent_dfs)
 
 
-state 340
+State 340
 
   205 field: T_EDGE '(' id ')' . '.' id
 
     '.'  shift, and go to state 327
 
 
-state 341
+State 341
 
   158 expr: '(' prim_type ')' expr .
   163     | expr . '%' expr
@@ -5508,7 +5508,7 @@ state 341
     $default  reduce using rule 158 (expr)
 
 
-state 342
+State 342
 
   176 expr: expr '?' expr ':' . expr
 
@@ -5534,19 +5534,19 @@ state 342
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 374
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 374
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 343
+State 343
 
   159 expr: reduce_op foreach_header '(' expr . ')' '{' expr '}'
   163     | expr . '%' expr
@@ -5581,7 +5581,7 @@ state 343
     ')'    shift, and go to state 375
 
 
-state 344
+State 344
 
   160 expr: reduce_op foreach_header '{' expr . '}'
   163     | expr . '%' expr
@@ -5616,7 +5616,7 @@ state 344
     '}'    shift, and go to state 376
 
 
-state 345
+State 345
 
   161 expr: reduce_op2 foreach_header '(' expr . ')'
   163     | expr . '%' expr
@@ -5651,7 +5651,7 @@ state 345
     ')'    shift, and go to state 377
 
 
-state 346
+State 346
 
   114 bfs_reverse: T_BACK . bfs_filter sent_block
   115            | T_BACK . sent_block
@@ -5659,26 +5659,26 @@ state 346
     '('  shift, and go to state 196
     '{'  shift, and go to state 11
 
-    sent_block  go to state 378
-    sb_begin    go to state 14
-    bfs_filter  go to state 379
+    sent_block  转到状态 378
+    sb_begin    转到状态 14
+    bfs_filter  转到状态 379
 
 
-state 347
+State 347
 
   109 sent_bfs: T_BFS bfs_header_format bfs_filters sent_block bfs_reverse .
 
     $default  reduce using rule 109 (sent_bfs)
 
 
-state 348
+State 348
 
    92 foreach_header: '(' id ':' foreach_src . '.' iterator1 ')'
 
     '.'  shift, and go to state 380
 
 
-state 349
+State 349
 
    94 foreach_src: field . foreach_dir
 
@@ -5687,10 +5687,10 @@ state 349
 
     $default  reduce using rule 95 (foreach_dir)
 
-    foreach_dir  go to state 383
+    foreach_dir  转到状态 383
 
 
-state 350
+State 350
 
    93 foreach_src: id . foreach_dir
   204 field: id . '.' id
@@ -5701,17 +5701,17 @@ state 350
 
     '.'  [reduce using rule 95 (foreach_dir)]
 
-    foreach_dir  go to state 384
+    foreach_dir  转到状态 384
 
 
-state 351
+State 351
 
    99 foreach_filter: '(' bool_expr ')' .
 
     $default  reduce using rule 99 (foreach_filter)
 
 
-state 352
+State 352
 
   150 sent_if: T_IF '(' bool_expr ')' sent .
   151        | T_IF '(' bool_expr ')' sent . T_ELSE sent
@@ -5722,43 +5722,43 @@ state 352
     $default  reduce using rule 150 (sent_if)
 
 
-state 353
+State 353
 
    89 sent_do_while: T_DO sent_block T_WHILE '(' bool_expr . ')'
 
     ')'  shift, and go to state 386
 
 
-state 354
+State 354
 
    88 sent_while: T_WHILE '(' bool_expr ')' sent_block .
 
     $default  reduce using rule 88 (sent_while)
 
 
-state 355
+State 355
 
   202 lhs_list: lhs ',' . lhs_list
 
     T_EDGE  shift, and go to state 100
     ID      shift, and go to state 8
 
-    lhs         go to state 305
-    lhs_list    go to state 387
-    scala       go to state 77
-    field       go to state 136
-    map_access  go to state 79
-    id          go to state 137
+    lhs         转到状态 305
+    lhs_list    转到状态 387
+    scala       转到状态 77
+    field       转到状态 136
+    map_access  转到状态 79
+    id          转到状态 137
 
 
-state 356
+State 356
 
   214 lhs_list2: '<' lhs ';' lhs_list '>' .
 
     $default  reduce using rule 214 (lhs_list2)
 
 
-state 357
+State 357
 
   215 rhs_list2: '<' expr ';' . expr_list '>'
 
@@ -5784,135 +5784,135 @@ state 357
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 248
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_list   go to state 388
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 248
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_list   转到状态 388
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 358
+State 358
 
   153 sent_user: expr_user T_DOUBLE_COLON '[' lhs_list ']' .
 
     $default  reduce using rule 153 (sent_user)
 
 
-state 359
+State 359
 
   213 expr_list: expr ',' expr_list .
 
     $default  reduce using rule 213 (expr_list)
 
 
-state 360
+State 360
 
    36 edge_type: T_EDGE '(' id ')' .
 
     $default  reduce using rule 36 (edge_type)
 
 
-state 361
+State 361
 
    51 property: T_NODEPROP '<' prim_type '>' '(' id . ')'
 
     ')'  shift, and go to state 389
 
 
-state 362
+State 362
 
    52 property: T_NODEPROP '<' nodeedge_type '>' '(' id . ')'
 
     ')'  shift, and go to state 390
 
 
-state 363
+State 363
 
    53 property: T_NODEPROP '<' set_type '>' '(' id . ')'
 
     ')'  shift, and go to state 391
 
 
-state 364
+State 364
 
   205 field: T_EDGE '(' id ')' '.' id .
 
     $default  reduce using rule 205 (field)
 
 
-state 365
+State 365
 
    57 property: T_EDGEPROP '<' prim_type '>' '(' id . ')'
 
     ')'  shift, and go to state 392
 
 
-state 366
+State 366
 
    58 property: T_EDGEPROP '<' nodeedge_type '>' '(' id . ')'
 
     ')'  shift, and go to state 393
 
 
-state 367
+State 367
 
    59 property: T_EDGEPROP '<' set_type '>' '(' id . ')'
 
     ')'  shift, and go to state 394
 
 
-state 368
+State 368
 
    44 set_type: T_COLLECTION '<' set_type '>' '(' id . ')'
 
     ')'  shift, and go to state 395
 
 
-state 369
+State 369
 
    50 map_type: T_MAP '<' key_type ',' value_type '>' .
 
     $default  reduce using rule 50 (map_type)
 
 
-state 370
+State 370
 
   118 opt_tp: '^' .
 
     $default  reduce using rule 118 (opt_tp)
 
 
-state 371
+State 371
 
   116 bfs_header_format: '(' id ':' id opt_tp . '.' T_NODES from_or_semi id ')'
 
     '.'  shift, and go to state 396
 
 
-state 372
+State 372
 
   112 dfs_post: T_POST sent_block .
 
     $default  reduce using rule 112 (dfs_post)
 
 
-state 373
+State 373
 
   111 dfs_post: T_POST bfs_filter . sent_block
 
     '{'  shift, and go to state 11
 
-    sent_block  go to state 397
-    sb_begin    go to state 14
+    sent_block  转到状态 397
+    sb_begin    转到状态 14
 
 
-state 374
+State 374
 
   163 expr: expr . '%' expr
   164     | expr . '*' expr
@@ -5947,45 +5947,45 @@ state 374
     $default  reduce using rule 176 (expr)
 
 
-state 375
+State 375
 
   159 expr: reduce_op foreach_header '(' expr ')' . '{' expr '}'
 
     '{'  shift, and go to state 398
 
 
-state 376
+State 376
 
   160 expr: reduce_op foreach_header '{' expr '}' .
 
     $default  reduce using rule 160 (expr)
 
 
-state 377
+State 377
 
   161 expr: reduce_op2 foreach_header '(' expr ')' .
 
     $default  reduce using rule 161 (expr)
 
 
-state 378
+State 378
 
   115 bfs_reverse: T_BACK sent_block .
 
     $default  reduce using rule 115 (bfs_reverse)
 
 
-state 379
+State 379
 
   114 bfs_reverse: T_BACK bfs_filter . sent_block
 
     '{'  shift, and go to state 11
 
-    sent_block  go to state 399
-    sb_begin    go to state 14
+    sent_block  转到状态 399
+    sb_begin    转到状态 14
 
 
-state 380
+State 380
 
    92 foreach_header: '(' id ':' foreach_src '.' . iterator1 ')'
 
@@ -5998,38 +5998,38 @@ state 380
     T_DOWN_NBRS    shift, and go to state 406
     T_COMMON_NBRS  shift, and go to state 407
 
-    iterator1  go to state 408
+    iterator1  转到状态 408
 
 
-state 381
+State 381
 
    97 foreach_dir: '+' .
 
     $default  reduce using rule 97 (foreach_dir)
 
 
-state 382
+State 382
 
    96 foreach_dir: '-' .
 
     $default  reduce using rule 96 (foreach_dir)
 
 
-state 383
+State 383
 
    94 foreach_src: field foreach_dir .
 
     $default  reduce using rule 94 (foreach_src)
 
 
-state 384
+State 384
 
    93 foreach_src: id foreach_dir .
 
     $default  reduce using rule 93 (foreach_src)
 
 
-state 385
+State 385
 
   151 sent_if: T_IF '(' bool_expr ')' sent T_ELSE . sent
 
@@ -6062,127 +6062,127 @@ state 385
     '{'           shift, and go to state 11
     '['           shift, and go to state 49
 
-    typedecl                   go to state 50
-    graph_type                 go to state 51
-    prim_type                  go to state 52
-    nodeedge_type              go to state 53
-    node_type                  go to state 54
-    edge_type                  go to state 55
-    set_type                   go to state 56
-    map_type                   go to state 57
-    property                   go to state 58
-    sent_block                 go to state 59
-    sb_begin                   go to state 14
-    sent                       go to state 409
-    sent_call                  go to state 62
-    sent_while                 go to state 63
-    sent_do_while              go to state 64
-    sent_foreach               go to state 65
-    sent_dfs                   go to state 66
-    sent_bfs                   go to state 67
-    sent_variable_decl         go to state 68
-    sent_assignment            go to state 69
-    sent_reduce_assignment     go to state 70
-    sent_defer_assignment      go to state 71
-    sent_argminmax_assignment  go to state 72
-    sent_return                go to state 73
-    sent_if                    go to state 74
-    sent_user                  go to state 75
-    lhs                        go to state 76
-    scala                      go to state 77
-    field                      go to state 78
-    map_access                 go to state 79
-    built_in                   go to state 80
-    lhs_list2                  go to state 81
-    expr_user                  go to state 82
-    id                         go to state 83
+    typedecl                   转到状态 50
+    graph_type                 转到状态 51
+    prim_type                  转到状态 52
+    nodeedge_type              转到状态 53
+    node_type                  转到状态 54
+    edge_type                  转到状态 55
+    set_type                   转到状态 56
+    map_type                   转到状态 57
+    property                   转到状态 58
+    sent_block                 转到状态 59
+    sb_begin                   转到状态 14
+    sent                       转到状态 409
+    sent_call                  转到状态 62
+    sent_while                 转到状态 63
+    sent_do_while              转到状态 64
+    sent_foreach               转到状态 65
+    sent_dfs                   转到状态 66
+    sent_bfs                   转到状态 67
+    sent_variable_decl         转到状态 68
+    sent_assignment            转到状态 69
+    sent_reduce_assignment     转到状态 70
+    sent_defer_assignment      转到状态 71
+    sent_argminmax_assignment  转到状态 72
+    sent_return                转到状态 73
+    sent_if                    转到状态 74
+    sent_user                  转到状态 75
+    lhs                        转到状态 76
+    scala                      转到状态 77
+    field                      转到状态 78
+    map_access                 转到状态 79
+    built_in                   转到状态 80
+    lhs_list2                  转到状态 81
+    expr_user                  转到状态 82
+    id                         转到状态 83
 
 
-state 386
+State 386
 
    89 sent_do_while: T_DO sent_block T_WHILE '(' bool_expr ')' .
 
     $default  reduce using rule 89 (sent_do_while)
 
 
-state 387
+State 387
 
   202 lhs_list: lhs ',' lhs_list .
 
     $default  reduce using rule 202 (lhs_list)
 
 
-state 388
+State 388
 
   215 rhs_list2: '<' expr ';' expr_list . '>'
 
     '>'  shift, and go to state 410
 
 
-state 389
+State 389
 
    51 property: T_NODEPROP '<' prim_type '>' '(' id ')' .
 
     $default  reduce using rule 51 (property)
 
 
-state 390
+State 390
 
    52 property: T_NODEPROP '<' nodeedge_type '>' '(' id ')' .
 
     $default  reduce using rule 52 (property)
 
 
-state 391
+State 391
 
    53 property: T_NODEPROP '<' set_type '>' '(' id ')' .
 
     $default  reduce using rule 53 (property)
 
 
-state 392
+State 392
 
    57 property: T_EDGEPROP '<' prim_type '>' '(' id ')' .
 
     $default  reduce using rule 57 (property)
 
 
-state 393
+State 393
 
    58 property: T_EDGEPROP '<' nodeedge_type '>' '(' id ')' .
 
     $default  reduce using rule 58 (property)
 
 
-state 394
+State 394
 
    59 property: T_EDGEPROP '<' set_type '>' '(' id ')' .
 
     $default  reduce using rule 59 (property)
 
 
-state 395
+State 395
 
    44 set_type: T_COLLECTION '<' set_type '>' '(' id ')' .
 
     $default  reduce using rule 44 (set_type)
 
 
-state 396
+State 396
 
   116 bfs_header_format: '(' id ':' id opt_tp '.' . T_NODES from_or_semi id ')'
 
     T_NODES  shift, and go to state 411
 
 
-state 397
+State 397
 
   111 dfs_post: T_POST bfs_filter sent_block .
 
     $default  reduce using rule 111 (dfs_post)
 
 
-state 398
+State 398
 
   159 expr: reduce_op foreach_header '(' expr ')' '{' . expr '}'
 
@@ -6208,113 +6208,113 @@ state 398
     '|'        shift, and go to state 117
     '!'        shift, and go to state 118
 
-    expr        go to state 412
-    reduce_op   go to state 120
-    reduce_op2  go to state 121
-    inf         go to state 122
-    scala       go to state 123
-    field       go to state 124
-    map_access  go to state 125
-    built_in    go to state 126
-    expr_user   go to state 127
-    id          go to state 83
+    expr        转到状态 412
+    reduce_op   转到状态 120
+    reduce_op2  转到状态 121
+    inf         转到状态 122
+    scala       转到状态 123
+    field       转到状态 124
+    map_access  转到状态 125
+    built_in    转到状态 126
+    expr_user   转到状态 127
+    id          转到状态 83
 
 
-state 399
+State 399
 
   114 bfs_reverse: T_BACK bfs_filter sent_block .
 
     $default  reduce using rule 114 (bfs_reverse)
 
 
-state 400
+State 400
 
   106 iterator1: T_ITEMS .
 
     $default  reduce using rule 106 (iterator1)
 
 
-state 401
+State 401
 
   100 iterator1: T_NODES .
 
     $default  reduce using rule 100 (iterator1)
 
 
-state 402
+State 402
 
   101 iterator1: T_EDGES .
 
     $default  reduce using rule 101 (iterator1)
 
 
-state 403
+State 403
 
   102 iterator1: T_NBRS .
 
     $default  reduce using rule 102 (iterator1)
 
 
-state 404
+State 404
 
   103 iterator1: T_IN_NBRS .
 
     $default  reduce using rule 103 (iterator1)
 
 
-state 405
+State 405
 
   104 iterator1: T_UP_NBRS .
 
     $default  reduce using rule 104 (iterator1)
 
 
-state 406
+State 406
 
   105 iterator1: T_DOWN_NBRS .
 
     $default  reduce using rule 105 (iterator1)
 
 
-state 407
+State 407
 
   107 iterator1: T_COMMON_NBRS . '(' id ')'
 
     '('  shift, and go to state 413
 
 
-state 408
+State 408
 
    92 foreach_header: '(' id ':' foreach_src '.' iterator1 . ')'
 
     ')'  shift, and go to state 414
 
 
-state 409
+State 409
 
   151 sent_if: T_IF '(' bool_expr ')' sent T_ELSE sent .
 
     $default  reduce using rule 151 (sent_if)
 
 
-state 410
+State 410
 
   215 rhs_list2: '<' expr ';' expr_list '>' .
 
     $default  reduce using rule 215 (rhs_list2)
 
 
-state 411
+State 411
 
   116 bfs_header_format: '(' id ':' id opt_tp '.' T_NODES . from_or_semi id ')'
 
     T_FROM  shift, and go to state 415
     ';'     shift, and go to state 416
 
-    from_or_semi  go to state 417
+    from_or_semi  转到状态 417
 
 
-state 412
+State 412
 
   159 expr: reduce_op foreach_header '(' expr ')' '{' expr . '}'
   163     | expr . '%' expr
@@ -6349,74 +6349,74 @@ state 412
     '}'    shift, and go to state 418
 
 
-state 413
+State 413
 
   107 iterator1: T_COMMON_NBRS '(' . id ')'
 
     ID  shift, and go to state 8
 
-    id  go to state 419
+    id  转到状态 419
 
 
-state 414
+State 414
 
    92 foreach_header: '(' id ':' foreach_src '.' iterator1 ')' .
 
     $default  reduce using rule 92 (foreach_header)
 
 
-state 415
+State 415
 
   119 from_or_semi: T_FROM .
 
     $default  reduce using rule 119 (from_or_semi)
 
 
-state 416
+State 416
 
   120 from_or_semi: ';' .
 
     $default  reduce using rule 120 (from_or_semi)
 
 
-state 417
+State 417
 
   116 bfs_header_format: '(' id ':' id opt_tp '.' T_NODES from_or_semi . id ')'
 
     ID  shift, and go to state 8
 
-    id  go to state 420
+    id  转到状态 420
 
 
-state 418
+State 418
 
   159 expr: reduce_op foreach_header '(' expr ')' '{' expr '}' .
 
     $default  reduce using rule 159 (expr)
 
 
-state 419
+State 419
 
   107 iterator1: T_COMMON_NBRS '(' id . ')'
 
     ')'  shift, and go to state 421
 
 
-state 420
+State 420
 
   116 bfs_header_format: '(' id ':' id opt_tp '.' T_NODES from_or_semi id . ')'
 
     ')'  shift, and go to state 422
 
 
-state 421
+State 421
 
   107 iterator1: T_COMMON_NBRS '(' id ')' .
 
     $default  reduce using rule 107 (iterator1)
 
 
-state 422
+State 422
 
   116 bfs_header_format: '(' id ':' id opt_tp '.' T_NODES from_or_semi id ')' .
 
