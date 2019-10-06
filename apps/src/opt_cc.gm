@@ -1,12 +1,9 @@
 Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>,count:N_P<Int>):Long{
     //init
-    Map<Long,Long> map;//id -> pid
     Map<Long,Node> idn;//id -> node
     N_P<Long> parId;
-    N_P<Node> parNode;
     Foreach(n:G.Nodes){
-        map[n.id] = n.id;
-        map[n.id] = n;
+        idn[n.id] = n;
     }
     Foreach(n: G.Nodes){
         Foreach(in: n.Nbrs){
@@ -17,9 +14,7 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
         If(n.pid > n.id)
             n.pid = n.id;
     }
-    Foreach(n:G.Nodes){
-        map[n.id] = n.pid;
-    }
+
 
     //singleton_elimination(G,size,parent,id,pid,count);
      Foreach(n:G.Nodes){
@@ -39,7 +34,6 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
             }
             If(flag == 1){
                 n.pid = mmin;
-                map[n.id] = mmin;
             }
         }
     }
@@ -55,16 +49,16 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
     G.star = 1;
     //rule 1
     Foreach(n:G.Nodes)(n.count != 0){
-        Long pp = map[n.pid];
-        If(pp != n.pid){
+        Node pn = idn[n.pid];
+        If(pp.pid != n.pid){
             n.star = 0;
         }
     }
     //rule 2
     Foreach(n:G.Nodes)(n.count != 0){
         If(n.star == 0){
-            Long pp = map[n.pid];
-            Node gn = idn[pp];
+            Node pn = idn[n.pid];
+            Node gn = idn[pn.pid];
             gn.star = 0;
         }
     }
@@ -101,7 +95,6 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
                  If(n.id > minPPid){
                          hookingRet1++;
                          n.pid = minPPid;
-                         map[n.id] = minPPid;
                  }
             }
 
@@ -109,16 +102,16 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
         G.star = 1;
         //rule 1
         Foreach(n:G.Nodes)(n.count != 0){
-            Long pp = map[n.pid];
-            If(pp != n.pid){
+            Node pn = idn[n.pid];
+            If(pp.pid != n.pid){
                 n.star = 0;
             }
         }
         //rule 2
         Foreach(n:G.Nodes)(n.count != 0){
             If(n.star == 0){
-                Long pp = map[n.pid];
-                Node gn = idn[pp];
+                Node pn = idn[n.pid];
+                Node gn = idn[pn.pid];
                 gn.star = 0;
             }
         }
@@ -148,25 +141,24 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
                 If(minPPid != size+1 && minPPid != n.pid){
                    hookingRet2++;
                    n.pid = minPPid;
-                   map[n.id] = minPPid;
                }
            }
 
         //ret1 = star_detection(G,parent,id,pid,star,count);
-        Long ret1 = 0;
+        ret1 = 0;
         G.star = 1;
         //rule 1
         Foreach(n:G.Nodes)(n.count != 0){
-            Long pp = map[n.pid];
-            If(pp != n.pid){
+            Node pn = idn[n.pid];
+            If(pp.pid != n.pid){
                 n.star = 0;
             }
         }
         //rule 2
         Foreach(n:G.Nodes)(n.count != 0){
             If(n.star == 0){
-                Long pp = map[n.pid];
-                Node gn = idn[pp];
+                Node pn = idn[n.pid];
+                Node gn = idn[pn.pid];
                 gn.star = 0;
             }
         }
@@ -186,27 +178,24 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
              n.parId = n.pid;
          }
          Foreach(n:G.Nodes)(n.count!=0 && n.star == 0){
-             n.pid = map[n.parId];
-             n.star = 2;
+             Node pn = idn[n.parId];
+             n.pid = pn.parId;
          }
-         Foreach(n:G.Nodes)(n.star == 2){
-              map[n.id] = n.pid;
-          }
 
         //star_detection(G,parent,id,pid,star,count);
         G.star = 1;
         //rule 1
         Foreach(n:G.Nodes)(n.count != 0){
-            Long pp = map[n.pid];
-            If(pp != n.pid){
+            Node pn = idn[n.pid];
+            If(pp.pid != n.pid){
                 n.star = 0;
             }
         }
         //rule 2
         Foreach(n:G.Nodes)(n.count != 0){
             If(n.star == 0){
-                Long pp = map[n.pid];
-                Node gn = idn[pp];
+                Node pn = idn[n.pid];
+                Node gn = idn[pn.pid];
                 gn.star = 0;
             }
         }
