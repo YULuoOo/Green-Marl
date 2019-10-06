@@ -183,20 +183,16 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
         }
 
         //pointer_jumping(G,parent,id,pid,star,count);
-         Map<Long,Node> IdNode;
-         Foreach(n:G.Nodes)(n.count!=0 && n.star == 0){
-             n.parId = n.pid;
-             n.parNode = n.parent;
-             IdNode[n.id] = n;
-         }
-         Foreach(n:G.Nodes)(n.count!=0 && n.star == 0){
-             Node fn = n.parNode;
-             n.pid = fn.parId;
-             n.parent = fn.parNode;
-         }
-         Foreach(n:G.Nodes){
-              Long fid = n.pid;
-              n.parent = IdNode[fid];
+          Map<Long,Node> IdNode;
+          Foreach(n:G.Nodes)(n.count!=0 && n.star == 0){
+              n.parId = n.pid;
+              n.parNode = n.parent;
+              IdNode[n.id] = n;
+          }
+          Foreach(n:G.Nodes)(n.count!=0 && n.star == 0){
+              Node fn = n.parNode;
+              n.pid = fn.parId;
+              n.parent = fn.parNode;
           }
 
         //star_detection(G,parent,id,pid,star,count);
