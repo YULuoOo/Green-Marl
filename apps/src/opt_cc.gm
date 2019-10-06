@@ -1,20 +1,16 @@
 Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>,count:N_P<Int>):Long{
     //init
-    Map<Long,Node> idn;//id -> node
     N_P<Long> parId;
-    Foreach(n:G.Nodes){
-        idn[n.id] = n;
-    }
+    N_P<Node> parNode;
     Foreach(n: G.Nodes){
         Foreach(in: n.Nbrs){
-            n.pid min= in.id;
+            <n.pid;n.parent> min= <in.id;in>;
         }
     }
     Foreach(n:G.Nodes){
-        If(n.pid > n.id)
-            n.pid = n.id;
+        If(n.pid >= n.id)
+            n.parent = n;
     }
-
 
     //singleton_elimination(G,size,parent,id,pid,count);
      Foreach(n:G.Nodes){
@@ -26,14 +22,16 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
     }
     Foreach(n:G.Nodes){
         Long mmin = size;
+        Node nn;
         Int flag = 0;
         If(n.count ==0 && n.pid == n.id){
             Foreach(e:n.Nbrs){
-                mmin min= e.id;
+                <mmin;nn> min= <e.id;e>;
                 flag = 1;
             }
             If(flag == 1){
                 n.pid = mmin;
+                n.parent = nn;
             }
         }
     }
@@ -49,28 +47,29 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
     G.star = 1;
     //rule 1
     Foreach(n:G.Nodes)(n.count != 0){
-        Node pn = idn[n.pid];
-        If(pn.pid != n.pid){
+        Node fa = n.parent;
+        If(fa.pid != n.pid){
             n.star = 0;
         }
     }
     //rule 2
     Foreach(n:G.Nodes)(n.count != 0){
         If(n.star == 0){
-            Node pn = idn[n.pid];
-            Node gn = idn[pn.pid];
-            gn.star = 0;
+           //shit grammar!
+            Node fa = n.parent;
+            Node gf = fa.parent;
+            gf.star = 0;
         }
     }
     //rule 3
     Foreach(n:G.Nodes)(n.count != 0){
-        Node fa = idn[n.pid];
+        Node fa = n.parent;
         If(fa.star == 0)
             n.star = 0;
     }
     Foreach(n:G.Nodes){
-        If(n.star == 1)
-            ret1 += 1;
+            If(n.star == 1)
+                ret1 += 1;
     }
     Int ii = 0;
     Int hookingRet1 = 0;
@@ -80,20 +79,24 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
          hookingRet1 = 0;
            Foreach(n:G.Nodes)(n.star==1 && n.pid == n.id && n.count!=0){
                    Long minPPid = size+1;
+                   Node minNNode = n;
                    Long minPid2 = size+1;
+                   Node minNode2 = n;
                    InBFS(e:G.Nodes From n)[e.pid == n.id]{
                        Foreach(t:e.Nbrs)(t.pid < n.id){
-                           minPPid min= t.pid;
+                           <minPPid;minNNode> min= <t.pid;t.parent>;
                        }
                    }
                    Foreach(t:n.Nbrs)(t.pid < n.id){
-                        minPid2 min= t.pid;
+                        <minPid2;minNode2> min= <t.pid;t.parent>;
                    }
                    If(minPPid>minPid2){
                        minPPid = minPid2;
+                       minNNode = minNode2;
                    }
                  If(n.id > minPPid){
                          hookingRet1++;
+                         n.parent = minNNode;
                          n.pid = minPPid;
                  }
             }
@@ -102,22 +105,23 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
         G.star = 1;
         //rule 1
         Foreach(n:G.Nodes)(n.count != 0){
-            Node pn = idn[n.pid];
-            If(pn.pid != n.pid){
+            Node fa = n.parent;
+            If(fa.pid != n.pid){
                 n.star = 0;
             }
         }
         //rule 2
         Foreach(n:G.Nodes)(n.count != 0){
             If(n.star == 0){
-                Node pn = idn[n.pid];
-                Node gn = idn[pn.pid];
-                gn.star = 0;
+               //shit grammar!
+                Node fa = n.parent;
+                Node gf = fa.parent;
+                gf.star = 0;
             }
         }
         //rule 3
         Foreach(n:G.Nodes)(n.count != 0){
-            Node fa = idn[n.pid];
+            Node fa = n.parent;
             If(fa.star == 0)
                 n.star = 0;
         }
@@ -126,20 +130,24 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
         hookingRet2 = 0;
            Foreach(n:G.Nodes)(n.star==1 && n.pid == n.id && n.count!=0){
                   Long minPPid = size+1;
+                  Node minNNode;
                   Long minPid2 = size+1;
+                  Node minNode2;
                   InBFS(e:G.Nodes From n)[e.pid == n.id]{
                        Foreach(t:e.Nbrs)(t.pid < n.id){
-                           minPPid min= t.pid;
+                           <minPPid;minNNode> min= <t.pid;t.parent>;
                        }
                    }
                    Foreach(t:n.Nbrs)(t.pid < n.id){
-                        minPid2 min= t.pid;
+                        <minPid2;minNode2> min= <t.pid;t.parent>;
                    }
                    If(minPPid>minPid2){
                        minPPid = minPid2;
+                       minNNode = minNode2;
                    }
                 If(minPPid != size+1 && minPPid != n.pid){
                    hookingRet2++;
+                   n.parent = minNNode;
                    n.pid = minPPid;
                }
            }
@@ -149,59 +157,69 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
         G.star = 1;
         //rule 1
         Foreach(n:G.Nodes)(n.count != 0){
-            Node pn = idn[n.pid];
-            If(pn.pid != n.pid){
+            Node fa = n.parent;
+            If(fa.pid != n.pid){
                 n.star = 0;
             }
         }
         //rule 2
         Foreach(n:G.Nodes)(n.count != 0){
             If(n.star == 0){
-                Node pn = idn[n.pid];
-                Node gn = idn[pn.pid];
-                gn.star = 0;
+               //shit grammar!
+                Node fa = n.parent;
+                Node gf = fa.parent;
+                gf.star = 0;
             }
         }
         //rule 3
         Foreach(n:G.Nodes)(n.count != 0){
-            Node fa = idn[n.pid];
+            Node fa = n.parent;
             If(fa.star == 0)
                 n.star = 0;
         }
         Foreach(n:G.Nodes){
-            If(n.star == 1)
-                ret1 += 1;
+                If(n.star == 1)
+                    ret1 += 1;
         }
 
         //pointer_jumping(G,parent,id,pid,star,count);
+         Map<Long,Node> IdNode;
          Foreach(n:G.Nodes)(n.count!=0 && n.star == 0){
              n.parId = n.pid;
+             n.parNode = n.parent;
+             IdNode[n.id] = n;
          }
          Foreach(n:G.Nodes)(n.count!=0 && n.star == 0){
-             Node pn = idn[n.parId];
-             n.pid = pn.parId;
+             Node fn = n.parNode;
+             n.pid = fn.parId;
+             n.parent = fn.parNode;
          }
+         Foreach(n:G.Nodes){
+              Long fid = n.pid;
+              n.parent = IdNode[fid];
+          }
 
         //star_detection(G,parent,id,pid,star,count);
         G.star = 1;
         //rule 1
         Foreach(n:G.Nodes)(n.count != 0){
-            Node pn = idn[n.pid];
-            If(pn.pid != n.pid){
+            Node fa = n.parent;
+            If(fa.pid != n.pid){
                 n.star = 0;
             }
         }
         //rule 2
         Foreach(n:G.Nodes)(n.count != 0){
             If(n.star == 0){
-                Node pn = idn[n.pid];
-                Node gn = idn[pn.pid];
-                gn.star = 0;
+               //shit grammar!
+                Node fa = n.parent;
+                Node gf = fa.parent;
+                gf.star = 0;
             }
         }
         //rule 3
         Foreach(n:G.Nodes)(n.count != 0){
-            Node fa = idn[n.pid];
+            Node fa = n.parent;
             If(fa.star == 0)
                 n.star = 0;
         }
