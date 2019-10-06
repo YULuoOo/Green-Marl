@@ -71,19 +71,19 @@ public:
             gettimeofday(&T2, NULL);
             printf("the %d round C time=%lf\n",ii++, (T2.tv_sec - T1.tv_sec) * 1000 + (T2.tv_usec - T1.tv_usec) * 0.001);
             gettimeofday(&T1, NULL);
-            star_detection(G,parent,id,pid,star,count);
+            star_detection(G,parent,id,pid,star);
             gettimeofday(&T2, NULL);
             printf("the %d round star time=%lf\n",ii++, (T2.tv_sec - T1.tv_sec) * 1000 + (T2.tv_usec - T1.tv_usec) * 0.001);
             gettimeofday(&T1, NULL);
             hookingRet2 = U_star_hooking(G,size,parent,id,pid,star,count);
             gettimeofday(&T2, NULL);
             printf("the %d round U time=%lf\n",ii++, (T2.tv_sec - T1.tv_sec) * 1000 + (T2.tv_usec - T1.tv_usec) * 0.001);
-	    long ret1 = star_detection(G,parent,id,pid,star,count);
+	    long ret1 = star_detection(G,parent,id,pid,star);
             gettimeofday(&T1, NULL);
-            pointer_jumping(G,parent,id,pid,count);
+            pointer_jumping(G,parent,id,pid,star,count);
             gettimeofday(&T2, NULL);
             printf("the %d round PT time=%lf\n",ii++, (T2.tv_sec - T1.tv_sec) * 1000 + (T2.tv_usec - T1.tv_usec) * 0.001);
-            star_detection(G,parent,id,pid,star,count);
+            star_detection(G,parent,id,pid,star);
           
            if(ret1 == size && hookingRet1 == 0 && hookingRet2 == 0)
       	        break;
