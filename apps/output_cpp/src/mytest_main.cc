@@ -30,17 +30,12 @@ public:
 
     virtual bool prepare() {
         printf("prepare");
-        //node_t*  parent = new node_t[G.num_nodes()+1];
-        //long* pid = new long[G.num_nodes()+1];
-        //long* id = new long[G.num_nodes()+1];
-        //long size = G.num_nodes();
-        //int* star = new int[G.num_nodes()+1];
         return true;
     }
 
     virtual bool run()
-    {  //struct timeval T1, T2; 
-        //gettimeofday(&T1, NULL);
+    {  struct timeval T1, T2;
+        gettimeofday(&T1, NULL);
         node_t*  parent = new node_t[G.num_nodes()+1];
         long* pid = new long[G.num_nodes()+1];
         long* id = new long[G.num_nodes()+1];
@@ -56,35 +51,40 @@ public:
             count[i] = 0;
             star[i] = 1;
         }
-       // gettimeofday(&T2, NULL);
-       // printf("init time=%lf\n", (T2.tv_sec - T1.tv_sec) * 1000 + (T2.tv_usec - T1.tv_usec) * 0.001);
-       // gettimeofday(&T1, NULL);
+        gettimeofday(&T2, NULL);
+        printf("init time=%lf\n", (T2.tv_sec - T1.tv_sec) * 1000 + (T2.tv_usec - T1.tv_usec) * 0.001);
+        gettimeofday(&T1, NULL);
         init(G, parent,id,pid);
-       // gettimeofday(&T2, NULL);
-       // printf("step1 time=%lf\n", (T2.tv_sec - T1.tv_sec) * 1000 + (T2.tv_usec - T1.tv_usec) * 0.001);
-       // gettimeofday(&T1, NULL);
+        gettimeofday(&T2, NULL);
+        printf("step1 time=%lf\n", (T2.tv_sec - T1.tv_sec) * 1000 + (T2.tv_usec - T1.tv_usec) * 0.001);
+        gettimeofday(&T1, NULL);
         singleton_elimination(G,size,parent,id,pid,count);
-       // gettimeofday(&T2, NULL);
-       // printf("singleton_elimination time=%lf\n", (T2.tv_sec - T1.tv_sec) * 1000 + (T2.tv_usec - T1.tv_usec) * 0.001);
+        gettimeofday(&T2, NULL);
+        printf("singleton_elimination time=%lf\n", (T2.tv_sec - T1.tv_sec) * 1000 + (T2.tv_usec - T1.tv_usec) * 0.001);
         long ret1 = star_detection(G,parent,id,pid,star);
         int ii = 0;
         int hookingRet1 = 0;
         int hookingRet2 = 0; 
-        //avoid while(true)
         while(true){
-	 //  gettimeofday(&T1, NULL);
-           hookingRet1 =  C_star_hooking(G,size,parent,id,pid,star);
-           //memset(star,0,sizeof(star));
-           star_detection(G,parent,id,pid,star);
-           hookingRet2 = U_star_hooking(G,size,parent,id,pid,star);
-           //memset(star,0,sizeof(star));
-	    long ret1 = star_detection(G,parent,id,pid,star);
-            pointer_jumping(G,parent,id,pid);
-	   // memset(star,0,sizeof(star));
-            star_detection(G,parent,id,pid,star);
+	   gettimeofday(&T1, NULL);
+           hookingRet1 =  C_star_hooking(G,size,parent,id,pid,star,count);
+            gettimeofday(&T2, NULL);
+            printf("the %d round C time=%lf\n",ii++, (T2.tv_sec - T1.tv_sec) * 1000 + (T2.tv_usec - T1.tv_usec) * 0.001);
+            gettimeofday(&T1, NULL);
+            star_detection(G,parent,id,pid,star,count);
+            gettimeofday(&T2, NULL);
+            printf("the %d round star time=%lf\n",ii++, (T2.tv_sec - T1.tv_sec) * 1000 + (T2.tv_usec - T1.tv_usec) * 0.001);
+            gettimeofday(&T1, NULL);
+            hookingRet2 = U_star_hooking(G,size,parent,id,pid,star,count);
+            gettimeofday(&T2, NULL);
+            printf("the %d round U time=%lf\n",ii++, (T2.tv_sec - T1.tv_sec) * 1000 + (T2.tv_usec - T1.tv_usec) * 0.001);
+	    long ret1 = star_detection(G,parent,id,pid,star,count);
+            gettimeofday(&T1, NULL);
+            pointer_jumping(G,parent,id,pid,count);
+            gettimeofday(&T2, NULL);
+            printf("the %d round PT time=%lf\n",ii++, (T2.tv_sec - T1.tv_sec) * 1000 + (T2.tv_usec - T1.tv_usec) * 0.001);
+            star_detection(G,parent,id,pid,star,count);
           
-        //gettimeofday(&T2, NULL);
-        //printf("the %d round while_loop time=%lf\n",ii++, (T2.tv_sec - T1.tv_sec) * 1000 + (T2.tv_usec - T1.tv_usec) * 0.001);
            if(ret1 == size && hookingRet1 == 0 && hookingRet2 == 0)
       	        break;
         }
