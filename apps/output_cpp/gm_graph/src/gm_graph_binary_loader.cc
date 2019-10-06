@@ -278,7 +278,11 @@ static inline uint64_t READ8B(FILE* f, bool& okay)
 }
 static node_t READ_NODE(FILE* f, bool& okay)
 {
+#if GM_NODE64
     return READ8B(f, okay);
+#else
+    return READ4B(f, okay);
+#endif
 }
 
 static bool load_binary_property(FILE* f, VALUE_TYPE expected_type, size_t num_items, void*& array)
@@ -460,7 +464,11 @@ static inline void WRITE8B(FILE* f, uint64_t key, bool& okay)
 }
 static void WRITE_NODE(FILE* f, node_t node, bool& okay)
 {
+#if GM_NODE64
     WRITE8B(f, node, okay);
+#else
+    WRITE4B(f, node, okay);
+#endif
 }
 
 /*

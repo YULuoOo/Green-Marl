@@ -52,8 +52,8 @@ FORCE_32BIT=0
 
 # Bit width of node-id type and, edge-id type: 
 # one of (32,32), (32,64), (64,64)
-NODE_SIZE=64
-EDGE_SIZE=64
+NODE_SIZE=32
+EDGE_SIZE=32
 
 # Support reading/writing graph files from HDFS
 SUPPORT_HDFS=0

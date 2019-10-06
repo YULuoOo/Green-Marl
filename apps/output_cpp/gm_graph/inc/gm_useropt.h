@@ -39,10 +39,18 @@ public:
     float   get_option_float(const char* option)  {return atof(get_option(option));}
     double   get_option_double(const char* option)  {return strtod(get_option(option),NULL);}
     node_t   get_option_node(const char* option)  {
+#ifdef GM_NODE64
         return (node_t) atol(get_option(option));
+#else
+        return (node_t) atoi(get_option(option));
+#endif
     }
     edge_t   get_option_edge(const char* option)  {
+#ifdef GM_EDGE64
         return (edge_t) atol(get_option(option));
+#else
+        return (edge_t) atoi(get_option(option));
+#endif
     }
 
     const char*   get_arg(int i)        {assert(arg_values.size() > (size_t)i); return arg_values[i];}
