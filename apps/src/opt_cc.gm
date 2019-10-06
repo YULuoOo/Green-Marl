@@ -50,7 +50,7 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
     //rule 1
     Foreach(n:G.Nodes)(n.count != 0){
         Node pn = idn[n.pid];
-        If(pp.pid != n.pid){
+        If(pn.pid != n.pid){
             n.star = 0;
         }
     }
@@ -103,7 +103,7 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
         //rule 1
         Foreach(n:G.Nodes)(n.count != 0){
             Node pn = idn[n.pid];
-            If(pp.pid != n.pid){
+            If(pn.pid != n.pid){
                 n.star = 0;
             }
         }
@@ -150,7 +150,7 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
         //rule 1
         Foreach(n:G.Nodes)(n.count != 0){
             Node pn = idn[n.pid];
-            If(pp.pid != n.pid){
+            If(pn.pid != n.pid){
                 n.star = 0;
             }
         }
@@ -187,7 +187,7 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
         //rule 1
         Foreach(n:G.Nodes)(n.count != 0){
             Node pn = idn[n.pid];
-            If(pp.pid != n.pid){
+            If(pn.pid != n.pid){
                 n.star = 0;
             }
         }
