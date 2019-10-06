@@ -159,15 +159,13 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
     Int ii = 0;
     Int hookingRet1 = 0;
     Int hookingRet2 = 0;
-    While(True){
+    While(ret1 != size || hookingRet1 != 0 || hookingRet2 != 0){
         hookingRet1 =  C_star_hooking(G,size,parent,id,pid,star,count);
         star_detection(G,parent,id,pid,star,count);
         hookingRet2 = U_star_hooking(G,size,parent,id,pid,star,count);
-        long ret1 = star_detection(G,parent,id,pid,star,count);
+        ret1 = star_detection(G,parent,id,pid,star,count);
         pointer_jumping(G,parent,id,pid,star,count);
         star_detection(G,parent,id,pid,star,count);
-        If(ret1 == size && hookingRet1 == 0 && hookingRet2 == 0)
-            Break;
     }
     Long rettt = ret_cc_num(G,id,pid);
     Return rettt;
