@@ -52,25 +52,27 @@ Procedure singleton_elimination(G: Graph, size:Long, parent:N_P<Node>, id:N_P<Lo
         }
     }
 }
-Procedure star_detection(G: Graph, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>):Long{
+Procedure star_detection(G: Graph, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>,count:N_P<Int>):Long{
     Long ret = 0;
     G.star = 1;
     //rule 1
-    Foreach(n:G.Nodes){
+    Foreach(n:G.Nodes)(n.count != 0){
         Node fa = n.parent;
 	    If(fa.pid != n.pid){
 	        n.star = 0;
 	    }
     }
     //rule 2
-    Foreach(n:G.Nodes)(n.star == 0){
-       //shit grammar!
-        Node fa = n.parent;
-        Node gf = fa.parent;
-        gf.star = 0;
+    Foreach(n:G.Nodes)(n.count != 0){
+	    If(n.star == 0){
+           //shit grammar!
+	        Node fa = n.parent;
+	        Node gf = fa.parent;
+	        gf.star = 0;
+	    }
     }
     //rule 3
-    Foreach(n:G.Nodes){
+    Foreach(n:G.Nodes)(n.count != 0){
 	    Node fa = n.parent;
 	    If(fa.star == 0)
 	        n.star = 0;
@@ -91,7 +93,7 @@ Procedure C_star_hooking(G: Graph, size:Long,parent:N_P<Node>,id:N_P<Long>,pid:N
                InBFS(e:G.Nodes From n)[e.pid == n.id]{
                    Long minPid = size+1;
                    Node minNode = n;
-                   Foreach(t:e.Nbrs){
+                   Foreach(t:e.Nbrs)(t.pid != n.id){
                        <minPid;minNode> min= <t.pid;t.parent>;
                    }
                    <minPPid;minNNode> min= <minPid;minNode>;
@@ -122,7 +124,7 @@ Procedure U_star_hooking(G: Graph,size: Long, parent:N_P<Node>,id:N_P<Long>,pid:
           InBFS(e:G.Nodes From n)[e.pid == n.id]{
                Long minPid = size+1;
                Node minNode = n;
-               Foreach(t:e.Nbrs){
+               Foreach(t:e.Nbrs)(t.pid != n.id){
                    <minPid;minNode> min= <t.pid;t.parent>;
                }
                <minPPid;minNNode> min= <minPid;minNode>;
