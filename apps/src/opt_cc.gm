@@ -86,7 +86,7 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
                    InBFS(e:G.Nodes From n)[e.pid == n.id]{
                       Long minPid = size+1;
                       Node minNode = n;
-                      Foreach(t:e.Nbrs){
+                      Foreach(t:e.Nbrs)(t.pid < n.id){
                           <minPid;minNode> min= <t.pid;t.parent>;
                       }
                       <minPPid;minNNode> min= <minPid;minNode>;
@@ -142,7 +142,7 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
                   InBFS(e:G.Nodes From n)[e.pid == n.id]{
                     Long minPid = size+1;
                     Node minNode = n;
-                    Foreach(t:e.Nbrs){
+                    Foreach(t:e.Nbrs)(t.pid < n.id){
                         <minPid;minNode> min= <t.pid;t.parent>;
                     }
                     <minPPid;minNNode> min= <minPid;minNode>;
