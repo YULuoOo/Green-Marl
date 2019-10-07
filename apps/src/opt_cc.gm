@@ -84,9 +84,12 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
                    Long minPid2 = size+1;
                    Node minNode2 = n;
                    InBFS(e:G.Nodes From n)[e.pid == n.id]{
-                       Foreach(t:e.Nbrs)(t.pid < n.id){
-                           <minPPid;minNNode> min= <t.pid;t.parent>;
-                       }
+                      Long minPid = size+1;
+                      Node minNode = n;
+                      Foreach(t:e.Nbrs){
+                          <minPid;minNode> min= <t.pid;t.parent>;
+                      }
+                      <minPPid;minNNode> min= <minPid;minNode>;
                    }
                    Foreach(t:n.Nbrs)(t.pid < n.id){
                         <minPid2;minNode2> min= <t.pid;t.parent>;
@@ -137,10 +140,13 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
                   Long minPid2 = size+1;
                   Node minNode2;
                   InBFS(e:G.Nodes From n)[e.pid == n.id]{
-                       Foreach(t:e.Nbrs)(t.pid < n.id){
-                           <minPPid;minNNode> min= <t.pid;t.parent>;
-                       }
-                   }
+                    Long minPid = size+1;
+                    Node minNode = n;
+                    Foreach(t:e.Nbrs){
+                        <minPid;minNode> min= <t.pid;t.parent>;
+                    }
+                    <minPPid;minNNode> min= <minPid;minNode>;
+                  }
                    Foreach(t:n.Nbrs)(t.pid < n.id){
                         <minPid2;minNode2> min= <t.pid;t.parent>;
                    }
