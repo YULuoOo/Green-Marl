@@ -2,9 +2,9 @@ Proc naive_cc (G: Graph, mem: N_P<Long>, id: N_P<Long>) :Long
 {
     Long cc_num = 0;
     Long ret=1;
-    Map<Long,Long> map;
+    N_P<Long> memtemp;
     Foreach(n:G.Nodes){
-	map[n.id] = n.mem;
+	n.memtemp = n.mem;
     }
     While(ret!=0)
     {
@@ -16,12 +16,12 @@ Proc naive_cc (G: Graph, mem: N_P<Long>, id: N_P<Long>) :Long
                 minId min= e.mem;
 	    }
 	    If(n.mem > minId){
-	        map[n.id] = minId;
+	        n.memtemp = minId;
 	        ret++;
 	    }
         }
 	Foreach(n:G.Nodes)
-	    n.mem = map[n.id];
+	    n.mem = n.memtemp;
     }
    
      Foreach(n:G.Nodes){
