@@ -2,6 +2,8 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
     //init
     N_P<Long> parId;
     N_P<Node> parNode;
+    Node fa;
+    Node gf;
     Foreach(n: G.Nodes){
         Foreach(in: n.Nbrs){
             <n.pid;n.parent> min= <in.id;in>;
@@ -47,7 +49,7 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
     G.star = 1;
     //rule 1
     Foreach(n:G.Nodes)(n.count != 0){
-        Node fa = n.parent;
+        fa = n.parent;
         If(fa.pid != n.pid){
             n.star = 0;
         }
@@ -56,14 +58,14 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
     Foreach(n:G.Nodes)(n.count != 0){
         If(n.star == 0){
            //shit grammar!
-            Node fa = n.parent;
-            Node gf = fa.parent;
+            fa = n.parent;
+            gf = fa.parent;
             gf.star = 0;
         }
     }
     //rule 3
     Foreach(n:G.Nodes)(n.count != 0){
-        Node fa = n.parent;
+        fa = n.parent;
         If(fa.star == 0)
             n.star = 0;
     }
@@ -111,7 +113,7 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
         G.star = 1;
         //rule 1
         Foreach(n:G.Nodes)(n.count != 0){
-            Node fa = n.parent;
+            fa = n.parent;
             If(fa.pid != n.pid){
                 n.star = 0;
             }
@@ -120,14 +122,14 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
         Foreach(n:G.Nodes)(n.count != 0){
             If(n.star == 0){
                //shit grammar!
-                Node fa = n.parent;
-                Node gf = fa.parent;
+                fa = n.parent;
+                gf = fa.parent;
                 gf.star = 0;
             }
         }
         //rule 3
         Foreach(n:G.Nodes)(n.count != 0){
-            Node fa = n.parent;
+            fa = n.parent;
             If(fa.star == 0)
                 n.star = 0;
         }
@@ -162,7 +164,7 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
         G.star = 1;
         //rule 1
         Foreach(n:G.Nodes)(n.count != 0){
-            Node fa = n.parent;
+            fa = n.parent;
             If(fa.pid != n.pid){
                 n.star = 0;
             }
@@ -171,14 +173,14 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
         Foreach(n:G.Nodes)(n.count != 0){
             If(n.star == 0){
                //shit grammar!
-                Node fa = n.parent;
-                Node gf = fa.parent;
+                fa = n.parent;
+                gf = fa.parent;
                 gf.star = 0;
             }
         }
         //rule 3
         Foreach(n:G.Nodes)(n.count != 0){
-            Node fa = n.parent;
+            fa = n.parent;
             If(fa.star == 0)
                 n.star = 0;
         }
@@ -192,16 +194,16 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
               n.parNode = n.parent;
           }
           Foreach(n:G.Nodes)(n.count!=0 && n.star == 0){
-              Node fn = n.parNode;
-              n.pid = fn.parId;
-              n.parent = fn.parNode;
+              fa = n.parNode;
+              n.pid = fa.parId;
+              n.parent = fa.parNode;
           }
 
         //star_detection(G,parent,id,pid,star,count);
         G.star = 1;
         //rule 1
         Foreach(n:G.Nodes)(n.count != 0){
-            Node fa = n.parent;
+            fa = n.parent;
             If(fa.pid != n.pid){
                 n.star = 0;
             }
@@ -210,14 +212,14 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
         Foreach(n:G.Nodes)(n.count != 0){
             If(n.star == 0){
                //shit grammar!
-                Node fa = n.parent;
-                Node gf = fa.parent;
+                fa = n.parent;
+                gf = fa.parent;
                 gf.star = 0;
             }
         }
         //rule 3
         Foreach(n:G.Nodes)(n.count != 0){
-            Node fa = n.parent;
+            fa = n.parent;
             If(fa.star == 0)
                 n.star = 0;
         }
