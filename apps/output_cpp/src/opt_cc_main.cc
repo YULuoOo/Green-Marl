@@ -41,12 +41,12 @@ public:
             count[i] = 0;
             star[i] = 1;
         }
+        printf("Graph has %d node\n",G.num_nodes());
         return true;
     }
 
     virtual bool run()
     {
-        printf("Graph has %d node\n",G.num_nodes());
         long rettt = opt_cc(G,size,parent,id,pid,star,count);
         printf("ret = %ld",rettt);
         return true;

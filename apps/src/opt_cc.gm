@@ -71,13 +71,11 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
             If(n.star == 1)
                 ret1 += 1;
     }
-    Int ii = 0;
     Long hookingRet1 = 1;
     Long hookingRet2 = 1;
     N_P<Long> minPid;
     N_P<Node> minPar;
     While(ret1 != size || hookingRet1 != 0 || hookingRet2 != 0){
-      [ printf("round %d C_star_hooking\n",$ii) ];
         //hookingRet1 =  C_star_hooking(G,size,parent,id,pid,star,count);
          hookingRet1 = 0;
 
@@ -108,7 +106,6 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
 
 
 
-      [ printf("round %d star_detection\n",$ii) ];
 
         //star_detection(G,parent,id,pid,star,count);
         G.star = 1;
@@ -134,7 +131,6 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
             If(fa.star == 0)
                 n.star = 0;
         }
-      [ printf("round %d U_star_hooking\n",$ii) ];
 
         //hookingRet2 = U_star_hooking(G,size,parent,id,pid,star,count);
         hookingRet2 = 0;
@@ -160,7 +156,6 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
             n.pid = n.minPid;
             n.parent = n.minPar;
         }
-      [ printf("round %d star_detection\n",$ii) ];
 
         //ret1 = star_detection(G,parent,id,pid,star,count);
         ret1 = 0;
@@ -191,8 +186,6 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
                 If(n.star == 1)
                     ret1 += 1;
         }
-      [ printf("round %d pointer_jumping\n",$ii) ];
-ii++;
         //pointer_jumping(G,parent,id,pid,star,count);
           Foreach(n:G.Nodes)(n.count!=0 && n.star == 0){
               n.parId = n.pid;
