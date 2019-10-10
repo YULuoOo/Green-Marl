@@ -77,33 +77,32 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
     While(ret1 != size || hookingRet1 != 0 || hookingRet2 != 0){
       [ printf("round %d C_star_hooking\n",$ii) ];
         //hookingRet1 =  C_star_hooking(G,size,parent,id,pid,star,count);
-         hookingRet1 = 0;
-           Foreach(n:G.Nodes)(n.star==1 && n.pid == n.id && n.count!=0){
-                   Long minPPid = size+1;
-                   Node minNNode = n;
-                   Long minPid2 = size+1;
-                   Node minNode2 = n;
-                   InBFS(e:G.Nodes From n)[e.pid == n.id]{
-                      Long minPid = size+1;
-                      Node minNode = n;
-                      Foreach(t:e.Nbrs)(t.pid < n.id){
-                          <minPid;minNode> min= <t.pid;t.parent>;
-                      }
-                      <minPPid;minNNode> min= <minPid;minNode>;
-                   }
-                   Foreach(t:n.Nbrs)(t.pid < n.id){
-                        <minPid2;minNode2> min= <t.pid;t.parent>;
-                   }
-                   If(minPPid>minPid2){
-                       minPPid = minPid2;
-                       minNNode = minNode2;
-                   }
-                 If(n.id > minPPid){
-                         hookingRet1++;
-                         n.parent = minNNode;
-                         n.pid = minPPid;
-                 }
+        hookingRet1 = 0;
+        
+         Foreach(n:G.Nodes)(n.star==1 && n.pid == n.id && n.count!=0){
+            n.minPid = n.id;
+            n.minPar = n;
+         }
+         Foreach(e:G.Edges){
+            Node to = e.ToNode();
+            Node from = e.FromNode();
+            If(from.star == 1){
+                Node fpa = from.parent;
+                If(fpa.pid == fpa.id && from.pid > to.pid){
+                    If(fpa.minPid > to.pid){
+                        hookingRet1++;
+                        fpa.minPid = to.pid;
+                        fpa.minPar = to.parent;
+                    }
+                }
             }
+         }
+         Foreach(n:G.Nodes)(n.star==1 && n.pid == n.id && n.count!=0){
+             n.pid = n.minPid;
+             n.parent = n.minPar;
+         }
+
+
       [ printf("round %d star_detection\n",$ii) ];
 
         //star_detection(G,parent,id,pid,star,count);
