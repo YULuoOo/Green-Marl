@@ -147,7 +147,7 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
            Node from = e.FromNode();
            If(from.star == 1){
                Node fpa = from.parent;
-               If(fpa.pid == fpa.id){
+               If(fpa.pid == fpa.id && from.pid != to.pid){
                    If(fpa.minPid > to.pid){
                        hookingRet1++;
                        fpa.minPid = to.pid;
