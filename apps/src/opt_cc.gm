@@ -84,6 +84,7 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
 
          Foreach(n:G.Nodes)(n.star==1 && n.pid == n.id && n.count!=0){
             n.minPid = n.id;
+            n.minPar = n;
          }
          Foreach(e:G.Edges){
             Node to = e.ToNode();
