@@ -26,18 +26,13 @@ public:
 
     virtual bool prepare() {
         printf("prepare");
-        return true;
-    }
-
-    virtual bool run()
-    {  struct timeval T1, T2;
-        node_t*  parent = new node_t[G.num_nodes()+1];
-        long* pid = new long[G.num_nodes()+1];
-        long* id = new long[G.num_nodes()+1];
-        long size = G.num_nodes();
-        int* count = new int[G.num_nodes()+1];
-        int* star = new int[G.num_nodes()+1];
-        printf("Graph has %d node\n",G.num_nodes());
+        parent = new node_t[G.num_nodes()+1];
+        pid = new long[G.num_nodes()+1];
+        id = new long[G.num_nodes()+1];
+        size = G.num_nodes();
+        count = new int[G.num_nodes()+1];
+        star = new int[G.num_nodes()+1];
+        #pragma omp parallel for
         for (int i = 0; i < G.num_nodes(); i++)
         {
 
@@ -46,6 +41,12 @@ public:
             count[i] = 0;
             star[i] = 1;
         }
+        return true;
+    }
+
+    virtual bool run()
+    {
+        printf("Graph has %d node\n",G.num_nodes());
         long rettt = opt_cc(G,size,parent,id,pid,star,count);
         printf("ret = %ld",rettt);
         return true;
