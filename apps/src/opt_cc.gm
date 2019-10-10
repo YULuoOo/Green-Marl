@@ -138,32 +138,28 @@ Procedure opt_cc(G:Graph, size:Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>
 
         //hookingRet2 = U_star_hooking(G,size,parent,id,pid,star,count);
         hookingRet2 = 0;
-           Foreach(n:G.Nodes)(n.star==1 && n.pid == n.id && n.count!=0){
-                  Long minPPid = size+1;
-                  Node minNNode;
-                  Long minPid2 = size+1;
-                  Node minNode2;
-                  InBFS(e:G.Nodes From n)[e.pid == n.id]{
-                    Long minPid = size+1;
-                    Node minNode = n;
-                    Foreach(t:e.Nbrs)(t.pid < n.id){
-                        <minPid;minNode> min= <t.pid;t.parent>;
-                    }
-                    <minPPid;minNNode> min= <minPid;minNode>;
-                  }
-                   Foreach(t:n.Nbrs)(t.pid < n.id){
-                        <minPid2;minNode2> min= <t.pid;t.parent>;
+        Foreach(n:G.Nodes)(n.star==1 && n.pid == n.id && n.count!=0){
+           n.minPid = size+1;
+           n.minPar = n;
+        }
+        Foreach(e:G.Edges){
+           Node to = e.ToNode();
+           Node from = e.FromNode();
+           If(from.star == 1){
+               Node fpa = from.parent;
+               If(fpa.pid == fpa.id && from.pid > to.pid){
+                   If(fpa.minPid > to.pid){
+                       hookingRet1++;
+                       fpa.minPid = to.pid;
+                       fpa.minPar = to.parent;
                    }
-                   If(minPPid>minPid2){
-                       minPPid = minPid2;
-                       minNNode = minNode2;
-                   }
-                If(minPPid != size+1 && minPPid != n.pid){
-                   hookingRet2++;
-                   n.parent = minNNode;
-                   n.pid = minPPid;
                }
            }
+        }
+        Foreach(n:G.Nodes)(n.star==1 && n.pid == n.id && n.count!=0){
+            n.pid = n.minPid;
+            n.parent = n.minPar;
+        }
       [ printf("round %d star_detection\n",$ii) ];
 
         //ret1 = star_detection(G,parent,id,pid,star,count);
