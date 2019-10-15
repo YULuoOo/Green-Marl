@@ -4,54 +4,23 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
     Int ret = 0;
     Int change = 1;
     N_P<Int> temp;
+    N_P<Int> count;
     G.temp = -1;
+
+    G.count = 0;
+    Foreach(n:G.Nodes){
+        Foreach(e: n.Nbrs){
+            n.count += 1;
+        }
+    }
+    Foreach(n:G.Nodes)(n.count == 0){
+        ret++;
+    }
+    [printf("no edge count %d\n", ret)];
+    ret = 0;
     Foreach(n:G.Nodes)(n.scc == -1){
         n.color = n.id;
     }
-    While(nnum > 0){
-        [printf("round %d\n", i)];
-        i++;
-        nnum=0;
 
-        While(change > 0){
-            change = 0;
-            Foreach(n:G.Nodes){
-                Foreach(e:n.OutNbrs){
-                    If(n.color < e.color){
-                        e.color = n.color;
-                        change++;
-                    }
-                }
-            }
-        }
-        [printf("step 1 over \n")];
-        Foreach(n:G.Nodes)(n.scc == -1 && n.color == n.id){
-            n.scc = n.id;
-            n.temp = n.id;
-        }
-        change = 1;
-        While(change > 0){
-            change = 0;
-            Foreach(n:G.Nodes)(n.scc == n.color){
-                Foreach(e:n.InNbrs)(e.scc == -1){
-                    e.temp = n.scc;
-                    change++;
-                }
-            }
-            Foreach(n:G.Nodes)(n.temp != -1){
-                n.scc = n.temp;
-                n.temp = -1;
-            }
-        }
-        [printf("step 2 over \n")];
-        Foreach(n:G.Nodes)(n.scc == -1){
-            nnum++;
-        }
-        [printf("still have %d \n",nnum)];
-
-    }
-    Foreach(n:G.Nodes)(n.scc == n.id){
-        ret++;
-    }
     Return ret;
 }
