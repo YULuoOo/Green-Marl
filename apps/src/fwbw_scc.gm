@@ -4,8 +4,12 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
     Int ret = 0;
     Int change = 1;
     Foreach(n:G.Nodes){
-        If(!Exist(in: n.InNbrs) || !Exist(out: n.OutNbrs))
+        If(!Exist(in: n.InNbrs))
         {
+            n.scc = 1;
+            nnum--;
+            ret++;
+        } Else If(!Exist(out: n.OutNbrs)){
             n.scc = 1;
             nnum--;
             ret++;
