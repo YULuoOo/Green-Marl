@@ -32,6 +32,7 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
                 InBFS(b:G^.Nodes From rt)[b.color == n.id]
                 {
                     b.scc = 1;
+                    nnum--;
                 }
                 ret++;
             }
