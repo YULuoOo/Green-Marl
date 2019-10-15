@@ -8,6 +8,7 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
     While(nnum > 0){
         [printf("round %d\n", i)];
         i++;
+        nnum=0;
         Foreach(n:G.Nodes)(n.scc == -1){
             n.color = n.id;
         }
@@ -34,7 +35,6 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
                 Foreach(e:n.InNbrs)(e.scc == -1){
                     e.temp = n.scc;
                     change++;
-                    nnum--;
                 }
             }
             Foreach(n:G.Nodes)(n.temp != -1){
@@ -43,6 +43,9 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
             }
         }
         [printf("step 2 over \n")];
+        Foreach(n:G.Nodes)(n.scc == -1){
+            nnum++;
+        }
     }
     Foreach(n:G.Nodes)(n.scc == n.id){
         ret++;
