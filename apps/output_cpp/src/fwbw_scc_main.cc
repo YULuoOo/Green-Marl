@@ -40,7 +40,7 @@ public:
     virtual bool run()
     {
         int size = G.num_nodes();
-        int ret = scc(G,color,id,scc,size);
+        int ret = color_scc(G,color,id,scc,size);
         printf("ret = %d",ret);
         return true;
     }

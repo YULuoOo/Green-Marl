@@ -1,4 +1,4 @@
-Proc scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
+Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
     Int i = 0;
     Int nnum = size;
     Int ret = 0;
