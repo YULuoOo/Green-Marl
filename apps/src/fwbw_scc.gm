@@ -3,6 +3,14 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
     Int nnum = size;
     Int ret = 0;
     Int change = 1;
+    Foreach(n:G.Nodes){
+        If(!Exist(in: n.InNbrs) || !Exist(out: n.OutNbrs))
+        {
+            n.scc = 1;
+            nnum--;
+            ret++;
+        }
+    }
     While(nnum > 0){
         [printf("round %d\n", i)];
         i++;
@@ -23,19 +31,17 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
         [printf("step 1 over \n")];
 
         Foreach(n:G.Nodes)(n.scc == 0){
-            If(Exist(z: G.Nodes){z.scc == 0 && z.color == n.id}){
-                Node rt = n;
-                Foreach(t:G.Nodes)(t.scc == 0 && t.color == n.id){
-                    rt = t;
-                }
-                rt.scc = 1;
-                InBFS(b:G^.Nodes From rt)[b.color == n.id]
-                {
-                    b.scc = 1;
-                    nnum--;
-                }
-                ret++;
+            Node rt = n;
+            Foreach(t:G.Nodes)(t.scc == 0 && t.color == n.id){
+                rt = t;
             }
+            rt.scc = 1;
+            InBFS(b:G^.Nodes From rt)[b.color == n.id]
+            {
+                b.scc = 1;
+                nnum--;
+            }
+            ret++;
         }
         [printf("step 2 over \n")];
 
