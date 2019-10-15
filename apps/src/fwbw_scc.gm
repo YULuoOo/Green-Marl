@@ -10,7 +10,7 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
         [printf("round %d\n", i)];
         i++;
         nnum=0;
-        Foreach(n:G.Nodes){
+        Foreach(n:G.Nodes)(n.scc == -1){
             n.color = n.id;
         }
         While(change > 0){
