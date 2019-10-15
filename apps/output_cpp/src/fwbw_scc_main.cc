@@ -29,7 +29,7 @@ public:
 #pragma omp parallel for
         for (int i = 0; i < G.num_nodes(); i++)
         {
-            scc[i] = 0;
+            scc[i] = -1;
             color[i] = i;
             id[i] = i;
         }
