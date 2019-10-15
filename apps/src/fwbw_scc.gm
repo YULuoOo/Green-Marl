@@ -3,13 +3,20 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
     Int nnum = size;
     Int ret = 0;
     Int change = 1;
+    N_P<Int> inedge;
+    N_P<Int> outedge;
+    G.inedge = 0;
+    G.outedge = 0;
     Foreach(n:G.Nodes){
-        If(!Exist(in: n.InNbrs))
-        {
-            n.scc = 1;
-            nnum--;
-            ret++;
-        } Else If(!Exist(out: n.OutNbrs)){
+        Foreach(e: n.InNbrs){
+            n.inedge += 1;
+        }
+        Foreach(e: n.InNbrs){
+            n.outedge += 1;
+        }
+    }
+    Foreach(n:G.Nodes){
+        If(n.inedge == 0 || n.outedge == 0){
             n.scc = 1;
             nnum--;
             ret++;
