@@ -39,17 +39,13 @@ public:
 
     virtual bool run()
     {
-        Int ret = scc(G,color,id,scc,G.num_nodes());
-        printf("ret = %d",rettt);
+        int ret = scc(G,color,id,scc,G.num_nodes());
+        printf("ret = %d",ret);
         return true;
     }
 
     virtual bool post_process() {
         return true;
-    }
-
-    rec_scc(state){
-
     }
 };
 
