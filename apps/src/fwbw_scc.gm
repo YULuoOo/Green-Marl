@@ -25,7 +25,7 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
             }
         }
         [printf("step 1 over \n")];
-        Foreach(n:G.Nodes)(n.color == n.id){
+        Foreach(n:G.Nodes)(n.scc == -1 && n.color == n.id){
             n.scc = n.id;
             n.temp = n.id;
         }
