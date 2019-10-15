@@ -24,9 +24,13 @@ Proc scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
         [printf("step 1 over \n")];
 
         Foreach(n:G.Nodes)(n.scc == 0){
+            Node root;
             If(Exist(z: G.Nodes){z.scc == 0 && z.color == n.id}){
-                z.scc = 1;
-                InBFS(b:G^.Nodes From z)[b.color == n.id]
+                Foreach(t:G.Nodes)(t.scc == 0 && t.color == n.id){
+                    root = t;
+                }
+                root.scc = 1;
+                InBFS(b:G^.Nodes From root)[b.color == n.id]
                 {
                     b.scc = 1;
                 }
