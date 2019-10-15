@@ -1,6 +1,6 @@
 ifndef PROGS
  ifeq ($(TARGET), gps)
-   PROGS=opt_cc mst_prim naive_cc ytest pagerank avg_teen_cnt conduct hop_dist sssp random_bipartite_matching bc_random
+   PROGS=fwbw_scc opt_cc mst_prim naive_cc ytest pagerank avg_teen_cnt conduct hop_dist sssp random_bipartite_matching bc_random
  else
   ifeq ($(TARGET), giraph)
     PROGS=opt_cc mst_prim naive_cc mytest pagerank avg_teen_cnt conduct hop_dist sssp random_bipartite_matching bc_random triangle_counting_directed parallel_random_walk_jump_sampling

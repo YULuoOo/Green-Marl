@@ -1,0 +1,37 @@
+Proc scc(G:Graph,fw:N_P<Int>,bw:N_P<Int>,state:N_P<Int>,scc:N_P<Int>,part:Int):N_P<Int>{
+    Node pivot;
+    N_P<Int> temp;
+    Foreach(n:G.Nodes)(n.state == part)
+    {
+        n.fw = 0;
+        n.bw = 0;
+    }
+    For(n:G.Nodes)(n.state == part)
+    {
+        pivot = n;
+        Break;
+    }
+
+    InBFS(n:G.Nodes From pivot)[n.state == part]
+    {
+        n.fw = 1;
+    }
+    InBFS(n:G^.Nodes From pivot)[n.mem == -1]
+    {
+        n.bw = 1;
+    }
+    Foreach(n:G.Nodes)(n.state == part)
+    {
+        If(n.fw == 1 && n.bw ==0){
+            n.temp = 1;
+        } Else If(n.fw ==0 && n.bw ==1){
+            n.temp = 2;
+        } Else If(n.fw ==0 && n.bw == 0){
+            n.temp = 3;
+        } Else {
+            n.scc = 1;
+        }
+    }
+    Return temp;
+
+}
