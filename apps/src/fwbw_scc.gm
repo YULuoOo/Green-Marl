@@ -47,6 +47,8 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
         Foreach(n:G.Nodes)(n.scc == -1){
             nnum++;
         }
+        [printf("still have %d \n",nnum)];
+
     }
     Foreach(n:G.Nodes)(n.scc == n.id){
         ret++;
