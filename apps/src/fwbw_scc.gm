@@ -4,7 +4,9 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
     Int ret = 0;
     Int change = 1;
     N_P<Int> temp;
+    N_P<Int> color2;
     G.temp = -1;
+    G.color2 = -1;
 
     While(nnum > 0){
         [printf("round %d\n", i)];
@@ -18,10 +20,14 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
             Foreach(n:G.Nodes){
                 Foreach(e:n.OutNbrs){
                     If(n.color < e.color){
-                        e.color = n.color;
+                        e.color2 = n.color;
                         change++;
                     }
                 }
+            }
+            Foreach(n:G.Nodes)(n.color2 != -1){
+                n.color = n.color2;
+                n.color2 = -1;
             }
         }
         [printf("step 1 over \n")];
