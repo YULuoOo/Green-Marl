@@ -49,7 +49,7 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
             Foreach(n:G.Nodes)(n.scc == n.color && n.used == False){
                 n.temp = n.scc;
                 change++;
-                Foreach(e:n.InNbrs)(e.scc == -1 && n.used == False){
+                Foreach(e:n.InNbrs)(e.color == n.color && e.scc == -1 && n.used == False){
                     e.temp = n.scc;
                     change++;
                 }
