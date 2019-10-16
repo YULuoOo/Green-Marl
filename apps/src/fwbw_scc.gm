@@ -39,7 +39,6 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
         }
 
         [printf("still have %d \n",nnum)];
-        nnum=0;
         change = 1;
         While(change > 0){
             change = 0;
@@ -54,6 +53,8 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
                 n.temp = -1;
             }
         }
+        nnum=0;
+
         [printf("step 2 over \n")];
         Foreach(n:G.Nodes)(n.scc == -1){
             nnum++;
