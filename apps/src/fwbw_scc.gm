@@ -29,7 +29,7 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
                     }
                 }
             }
-            Foreach(n:G.Nodes)(n.color2 != -1){
+            Foreach(n:G.Nodes)(n.color2 != -1 && n.used == False){
                 n.color = n.color2;
                 n.color2 = -1;
             }
@@ -54,7 +54,7 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
                     change++;
                 }
             }
-            Foreach(n:G.Nodes)(n.temp != -1){
+            Foreach(n:G.Nodes)(n.temp != -1 && n.used == False){
                 n.scc = n.temp;
                 n.used = True;
                 n.temp = -1;
