@@ -8,20 +8,6 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
     G.temp = -1;
     G.color2 = -1;
     Int x = 0;
-    Int ct = 0;
-    N_P<Int> count;
-    G.count = 0;
-    Foreach(n:G.Nodes){
-        Foreach(e: n.Nbrs){
-            n.count += 1;
-        }
-    }
-    Foreach(n:G.Nodes){
-        If(n.count == 0){
-            ct++;
-        }
-    }
-    [printf("ct %d\n", ct)];
     While(nnum > 0){
         [printf("round %d\n", i)];
         i++;
