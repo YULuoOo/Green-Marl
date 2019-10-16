@@ -5,6 +5,8 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
     Int change = 1;
     N_P<Int> temp;
     N_P<Int> color2;
+    N_P<Bool> used;
+    G.used = False;
     G.temp = -1;
     G.color2 = -1;
     Int x = 0;
@@ -14,13 +16,13 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
         i++;
         x = 0;
         nnum=0;
-        Foreach(n:G.Nodes)(n.scc == -1){
+        Foreach(n:G.Nodes)(n.used == False){
             n.color = n.id;
         }
         While(change > 0){
             change = 0;
-            Foreach(n:G.Nodes)(n.scc == -1){
-                Foreach(e:n.OutNbrs)(e.scc == -1){
+            Foreach(n:G.Nodes)(n.used == False){
+                Foreach(e:n.OutNbrs)(n.used == False){
                     If(n.color < e.color){
                         e.color2 = n.color;
                         change++;
@@ -33,10 +35,10 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
             }
         }
         [printf("step 1 over \n")];
-        Foreach(n:G.Nodes)(n.scc == -1 && n.color == n.id){
+        Foreach(n:G.Nodes)(n.used == False && n.color == n.id){
             n.scc = n.id;
         }
-        Foreach(n:G.Nodes)(n.scc == -1){
+        Foreach(n:G.Nodes)(n.used == False){
             x++;
         }
 
@@ -44,23 +46,27 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
         change = 1;
         While(change > 0){
             change = 0;
-            Foreach(n:G.Nodes)(n.scc == n.color){
-                Foreach(e:n.InNbrs)(e.scc == -1){
+            Foreach(n:G.Nodes)(n.scc == n.color && n.used == False){
+                n.temp = n.scc;
+                change++;
+                Foreach(e:n.InNbrs)(e.scc == -1 && n.used == False){
                     e.temp = n.scc;
                     change++;
                 }
             }
             Foreach(n:G.Nodes)(n.temp != -1){
                 n.scc = n.temp;
+                n.used = True;
                 n.temp = -1;
             }
         }
 
         [printf("step 2 over \n")];
-        Foreach(n:G.Nodes)(n.scc == -1){
+        Foreach(n:G.Nodes)(n.used == False){
             nnum++;
         }
         [printf("still have %d \n",nnum)];
+        change = 1;
 
     }
     Foreach(n:G.Nodes)(n.scc == n.id){
