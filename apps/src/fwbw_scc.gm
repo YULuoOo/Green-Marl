@@ -34,10 +34,13 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
                 n.color2 = -1;
             }
         }
+        Int x1;
+        Int x2;
+        Int x3;
         For(n:G.Nodes){
-            Int x1 = n.id;
-            Int x2 = n.color;
-            Int x3 = n.scc;
+            x1 = n.id;
+            x2 = n.color;
+            x3 = n.scc;
             [printf("node %d color %d scc %d\n",x1,x2,x3)];
         }
         [printf("step 1 over \n")];
@@ -45,9 +48,9 @@ Proc color_scc(G:Graph,color:N_P<Int>,id:N_P<Int>,scc:N_P<Int>,size:Int):Int{
             n.scc = n.id;
         }
         For(n:G.Nodes){
-            Int x1 = n.id;
-            Int x2 = n.color;
-            Int x3 = n.scc;
+            x1 = n.id;
+            x2 = n.color;
+            x3 = n.scc;
             [printf("node %d color %d scc %d\n",x1,x2,x3)];
         }
         Foreach(n:G.Nodes)(n.scc == -1){
