@@ -80,7 +80,7 @@ public:
         printf("graph loading time=%lf\n", (T2.tv_sec - T1.tv_sec) * 1000 + (T2.tv_usec - T1.tv_usec) * 0.001);
 
         gettimeofday(&T1, NULL);
-//        G.make_reverse_edges();
+        G.make_reverse_edges();
         gettimeofday(&T2, NULL);
         printf("reverse edge creation time=%lf\n", (T2.tv_sec - T1.tv_sec) * 1000 + (T2.tv_usec - T1.tv_usec) * 0.001);
 
