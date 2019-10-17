@@ -56,9 +56,6 @@ int main(int argc, char** argv)
 //    G.add_edge(2,5);
 //    G.add_edge(4,9);
 
-for(int i=0;i<(sizeof(edges)/sizeof(edges[0]));i++){
-            G.add_edge(edges[i][0],edges[i][1]);
-    }
      int* membership;
     int  num_membership;
 
