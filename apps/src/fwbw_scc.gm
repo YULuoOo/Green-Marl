@@ -5,7 +5,6 @@
      Int change = 1;
      Int x = 0;
      While(nnum > 0){
-         [printf("round %d\n", i)];
          i++;
          x = 0;
          nnum=0;
@@ -24,7 +23,6 @@
              }
          }
 
-         [printf("step 1 over \n")];
          Foreach(n:G.Nodes)(n.scc == -1 && n.color == n.id){
              n.scc = n.id;
          }
@@ -33,7 +31,6 @@
              x++;
          }
 
-         [printf("still have %d \n",x)];
          change = 1;
          While(change > 0){
              change = 0;
@@ -47,11 +44,9 @@
              }
          }
 
-         [printf("step 2 over \n")];
          Foreach(n:G.Nodes)(n.scc == -1){
              nnum++;
          }
-         [printf("still have %d \n",nnum)];
          change = 1;
 
      }
