@@ -17,7 +17,7 @@
              Foreach(e:G.Edges){
                  Node from = e.FromNode();
                  Node to = e.ToNode();
-                 If(from.scc == -1 && to.scc == -1 && from.color < to.color){
+                 If(from.scc == -1 && to.scc == -1 && from.color > to.color){
                      to.color = from.color;
                      change++;
                  }
