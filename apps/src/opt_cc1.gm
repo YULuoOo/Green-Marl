@@ -1,0 +1,152 @@
+Procedure init(G:Graph, parent:N_P<Node>, id:N_P<Long>, pid:N_P<Long>)
+{
+    Foreach(n: G.Nodes){
+        Foreach(in: n.Nbrs){
+            <n.pid;n.parent> min= <in.id;in>;
+        }
+    }
+    Foreach(n:G.Nodes){
+        If(n.pid >= n.id)
+            n.parent = n;
+    }
+}
+
+Procedure singleton_elimination(G: Graph, size:Long, parent:N_P<Node>, id:N_P<Long>,pid:N_P<Long>,count:N_P<Int>){
+    Foreach(n:G.Nodes){
+        Foreach(e: n.Nbrs){
+            If(e.pid == n.id){
+                n.count += 1;
+            }
+        }
+    }
+    Foreach(n:G.Nodes){
+        Long mmin = size;
+        Node nn;
+        Int flag = 0;
+        If(n.count ==0 && n.pid == n.id){
+            Foreach(e:n.Nbrs){
+                <mmin;nn> min= <e.id;e>;
+                flag = 1;
+            }
+            If(flag == 1){
+                n.pid = mmin;
+                n.parent = nn;
+            }
+        }
+    }
+    G.count = 0;
+    Foreach(n:G.Nodes){
+        Foreach(e: n.Nbrs){
+            n.count += 1;
+        }
+    }
+}
+Procedure star_detection(G: Graph, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>,count:N_P<Int>):Long{
+    Long ret1 = 0;
+    G.star = 1;
+    //rule 1
+    Foreach(n:G.Nodes)(n.count != 0){
+        Node fa = n.parent;
+        If(fa.pid != n.pid){
+            n.star = 0;
+        }
+    }
+    //rule 2
+    Foreach(n:G.Nodes)(n.count != 0){
+        If(n.star == 0){
+           //shit grammar!
+            Node fa = n.parent;
+            Node gf = fa.parent;
+            gf.star = 0;
+        }
+    }
+    //rule 3
+    Foreach(n:G.Nodes)(n.count != 0){
+        Node fa = n.parent;
+        If(fa.star == 0)
+            n.star = 0;
+    }
+    Foreach(n:G.Nodes){
+            If(n.star == 1)
+                ret1 += 1;
+    }
+    Return ret;
+}
+Procedure C_star_hooking(G: Graph, size:Long,parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>,count:N_P<Int>):Int{
+	Int ret = 0;
+       While(ret1 != size || hookingRet1 != 0 || hookingRet2 != 0){
+           //hookingRet1 =  C_star_hooking(G,size,parent,id,pid,star,count);
+            hookingRet1 = 0;
+
+
+            Foreach(n:G.Nodes)(n.star==1 && n.pid == n.id && n.count!=0){
+               n.minPid = n.id;
+               n.minPar = n;
+            }
+            Foreach(e:G.Edges){
+               Node to = e.ToNode();
+               Node from = e.FromNode();
+               If(from.star == 1){
+                   Node fpa = from.parent;
+                   If(fpa.pid == fpa.id && from.pid > to.pid){
+                       If(fpa.minPid > to.pid){
+                           hookingRet1++;
+                           fpa.minPid = to.pid;
+                           fpa.minPar = to.parent;
+                       }
+                   }
+               }
+            }
+            Foreach(n:G.Nodes)(n.star==1 && n.pid == n.id && n.count!=0){
+                n.pid = n.minPid;
+                n.parent = n.minPar;
+            }
+        Return ret;
+}
+
+Procedure U_star_hooking(G: Graph,size: Long, parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>,count:N_P<Int>):Int{
+   Int ret = 0;
+   Foreach(n:G.Nodes)(n.star==1 && n.pid == n.id && n.count!=0){
+      n.minPid = size+1;
+      n.minPar = n;
+   }
+   Foreach(e:G.Edges){
+      Node to = e.ToNode();
+      Node from = e.FromNode();
+      If(from.star == 1){
+          Node fpa = from.parent;
+          If(fpa.pid == fpa.id && from.pid != to.pid){
+              If(fpa.minPid > to.pid){
+                  hookingRet1++;
+                  fpa.minPid = to.pid;
+                  fpa.minPar = to.parent;
+              }
+          }
+      }
+   }
+   Foreach(n:G.Nodes)(n.star==1 && n.pid == n.id && n.count!=0 && n.minPid != size+1){
+       n.pid = n.minPid;
+       n.parent = n.minPar;
+   }
+   Return ret;
+}
+
+Procedure pointer_jumping(G:Graph,parent:N_P<Node>,id:N_P<Long>,pid:N_P<Long>,star:N_P<Int>,count:N_P<Int>){
+     Foreach(n:G.Nodes)(n.count!=0 && n.star == 0){
+           n.parId = n.pid;
+           n.parNode = n.parent;
+       }
+       Foreach(n:G.Nodes)(n.count!=0 && n.star == 0){
+           Node fn = n.parNode;
+           n.pid = fn.parId;
+           n.parent = fn.parNode;
+       }
+}
+Procedure ret_cc_num(G:Graph,id:N_P<Long>,pid:N_P<Long>):Long{
+    Long rett = 0;
+    Foreach(n:G.Nodes){
+	If(n.id == n.pid)
+	    rett++;
+    }
+    Return rett;
+}
